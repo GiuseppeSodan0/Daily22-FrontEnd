@@ -1,0 +1,6 @@
+{
+  "name": "Daily 22",
+  "description": "Una versione moderna, reattiva e con design in modalità scura per Daily 22. Soluzioni intelligenti e IoT per la sicurezza sul lavoro.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
