@@ -1,124 +1,108 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React from 'react';
-import { ShieldCheck, Mail, Phone, Heart } from 'lucide-react';
+import {Link} from 'react-router-dom';
+import {Mail, Phone, Heart, Facebook, Linkedin, Instagram} from 'lucide-react';
 
-interface FooterProps {
-  onTabChange: (tab: 'home' | 'prodotto' | 'progetti' | 'contatti') => void;
-}
-
-export default function Footer({ onTabChange }: FooterProps) {
+export default function Footer() {
   return (
-    <footer className="bg-[#050505] border-t border-white/[0.06] pt-20 pb-12 select-none text-left">
+    <footer className="bg-gray-100 border-t border-gray-200 pt-20 pb-12 select-none text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
-          {/* Column 1: Info and Brand */}
-          <div className="space-y-4 md:col-span-1">
-            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => onTabChange('home')}>
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-tr from-yellow-500 to-amber-500 group-hover:scale-105 transition-transform">
-                <ShieldCheck className="w-5 h-5 text-black" />
-              </div>
-              <span className="text-lg font-bold tracking-tight text-white font-sans">
-                daily<span className="text-yellow-400">22</span>
-              </span>
-            </div>
-            <p className="text-xs text-gray-400 max-w-xs leading-relaxed font-light">
+          {/* Column 1: Brand */}
+          <div className="space-y-4 lg:col-span-1">
+            <Link to="/" className="inline-block group">
+              <img
+                src="/src/assets/images/logo_full.png"
+                alt="Daily 22"
+                className="h-8 w-auto group-hover:scale-105 transition-transform duration-300"
+              />
+            </Link>
+            <p className="text-xs text-gray-500 max-w-xs leading-relaxed">
               Piattaforma conversazionale con intelligenza artificiale che integra dati biometrici, ambientali e di sicurezza aziendale digitalizzati, trasformandoli in modelli di rischio predittivi.
             </p>
+            <div className="flex items-center gap-3 pt-2">
+              <a href="https://www.facebook.com/DailyPlatform1" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white hover:bg-gray-200 text-gray-400 hover:text-yellow-600 transition-colors">
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a href="https://www.linkedin.com/in/ilaria-leonardis-39b20626b" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white hover:bg-gray-200 text-gray-400 hover:text-yellow-600 transition-colors">
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a href="https://www.instagram.com/daily__platform" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white hover:bg-gray-200 text-gray-400 hover:text-yellow-600 transition-colors">
+                <Instagram className="w-4 h-4" />
+              </a>
+            </div>
           </div>
 
-          {/* Column 2: Offerings */}
+          {/* Column 2: Tecnologia */}
           <div>
-            <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 font-mono">
-              La Tecnologia
+            <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 font-mono">
+              Tecnologia
             </h4>
-            <ul className="space-y-2 text-xs text-gray-400">
-              <li>
-                <button onClick={() => onTabChange('progetti')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
-                  DAILYPLATFORM
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onTabChange('progetti')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
-                  SALVATORE AI
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onTabChange('progetti')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
-                  WIDIU Wearable
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onTabChange('prodotto')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
-                  Soluzioni IoT & Deep Learning
-                </button>
-              </li>
+            <ul className="space-y-2 text-xs text-gray-500">
+              <li><Link to="/progetti" className="hover:text-yellow-600 transition-colors">Dailyplatform</Link></li>
+              <li><Link to="/progetti" className="hover:text-yellow-600 transition-colors">WIDIU</Link></li>
+              <li><Link to="/progetti" className="hover:text-yellow-600 transition-colors">Salvatore AI</Link></li>
+              <li><Link to="/prodotto" className="hover:text-yellow-600 transition-colors">Soluzioni IoT & AI</Link></li>
+              <li><Link to="/brevetto" className="hover:text-yellow-600 transition-colors">Brevetto</Link></li>
             </ul>
           </div>
 
-          {/* Column 3: Verticals */}
+          {/* Column 3: Azienda */}
           <div>
-            <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 font-mono">
-              Iniziative Daily 4
+            <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 font-mono">
+              Azienda
             </h4>
-            <ul className="space-y-2 text-xs text-gray-400">
-              <li>
-                <button onClick={() => onTabChange('progetti')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
-                  daily 4 Compliance
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onTabChange('progetti')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
-                  daily 4 Child
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onTabChange('progetti')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
-                  daily 4 Woman
-                </button>
-              </li>
+            <ul className="space-y-2 text-xs text-gray-500">
+              <li><Link to="/mission" className="hover:text-yellow-600 transition-colors">Mission</Link></li>
+              <li><Link to="/team" className="hover:text-yellow-600 transition-colors">Il Team</Link></li>
+              <li><Link to="/faqs" className="hover:text-yellow-600 transition-colors">FAQs</Link></li>
+              <li><Link to="/startup" className="hover:text-yellow-600 transition-colors">STARTUP</Link></li>
+              <li><Link to="/smart-start" className="hover:text-yellow-600 transition-colors">SMART & START</Link></li>
+              <li><Link to="/daily-safety-lab" className="hover:text-yellow-600 transition-colors">Daily Safety Lab</Link></li>
             </ul>
           </div>
 
-          {/* Column 4: Legals & Contacts */}
+          {/* Column 4: Contatti */}
           <div>
-            <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 font-mono">
-              Contatti Rapidi
+            <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 font-mono">
+              Contatti
             </h4>
-            <ul className="space-y-2.5 text-xs text-gray-400">
-              <li className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-yellow-405" />
-                <a href="mailto:info@daily22.it" className="hover:text-white hover:underline transition-colors">
+            <ul className="space-y-2.5 text-xs text-gray-500">
+              <li className="flex items-start gap-2">
+                <Mail className="w-3.5 h-3.5 text-yellow-500 shrink-0 mt-0.5" />
+                <a href="mailto:info@daily22.it" className="hover:text-gray-900 hover:underline transition-colors">
                   info@daily22.it
                 </a>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-yellow-450" />
-                <a href="tel:+390812244222" className="hover:text-white transition-colors">
-                  +39 081 2244222
+              <li className="flex items-start gap-2">
+                <Phone className="w-3.5 h-3.5 text-yellow-500 shrink-0 mt-0.5" />
+                <a href="tel:+393206033483" className="hover:text-gray-900 transition-colors">
+                  +39 320 603 3483
                 </a>
               </li>
-              <li className="pt-2 text-[10px] text-gray-500 border-t border-white/[0.04] font-mono font-medium">
-                Sempre allineato alle linee guida INAIL
+              <li className="pt-2 text-[10px] text-gray-400 leading-relaxed">
+                Via Coroglio, 57<br />
+                c/o Campania Newsteel Srl<br />
+                Napoli, Italia
               </li>
             </ul>
           </div>
         </div>
 
         {/* Lower row */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between text-[11px] text-gray-500">
+        <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between text-[11px] text-gray-400">
           <div>
-            <p>© {new Date().getFullYear()} Daily 22 S.r.l. Tutti i diritti riservati. Startup Innovativa Benefit.</p>
-            <p className="mt-1">P.IVA IT09876543210 - Campania NewSteel Incubator - Città della Scienza, Napoli</p>
+            <p>© {new Date().getFullYear()} Daily Practice 22 S.r.l. Tutti i diritti riservati.</p>
+            <p className="mt-1">P.IVA 09637811218 - Campania NewSteel Incubator - Città della Scienza, Napoli</p>
           </div>
-          <div className="flex items-center gap-1.5 mt-4 md:mt-0 font-medium text-gray-400">
-            <span>Tecnologia ed Etica per la sicurezza</span>
-            <Heart className="w-3.5 h-3.5 text-yellow-450 fill-yellow-450" />
+          <div className="flex items-center gap-4 mt-4 md:mt-0">
+            <Link to="/privacy-policy" className="hover:text-yellow-600 transition-colors">Privacy Policy</Link>
+            <Link to="/brevetto" className="hover:text-yellow-600 transition-colors">Brevetto</Link>
+            <span className="flex items-center gap-1.5 font-medium text-gray-500">
+              Tecnologia ed Etica per la sicurezza
+              <Heart className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+            </span>
           </div>
         </div>
 

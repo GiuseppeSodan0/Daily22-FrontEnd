@@ -1,98 +1,103 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import React, {useState} from 'react';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {motion, AnimatePresence} from 'motion/react';
+import {Menu, X, ArrowUpRight} from 'lucide-react';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ShieldCheck, Menu, X, ArrowUpRight } from 'lucide-react';
-
-interface HeaderProps {
-  currentTab: 'home' | 'prodotto' | 'progetti' | 'contatti';
-  onTabChange: (tab: 'home' | 'prodotto' | 'progetti' | 'contatti') => void;
-}
-
-export default function Header({ currentTab, onTabChange }: HeaderProps) {
+export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'prodotto', label: 'Prodotto' },
-    { id: 'progetti', label: 'Progetti' },
-    { id: 'contatti', label: 'Contatti' },
-  ] as const;
+  const isActive = (path: string) => location.pathname === path;
 
-  const handleNavClick = (tabId: 'home' | 'prodotto' | 'progetti' | 'contatti') => {
-    onTabChange(tabId);
+  const mainNavItems = [
+    {path: '/', label: 'Home'},
+    {path: '/mission', label: 'Mission'},
+    {path: '/progetti', label: 'Progetti'},
+    {path: '/prodotto', label: 'Prodotto'},
+  ];
+
+  const secondaryNavItems = [
+    {path: '/startup', label: 'STARTUP'},
+    {path: '/smart-start', label: 'SMART & START'},
+    {path: '/daily-safety-lab', label: 'Daily Safety Lab'},
+    {path: '/team', label: 'Il Team'},
+    {path: '/faqs', label: 'FAQs'},
+    {path: '/brevetto', label: 'Brevetto'},
+  ];
+
+  const handleNavClick = (path: string) => {
+    navigate(path);
     setIsMobileMenuOpen(false);
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-2xl bg-black/80 border-b border-white/[0.06] transition-all duration-300">
+    <header className="sticky top-0 z-50 backdrop-blur-2xl bg-white/80 border-b border-gray-200 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo - Apple Luxury-tech variant in black & gold */}
-          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => onTabChange('home')}>
-            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 shadow-md shadow-yellow-500/10 group-hover:scale-105 transition-transform duration-300">
-              <ShieldCheck className="w-6 h-6 text-black" />
-              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping" />
-              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-yellow-400 border border-black" />
-            </div>
-            <div>
-              <span className="text-xl font-bold tracking-tight text-white font-sans">
-                daily<span className="text-yellow-400">22</span>
-              </span>
-              <p className="text-[9px] uppercase tracking-widest text-gray-400 font-mono font-medium">
-                Impegno Etico Daily
-              </p>
-            </div>
-          </div>
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 group">
+            <img
+              src="/src/assets/images/logo_full.png"
+              alt="Daily 22"
+              className="h-10 w-auto group-hover:scale-105 transition-transform duration-300"
+            />
+          </Link>
 
-          {/* Desktop Navigation - Ultra Clean & Minimal */}
-          <nav className="hidden md:flex items-center gap-1.5">
-            {navItems.map((item) => {
-              const isActive = currentTab === item.id;
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1.5">
+            {mainNavItems.map((item) => {
+              const active = isActive(item.path);
               return (
-                <button
-                  key={item.id}
-                  id={`nav-btn-${item.id}`}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 cursor-pointer ${
-                    isActive ? 'text-yellow-400 font-semibold' : 'text-gray-400 hover:text-white'
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 ${
+                    active ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-900'
                   }`}
                 >
                   {item.label}
-                  {isActive && (
+                  {active && (
                     <motion.div
                       layoutId="activeTabIndicator"
-                      className="absolute bottom-0 left-2.5 right-2.5 h-0.5 bg-yellow-400 rounded-full"
-                      transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                      className="absolute bottom-0 left-2.5 right-2.5 h-0.5 bg-yellow-500 rounded-full"
+                      transition={{type: 'spring', stiffness: 350, damping: 28}}
                     />
                   )}
-                </button>
+                </Link>
               );
             })}
+
+            {secondaryNavItems.slice(0, 3).map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 ${
+                  isActive(item.path) ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-900'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
-          {/* CTA Button with subtle Gold highlight */}
-          <div className="hidden md:block">
-            <button
-              id="cta-req-consult"
-              onClick={() => handleNavClick('contatti')}
-              className="group relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold text-black bg-yellow-400 hover:bg-yellow-300 transition-all duration-300 shadow-[0_0_20px_rgba(250,204,21,0.2)] hover:shadow-[0_0_25px_rgba(250,204,21,0.4)] cursor-pointer"
+          {/* CTA Button */}
+          <div className="hidden lg:block">
+            <Link
+              to="/contatti"
+              className="group relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold text-white bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 shadow-[0_0_20px_rgba(234,179,8,0.2)] hover:shadow-[0_0_25px_rgba(234,179,8,0.4)]"
             >
-              Richiedi Consulenza
+              Contattaci
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-[2.5]" />
-            </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
-              id="mobile-menu-btn"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2.5 rounded-xl border border-white/[0.08] text-gray-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+              className="p-2.5 rounded-xl border border-gray-200 text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -105,37 +110,35 @@ export default function Header({ currentTab, onTabChange }: HeaderProps) {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="md:hidden border-t border-white/[0.06] bg-[#090909]"
+            initial={{opacity: 0, height: 0}}
+            animate={{opacity: 1, height: 'auto'}}
+            exit={{opacity: 0, height: 0}}
+            transition={{duration: 0.25, ease: 'easeInOut'}}
+            className="lg:hidden border-t border-gray-200 bg-white"
           >
-            <div className="px-4 py-6 space-y-2.5">
-              {navItems.map((item) => {
-                const isActive = currentTab === item.id;
+            <div className="px-4 py-6 space-y-2.5 max-h-[80vh] overflow-y-auto">
+              {[...mainNavItems, ...secondaryNavItems].map((item) => {
+                const active = isActive(item.path);
                 return (
                   <button
-                    key={item.id}
-                    id={`mobile-nav-${item.id}`}
-                    onClick={() => handleNavClick(item.id)}
+                    key={item.path}
+                    onClick={() => handleNavClick(item.path)}
                     className={`block w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                      isActive
-                        ? 'bg-yellow-400/10 text-yellow-300 border-l-4 border-yellow-400'
-                        : 'text-gray-400 hover:text-white hover:bg-white/[0.03]'
+                      active
+                        ? 'bg-yellow-50 text-yellow-700 border-l-4 border-yellow-500'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                     }`}
                   >
                     {item.label}
                   </button>
                 );
               })}
-              <div className="pt-4 border-t border-white/[0.06]">
+              <div className="pt-4 border-t border-gray-200">
                 <button
-                  id="mobile-cta"
-                  onClick={() => handleNavClick('contatti')}
-                  className="flex items-center justify-center w-full gap-2 px-5 py-3 rounded-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs shadow-lg shadow-yellow-500/10"
+                  onClick={() => handleNavClick('/contatti')}
+                  className="flex items-center justify-center w-full gap-2 px-5 py-3 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xs shadow-lg"
                 >
-                  Richiedi Consulenza
+                  Contattaci
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                 </button>
               </div>

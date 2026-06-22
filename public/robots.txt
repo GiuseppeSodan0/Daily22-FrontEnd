@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://daily22.it/sitemap.xml

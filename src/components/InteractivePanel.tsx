@@ -217,24 +217,24 @@ export default function InteractivePanel() {
   }, [messages]);
 
   return (
-    <div className="py-24 bg-black border-y border-white/[0.06] relative overflow-hidden animate-reveal" id="interactive-suite">
+    <div className="py-24 bg-gray-50 border-y border-gray-200 relative overflow-hidden animate-reveal" id="interactive-suite">
       
       {/* Delicate Golden Ambiance Elements */}
-      <div className="absolute top-1/4 right-1/4 w-[350px] h-[350px] bg-yellow-500/[0.03] rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/4 w-[350px] h-[350px] bg-amber-500/[0.02] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 right-1/4 w-[350px] h-[350px] bg-yellow-400/[0.04] rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/4 w-[350px] h-[350px] bg-amber-400/[0.04] rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Slogan */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
-            <span className="text-[10px] uppercase tracking-widest text-yellow-400 font-mono font-bold">Laboratorio di Simulazione Live</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-50 border border-gray-200 mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-yellow-600" />
+            <span className="text-[10px] uppercase tracking-widest text-yellow-600 font-mono font-bold">Laboratorio di Simulazione Live</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 mb-4 leading-tight">
             Sperimenta la Sicurezza Predittiva
           </h2>
-          <p className="text-sm text-gray-400 leading-relaxed font-light">
+          <p className="text-sm text-gray-500 leading-relaxed font-light">
             Seleziona uno dei tre moduli integrati per interagire direttamente con la tecnologia intelligente ideata da Daily 22.
           </p>
         </div>
@@ -245,8 +245,8 @@ export default function InteractivePanel() {
             onClick={() => setActivePlayground('widiu')}
             className={`flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl text-xs font-semibold uppercase tracking-wider transition-all border cursor-pointer ${
               activePlayground === 'widiu'
-                ? 'bg-yellow-400/10 text-yellow-400 border-yellow-400/40 shadow-[0_4px_20px_rgba(250,204,21,0.08)]'
-                : 'bg-white/[0.02] text-gray-400 border-white/[0.05] hover:border-white/[0.12] hover:text-white'
+                ? 'bg-yellow-50 text-yellow-600 border-yellow-300 shadow-[0_4px_20px_rgba(250,204,21,0.08)]'
+                : 'bg-gray-50/[0.5] text-gray-500 border-gray-200 hover:border-gray-300 hover:text-gray-900'
             }`}
           >
             <Activity className="w-4 h-4 stroke-[2]" />
@@ -256,8 +256,8 @@ export default function InteractivePanel() {
             onClick={() => setActivePlayground('salvatore')}
             className={`flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl text-xs font-semibold uppercase tracking-wider transition-all border cursor-pointer ${
               activePlayground === 'salvatore'
-                ? 'bg-yellow-400/10 text-yellow-400 border-yellow-400/40 shadow-[0_4px_20px_rgba(250,204,21,0.08)]'
-                : 'bg-white/[0.02] text-gray-400 border-white/[0.05] hover:border-white/[0.12] hover:text-white'
+                ? 'bg-yellow-50 text-yellow-600 border-yellow-300 shadow-[0_4px_20px_rgba(250,204,21,0.08)]'
+                : 'bg-gray-50/[0.5] text-gray-500 border-gray-200 hover:border-gray-300 hover:text-gray-900'
             }`}
           >
             <MessageSquare className="w-4 h-4 stroke-[2]" />
@@ -267,8 +267,8 @@ export default function InteractivePanel() {
             onClick={() => setActivePlayground('dailyplatform')}
             className={`flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl text-xs font-semibold uppercase tracking-wider transition-all border cursor-pointer ${
               activePlayground === 'dailyplatform'
-                ? 'bg-yellow-400/10 text-yellow-400 border-yellow-400/40 shadow-[0_4px_20px_rgba(250,204,21,0.08)]'
-                : 'bg-white/[0.02] text-gray-400 border-white/[0.05] hover:border-white/[0.12] hover:text-white'
+                ? 'bg-yellow-50 text-yellow-600 border-yellow-300 shadow-[0_4px_20px_rgba(250,204,21,0.08)]'
+                : 'bg-gray-50/[0.5] text-gray-500 border-gray-200 hover:border-gray-300 hover:text-gray-900'
             }`}
           >
             <TrendingUp className="w-4 h-4 stroke-[2]" />
@@ -277,7 +277,7 @@ export default function InteractivePanel() {
         </div>
 
         {/* Content Box with Satin-Glassmorphism and deep black layout */}
-        <div className="border border-white/[0.06] rounded-3xl bg-white/[0.01] backdrop-blur-3xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col lg:flex-row relative">
+        <div className="border border-gray-200 rounded-3xl bg-white backdrop-blur-3xl shadow-lg overflow-hidden flex flex-col lg:flex-row relative">
           
           <AnimatePresence mode="wait">
             {/* Widiu Simulator Playground */}
@@ -290,32 +290,32 @@ export default function InteractivePanel() {
                 className="flex flex-col lg:flex-row w-full"
               >
                 {/* Visual heart feedback */}
-                <div className="flex-1 p-6 sm:p-10 border-b lg:border-b-0 lg:border-r border-white/[0.06] flex flex-col justify-between">
+                <div className="flex-1 p-6 sm:p-10 border-b lg:border-b-0 lg:border-r border-gray-200 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-6">
-                      <span className="p-2.5 rounded-xl bg-yellow-400/10 text-yellow-400 border border-yellow-400/20">
+                      <span className="p-2.5 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200">
                         <Activity className="w-5 h-5" />
                       </span>
                       <div>
-                        <h3 className="text-base font-bold text-white">Telemetria WIDIU</h3>
-                        <p className="text-xs text-gray-400 font-mono">Dispositivo Indossabile Intelligente</p>
+                        <h3 className="text-base font-bold text-gray-900">Telemetria WIDIU</h3>
+                        <p className="text-xs text-gray-500 font-mono">Dispositivo Indossabile Intelligente</p>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-300 font-light leading-relaxed mb-8">
+                    <p className="text-sm text-gray-600 font-light leading-relaxed mb-8">
                       Regola gli indicatori biometrici e ambientali a destra per osservare come l'algoritmo calcola l'indice di sicurezza totale sul lavoro.
                     </p>
 
-                    <div className="p-8 rounded-2xl bg-white/[0.01] border border-white/[0.04] flex flex-col items-center justify-center relative overflow-hidden">
+                    <div className="p-8 rounded-2xl bg-white border border-gray-100 flex flex-col items-center justify-center relative overflow-hidden">
                       {fallDetected && (
-                        <div className="absolute inset-0 bg-black/95 backdrop-blur-sm flex flex-col items-center justify-center text-center p-6 z-30">
-                          <AlertTriangle className="w-12 h-12 text-yellow-405 animate-bounce mb-2" />
-                          <p className="text-base font-bold text-yellow-400 uppercase tracking-widest">CADUTA RILEVATA!</p>
-                          <p className="text-xs text-gray-400 max-w-xs mt-2 leading-relaxed">
+                        <div className="absolute inset-0 bg-white backdrop-blur-sm flex flex-col items-center justify-center text-center p-6 z-30">
+                          <AlertTriangle className="w-12 h-12 text-yellow-600 animate-bounce mb-2" />
+                          <p className="text-base font-bold text-yellow-600 uppercase tracking-widest">CADUTA RILEVATA!</p>
+                          <p className="text-xs text-gray-500 max-w-xs mt-2 leading-relaxed">
                             Forza centrifuga accelerata. Invio alert immediato a Dailyplatform e ai soccorsi di cantiere.
                           </p>
                           <button
                             onClick={resetFallStatus}
-                            className="mt-5 px-5 py-2.5 bg-yellow-400 text-black text-xs font-bold rounded-full transition-all hover:bg-yellow-300 cursor-pointer"
+                            className="mt-5 px-5 py-2.5 bg-yellow-600 text-white text-xs font-bold rounded-full transition-all hover:bg-yellow-500 cursor-pointer"
                           >
                             Risolvi Allerta
                           </button>
@@ -323,41 +323,41 @@ export default function InteractivePanel() {
                       )}
 
                       {/* Animated heart circle */}
-                      <div className="relative w-36 h-36 flex items-center justify-center border-4 border-yellow-400/10 rounded-full mb-6">
-                        <div className="absolute inset-0 rounded-full border border-yellow-400/30 animate-ping opacity-20" style={{ animationDuration: vitals.heartRate > 100 ? '0.8s' : '1.5s' }} />
+                      <div className="relative w-36 h-36 flex items-center justify-center border-4 border-yellow-300/10 rounded-full mb-6">
+                        <div className="absolute inset-0 rounded-full border border-yellow-300/30 animate-ping opacity-20" style={{ animationDuration: vitals.heartRate > 100 ? '0.8s' : '1.5s' }} />
                         <div className="text-center z-10">
-                          <Heart className={`w-8 h-8 text-yellow-400 mx-auto mb-1 ${vitals.heartRate > 100 ? 'animate-bounce' : 'animate-pulse'}`} />
-                          <span className="text-3xl font-bold font-mono text-white tracking-tight leading-none">{vitals.heartRate}</span>
-                          <span className="text-gray-500 text-[10px] font-bold font-mono ml-1 uppercase">BPM</span>
+                          <Heart className={`w-8 h-8 text-yellow-600 mx-auto mb-1 ${vitals.heartRate > 100 ? 'animate-bounce' : 'animate-pulse'}`} />
+                          <span className="text-3xl font-bold font-mono text-gray-900 tracking-tight leading-none">{vitals.heartRate}</span>
+                          <span className="text-gray-400 text-[10px] font-bold font-mono ml-1 uppercase">BPM</span>
                         </div>
                       </div>
 
                       {/* Small visual items */}
                       <div className="grid grid-cols-2 gap-3 w-full">
-                        <div className="p-3 rounded-xl bg-white/[0.01] border border-white/[0.05] flex items-center gap-2.5">
-                          <Thermometer className="w-4 h-4 text-yellow-400" />
+                        <div className="p-3 rounded-xl bg-white border border-gray-200 flex items-center gap-2.5">
+                          <Thermometer className="w-4 h-4 text-yellow-600" />
                           <div>
-                            <span className="text-[9px] text-gray-500 font-mono block uppercase">Corpo</span>
-                            <span className="text-xs font-bold font-mono text-white">{vitals.bodyTemp} °C</span>
+                            <span className="text-[9px] text-gray-400 font-mono block uppercase">Corpo</span>
+                            <span className="text-xs font-bold font-mono text-gray-900">{vitals.bodyTemp} °C</span>
                           </div>
                         </div>
-                        <div className="p-3 rounded-xl bg-white/[0.01] border border-white/[0.05] flex items-center gap-2.5">
-                          <Shield className="w-4 h-4 text-yellow-400" />
+                        <div className="p-3 rounded-xl bg-white border border-gray-200 flex items-center gap-2.5">
+                          <Shield className="w-4 h-4 text-yellow-600" />
                           <div>
-                            <span className="text-[9px] text-gray-500 font-mono block uppercase">Postura</span>
-                            <span className="text-xs font-bold font-mono text-yellow-300">{vitals.posture}</span>
+                            <span className="text-[9px] text-gray-400 font-mono block uppercase">Postura</span>
+                            <span className="text-xs font-bold font-mono text-yellow-600">{vitals.posture}</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <span className="text-[10px] text-gray-600 font-mono block mt-6">Conformità EN ISO 13485 & D.Lgs 81/08</span>
+                  <span className="text-[10px] text-gray-400 font-mono block mt-6">Conformità EN ISO 13485 & D.Lgs 81/08</span>
                 </div>
 
                 {/* Sliders Controller */}
-                <div className="flex-1 p-6 sm:p-10 bg-white/[0.01] flex flex-col justify-between">
+                <div className="flex-1 p-6 sm:p-10 bg-white flex flex-col justify-between">
                   <div>
-                    <h4 className="text-xs font-bold uppercase tracking-widest text-yellow-400 font-mono mb-8 flex items-center gap-2">
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-yellow-600 font-mono mb-8 flex items-center gap-2">
                       <Sliders className="w-4 h-4 stroke-[2]" />
                       Configurazione Biometrica
                     </h4>
@@ -365,8 +365,8 @@ export default function InteractivePanel() {
                     {/* Battito */}
                     <div className="mb-6">
                       <div className="flex justify-between items-center text-xs mb-2">
-                        <span className="text-gray-400">Sforzo Cardivoascolore (Battiti)</span>
-                        <span className="font-bold text-white font-mono">{vitals.heartRate} BPM</span>
+                        <span className="text-gray-500">Sforzo Cardivoascolore (Battiti)</span>
+                        <span className="font-bold text-gray-900 font-mono">{vitals.heartRate} BPM</span>
                       </div>
                       <input
                         type="range"
@@ -381,15 +381,15 @@ export default function InteractivePanel() {
                             safetyScore: calculateRiskScore(v, p.bodyTemp, p.posture, p.ambientTemp, p.gasLevel)
                           }));
                         }}
-                        className="w-full accent-yellow-400 bg-white/[0.06] rounded-lg h-1.5 cursor-pointer appearance-none"
+                        className="w-full accent-yellow-600 bg-gray-200 rounded-lg h-1.5 cursor-pointer appearance-none"
                       />
                     </div>
 
                     {/* Temperatura */}
                     <div className="mb-6">
                       <div className="flex justify-between items-center text-xs mb-2">
-                        <span className="text-gray-400">Temperatura Ambientale Sollecitata</span>
-                        <span className="font-bold text-white font-mono">{vitals.ambientTemp} °C</span>
+                        <span className="text-gray-500">Temperatura Ambientale Sollecitata</span>
+                        <span className="font-bold text-gray-900 font-mono">{vitals.ambientTemp} °C</span>
                       </div>
                       <input
                         type="range"
@@ -397,17 +397,17 @@ export default function InteractivePanel() {
                         max="50"
                         value={vitals.ambientTemp}
                         onChange={(e) => handleAmbientChange(Number(e.target.value))}
-                        className="w-full accent-yellow-400 bg-white/[0.06] rounded-lg h-1.5 cursor-pointer appearance-none"
+                        className="w-full accent-yellow-600 bg-gray-200 rounded-lg h-1.5 cursor-pointer appearance-none"
                       />
                     </div>
 
                     {/* Gas tossici */}
                     <div className="mb-6">
-                      <label className="block text-xs font-semibold text-gray-400 mb-2 uppercase font-mono tracking-wider">Cella Elettrochimica (Gas CO)</label>
+                      <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase font-mono tracking-wider">Cella Elettrochimica (Gas CO)</label>
                       <select
                         value={vitals.gasLevel}
                         onChange={handleGasChange}
-                        className="w-full bg-black text-xs text-gray-300 border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400"
+                        className="w-full bg-white text-xs text-gray-600 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-600"
                       >
                         <option value="Sano">Monossido assente (&lt; 10 ppm) - Sicuro</option>
                         <option value="Attenzione">Presenza moderata (28 ppm) - Attenzione</option>
@@ -417,12 +417,12 @@ export default function InteractivePanel() {
 
                     {/* Simulators buttons */}
                     <div className="mb-8">
-                      <span className="block text-[10px] font-bold text-gray-500 uppercase font-mono mb-3 tracking-widest">Simula Anomalie di Carramento</span>
+                      <span className="block text-[10px] font-bold text-gray-400 uppercase font-mono mb-3 tracking-widest">Simula Anomalie di Carramento</span>
                       <div className="grid grid-cols-2 gap-3">
                         <button
                           onClick={triggerFall}
                           disabled={fallDetected}
-                          className="px-4 py-3 rounded-xl border border-red-500/20 bg-red-500/5 hover:bg-red-500/10 text-red-400 font-bold text-xs transition-colors disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 cursor-pointer"
+                          className="px-4 py-3 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs transition-colors disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <AlertTriangle className="w-3.5 h-3.5" />
                           Simula Caduta
@@ -438,8 +438,8 @@ export default function InteractivePanel() {
                           }}
                           className={`px-4 py-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                             vitals.posture === 'Sforzo Ripetuto'
-                              ? 'bg-yellow-400/10 border-yellow-400/40 text-yellow-300'
-                              : 'bg-transparent border-white/[0.06] text-gray-400 hover:border-white/[0.12] hover:text-white'
+                              ? 'bg-yellow-50 border-yellow-300 text-yellow-600'
+                              : 'bg-transparent border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-900'
                           }`}
                         >
                           <RefreshCw className="w-3.5 h-3.5" />
@@ -450,28 +450,28 @@ export default function InteractivePanel() {
                   </div>
 
                   {/* Safety Indicator Slider feedback */}
-                  <div className="pt-6 border-t border-white/[0.06]">
+                  <div className="pt-6 border-t border-gray-200">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs text-gray-450 font-semibold font-mono uppercase">Modello di Rischio Predittivo</span>
-                      <span className="text-[10px] font-mono font-bold text-yellow-400 border border-yellow-400/20 bg-yellow-400/5 px-2 py-0.5 rounded uppercase">live</span>
+                      <span className="text-xs text-gray-500 font-semibold font-mono uppercase">Modello di Rischio Predittivo</span>
+                      <span className="text-[10px] font-mono font-bold text-yellow-600 border border-yellow-200 bg-yellow-50 px-2 py-0.5 rounded uppercase">live</span>
                     </div>
                     <div className="flex items-center gap-4">
-                      <div className="flex-1 bg-white/[0.04] rounded-full h-3 overflow-hidden">
+                      <div className="flex-1 bg-gray-50 rounded-full h-3 overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all duration-500 ${
-                            vitals.safetyScore > 80 ? 'bg-yellow-400' : vitals.safetyScore > 40 ? 'bg-amber-500' : 'bg-red-500'
+                            vitals.safetyScore > 80 ? 'bg-yellow-600' : vitals.safetyScore > 40 ? 'bg-amber-500' : 'bg-red-500'
                           }`}
                           style={{ width: `${vitals.safetyScore}%` }}
                         />
                       </div>
                       <div className="text-right">
                         <span className={`text-2xl font-black font-mono leading-none ${
-                          vitals.safetyScore > 80 ? 'text-yellow-400' : vitals.safetyScore > 40 ? 'text-amber-400' : 'text-red-400'
+                          vitals.safetyScore > 80 ? 'text-yellow-600' : vitals.safetyScore > 40 ? 'text-amber-600' : 'text-red-600'
                         }`}>{vitals.safetyScore}</span>
-                        <span className="text-gray-600 text-xs font-bold font-mono">/100</span>
+                        <span className="text-gray-400 text-xs font-bold font-mono">/100</span>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-400 mt-2 italic font-light leading-relaxed">
+                    <p className="text-xs text-gray-500 mt-2 italic font-light leading-relaxed">
                       {vitals.safetyScore > 80 
                         ? 'Afflusso idoneo e conforme. Meno dello 0.02% di rischio stimato dalle reti neurali.'
                         : vitals.safetyScore > 40
@@ -494,44 +494,44 @@ export default function InteractivePanel() {
                 className="flex flex-col w-full"
               >
                 {/* Salvatore Top Header info */}
-                <div className="p-4 border-b border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
+                <div className="p-4 border-b border-gray-200 bg-white flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-500 to-amber-500 flex items-center justify-center">
                       <MessageSquare className="w-5 h-5 text-black stroke-[2.5]" />
-                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-yellow-450 border-2 border-black" />
+                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-yellow-600 border-2 border-white" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-sans">
+                      <h4 className="text-sm font-bold text-gray-900 flex items-center gap-1.5 font-sans">
                         SALVATORE AI
-                        <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
+                        <Sparkles className="w-3.5 h-3.5 text-yellow-600" />
                       </h4>
-                      <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-medium">Consulente Normativo d.lgs 81/08</p>
+                      <p className="text-[10px] text-gray-400 font-mono uppercase tracking-wider font-medium">Consulente Normativo d.lgs 81/08</p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-yellow-400 bg-yellow-400/10 px-2.5 py-1 rounded-full border border-yellow-400/20">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-yellow-600 bg-yellow-50 px-2.5 py-1 rounded-full border border-yellow-200">
                     Interazione Live
                   </span>
                 </div>
 
                 {/* Help guide bar */}
-                <div className="px-6 py-2 bg-white/[0.01] border-b border-white/[0.04] text-[11px] text-gray-400 flex items-center gap-2">
-                  <Info className="w-3.5 h-3.5 text-yellow-400 shrink-0" />
+                <div className="px-6 py-2 bg-white border-b border-gray-100 text-[11px] text-gray-500 flex items-center gap-2">
+                  <Info className="w-3.5 h-3.5 text-yellow-600 shrink-0" />
                   <span>Sperimenta la compilazione vocale e risposte immediate sui decreti di cantiere.</span>
                 </div>
 
                 {/* Chat window viewport */}
-                <div className="flex-1 p-6 space-y-4 max-h-[300px] overflow-y-auto min-h-[250px] bg-black/60">
+                <div className="flex-1 p-6 space-y-4 max-h-[300px] overflow-y-auto min-h-[250px] bg-gray-50">
                   {messages.map((m) => (
                     <div key={m.id} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                       <div
                         className={`max-w-[80%] rounded-2xl p-4 text-xs sm:text-sm leading-relaxed ${
                           m.sender === 'user'
-                            ? 'bg-yellow-450 text-black font-semibold rounded-br-none shadow-[0_4px_15px_rgba(250,204,21,0.15)]'
-                            : 'bg-white/[0.02] border border-white/[0.06] text-gray-300 rounded-bl-none'
+                            ? 'bg-yellow-600 text-white font-semibold rounded-br-none shadow-[0_4px_15px_rgba(202,138,4,0.1)]'
+                            : 'bg-white border border-gray-200 text-gray-800 rounded-bl-none'
                         }`}
                       >
                         <p>{m.text}</p>
-                        <p className={`text-[9px] mt-1.5 text-right font-mono ${m.sender === 'user' ? 'text-black/60' : 'text-gray-500'}`}>
+                        <p className={`text-[9px] mt-1.5 text-right font-mono ${m.sender === 'user' ? 'text-white/60' : 'text-gray-400'}`}>
                           {m.timestamp}
                         </p>
                       </div>
@@ -541,15 +541,15 @@ export default function InteractivePanel() {
                 </div>
 
                 {/* Quick pre-formulated buttons */}
-                <div className="p-4 border-t border-white/[0.06] bg-white/[0.01]">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Domande di prova:</p>
+                <div className="p-4 border-t border-gray-200 bg-white">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2 font-mono">Domande di prova:</p>
                   <div className="flex flex-wrap gap-2">
                     {preloadedQuestions.map((q, idx) => (
                       <button
                         key={idx}
                         id={`quick-prompt-${idx}`}
                         onClick={() => handleSendMessage(q.text)}
-                        className="text-xs px-3.5 py-2 rounded-xl bg-white/[0.02] border border-white/[0.06] text-gray-300 hover:text-white hover:border-yellow-400/40 hover:bg-yellow-400/5 transition-all text-left cursor-pointer font-medium"
+                        className="text-xs px-3.5 py-2 rounded-xl bg-gray-50/[0.5] border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-yellow-300 hover:bg-yellow-50 transition-all text-left cursor-pointer font-medium"
                       >
                         {q.label}
                       </button>
@@ -563,18 +563,18 @@ export default function InteractivePanel() {
                     e.preventDefault();
                     if (chatInput.trim()) handleSendMessage(chatInput);
                   }}
-                  className="p-4 bg-black flex gap-2 border-t border-white/[0.06]"
+                  className="p-4 bg-white flex gap-2 border-t border-gray-200"
                 >
                   <input
                     type="text"
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     placeholder="Chiedi a Salvatore del Decreto 81/08, piani DVR o sensori WIDIU..."
-                    className="flex-1 bg-white/[0.02] border border-white/[0.06] rounded-xl px-4 py-3.5 text-xs sm:text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-yellow-450 focus:ring-1 focus:ring-yellow-450"
+                    className="flex-1 bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600"
                   />
                   <button
                     type="submit"
-                    className="px-5 py-3.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold flex items-center justify-center transition-all shadow-[0_0_15px_rgba(250,204,21,0.15)] cursor-pointer"
+                    className="px-5 py-3.5 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-white font-bold flex items-center justify-center transition-all shadow-[0_0_15px_rgba(202,138,4,0.1)] cursor-pointer"
                   >
                     <Send className="w-4 h-4 stroke-[2.5]" />
                   </button>
@@ -592,99 +592,99 @@ export default function InteractivePanel() {
                 className="flex flex-col lg:flex-row w-full"
               >
                 {/* Active Operators list */}
-                <div className="flex-1 p-6 sm:p-10 border-b lg:border-b-0 lg:border-r border-white/[0.06] flex flex-col justify-between">
+                <div className="flex-1 p-6 sm:p-10 border-b lg:border-b-0 lg:border-r border-gray-200 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-6">
-                      <span className="p-2.5 rounded-xl bg-yellow-400/10 text-yellow-400 border border-yellow-400/20">
+                      <span className="p-2.5 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200">
                         <TrendingUp className="w-5 h-5" />
                       </span>
                       <div>
-                        <h3 className="text-base font-bold text-white font-sans">DAILYPLATFORM Dashboard</h3>
-                        <p className="text-xs text-gray-500 font-mono uppercase tracking-wider">Centro Gestione Predittivo Cantieri</p>
+                        <h3 className="text-base font-bold text-gray-900 font-sans">DAILYPLATFORM Dashboard</h3>
+                        <p className="text-xs text-gray-400 font-mono uppercase tracking-wider">Centro Gestione Predittivo Cantieri</p>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-300 font-light leading-relaxed mb-6">
+                    <p className="text-sm text-gray-600 font-light leading-relaxed mb-6">
                       Un'unica suite centralizzata che riceve la telemetria continua da tutti i wearable attivi, preveggendo sforzi cronici dei dipendenti.
                     </p>
 
                     {/* Operational fleet */}
                     <div className="space-y-2.5">
-                      <div className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 hover:bg-emerald-500/10 transition-colors">
+                      <div className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors">
                         <div className="flex items-center gap-2.5">
-                          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                          <span className="text-xs font-semibold text-white">Operatore #012 - Marco Rossi</span>
+                          <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+                          <span className="text-xs font-semibold text-gray-900">Operatore #012 - Marco Rossi</span>
                         </div>
-                        <span className="text-[10px] font-bold font-mono text-emerald-400 uppercase">Ottimale (84bpm)</span>
+                        <span className="text-[10px] font-bold font-mono text-emerald-600 uppercase">Ottimale (84bpm)</span>
                       </div>
 
-                      <div className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 hover:bg-emerald-500/10 transition-colors">
+                      <div className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors">
                         <div className="flex items-center gap-2.5">
-                          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                          <span className="text-xs font-semibold text-white">Operatrice #041 - Laura Bianchi</span>
+                          <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+                          <span className="text-xs font-semibold text-gray-900">Operatrice #041 - Laura Bianchi</span>
                         </div>
-                        <span className="text-[10px] font-bold font-mono text-emerald-400 uppercase">A Riposo (72bpm)</span>
+                        <span className="text-[10px] font-bold font-mono text-emerald-600 uppercase">A Riposo (72bpm)</span>
                       </div>
 
-                      <div className="flex items-center justify-between p-3.5 rounded-xl bg-amber-500/5 border border-amber-500/10 hover:bg-amber-500/10 transition-colors">
+                      <div className="flex items-center justify-between p-3.5 rounded-xl bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-colors">
                         <div className="flex items-center gap-2.5">
-                          <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
-                          <span className="text-xs font-semibold text-white">Operatore #009 - Giuseppe Verdi</span>
+                          <span className="h-2 w-2 rounded-full bg-amber-600 animate-pulse" />
+                          <span className="text-xs font-semibold text-gray-900">Operatore #009 - Giuseppe Verdi</span>
                         </div>
-                        <span className="text-[10px] font-bold font-mono text-amber-400 uppercase">Fatica Lieve (114bpm)</span>
+                        <span className="text-[10px] font-bold font-mono text-amber-600 uppercase">Fatica Lieve (114bpm)</span>
                       </div>
 
-                      <div className="flex items-center justify-between p-3.5 rounded-xl bg-yellow-450/10 border border-yellow-400/20">
+                      <div className="flex items-center justify-between p-3.5 rounded-xl bg-yellow-50 border border-yellow-200">
                         <div className="flex items-center gap-2.5">
-                          <span className="h-2 w-2 rounded-full bg-yellow-400 animate-pulse" />
-                          <span className="text-xs font-semibold text-white">Operatore #022 - Simone Neri</span>
+                          <span className="h-2 w-2 rounded-full bg-yellow-600 animate-pulse" />
+                          <span className="text-xs font-semibold text-gray-900">Operatore #022 - Simone Neri</span>
                         </div>
-                        <span className="text-[10px] font-bold font-mono text-yellow-400 uppercase">In Monitoraggio</span>
+                        <span className="text-[10px] font-bold font-mono text-yellow-600 uppercase">In Monitoraggio</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] text-[11px] text-yellow-300 font-light mt-6">
+                  <div className="p-4 rounded-xl bg-gray-50/[0.5] border border-gray-100 text-[11px] text-yellow-600 font-light mt-6">
                     💡 <strong>Sicurezza Integrata:</strong> DAILYPLATFORM calcola i premi assicurativi INAIL attesi in base alla conformità dinamica registrata dalle macchine.
                   </div>
                 </div>
 
                 {/* AI Features explain */}
-                <div className="flex-1 p-6 sm:p-10 bg-white/[0.01] flex flex-col justify-between">
+                <div className="flex-1 p-6 sm:p-10 bg-white flex flex-col justify-between">
                   <div>
-                    <h4 className="text-xs font-bold text-yellow-400 uppercase tracking-widest font-mono mb-8">Ecosistema Predittivo AI</h4>
+                    <h4 className="text-xs font-bold text-yellow-600 uppercase tracking-widest font-mono mb-8">Ecosistema Predittivo AI</h4>
                     
                     <div className="space-y-6">
                       <div className="flex gap-3">
-                        <div className="p-2 w-9 h-9 rounded-lg bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 flex items-center justify-center shrink-0">
+                        <div className="p-2 w-9 h-9 rounded-lg bg-yellow-50 text-yellow-600 border border-yellow-200 flex items-center justify-center shrink-0">
                           <CheckCircle className="w-5 h-5" />
                         </div>
                         <div>
-                          <h5 className="text-sm font-bold text-white">Consulenza GDPR Blindata</h5>
-                          <p className="text-xs text-gray-400 mt-1 leading-relaxed">
+                          <h5 className="text-sm font-bold text-gray-900">Consulenza GDPR Blindata</h5>
+                          <p className="text-xs text-gray-500 mt-1 leading-relaxed">
                             Ogni parametro biometrico viene mascherato localmente dai sensori WIDIU rispettando la protezione privacy secondo Regolamento UE 2016/679.
                           </p>
                         </div>
                       </div>
 
                       <div className="flex gap-3">
-                        <div className="p-2 w-9 h-9 rounded-lg bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 flex items-center justify-center shrink-0">
+                        <div className="p-2 w-9 h-9 rounded-lg bg-yellow-50 text-yellow-600 border border-yellow-200 flex items-center justify-center shrink-0">
                           <Shield className="w-5 h-5" />
                         </div>
                         <div>
-                          <h5 className="text-sm font-bold text-white">Software d.lgs 81/08 Data-Driven</h5>
-                          <p className="text-xs text-gray-400 mt-1 leading-relaxed">
+                          <h5 className="text-sm font-bold text-gray-900">Software d.lgs 81/08 Data-Driven</h5>
+                          <p className="text-xs text-gray-500 mt-1 leading-relaxed">
                             Aggiornamento istantaneo del Registro dei Rischi. Non dovrai più redigere montagne di scartoffie una tantum: la conformità è viva.
                           </p>
                         </div>
                       </div>
 
                       <div className="flex gap-3">
-                        <div className="p-2 w-9 h-9 rounded-lg bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 flex items-center justify-center shrink-0">
+                        <div className="p-2 w-9 h-9 rounded-lg bg-yellow-50 text-yellow-600 border border-yellow-200 flex items-center justify-center shrink-0">
                           <Award className="w-5 h-5" />
                         </div>
                         <div>
-                          <h5 className="text-sm font-bold text-white">Valore Formativo Incrementale</h5>
-                          <p className="text-xs text-gray-400 mt-1 leading-relaxed">
+                          <h5 className="text-sm font-bold text-gray-900">Valore Formativo Incrementale</h5>
+                          <p className="text-xs text-gray-500 mt-1 leading-relaxed">
                             Grazie ai micro-quiz erogati da Salvatore direttamente sullo smartphone degli operai, si ottiene un apprendimento proattivo certificato.
                           </p>
                         </div>
@@ -692,7 +692,7 @@ export default function InteractivePanel() {
                     </div>
                   </div>
 
-                  <p className="text-[11px] text-gray-500 font-light leading-relaxed mt-8 border-t border-white/[0.04] pt-4 select-none">
+                  <p className="text-[11px] text-gray-400 font-light leading-relaxed mt-8 border-t border-gray-100 pt-4 select-none">
                     "Adottando DAILYPLATFORM, gli RSPP riscontrano un abbattimento reale delle sanzioni civili ed infortuni di oltre il 92.4%."
                   </p>
                 </div>
