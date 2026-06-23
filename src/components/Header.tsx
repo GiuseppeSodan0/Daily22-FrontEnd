@@ -12,7 +12,7 @@ export default function Header() {
 
   const mainNavItems = [
     {path: '/', label: 'Home'},
-    {path: '/mission', label: 'Mission'},
+    {path: '/chi-siamo', label: 'Su di noi'},
     {path: '/servizi', label: 'Servizi'},
     {path: '/widiu', label: 'WIDIU'},
   ];
@@ -20,7 +20,6 @@ export default function Header() {
   const secondaryNavItems = [
     {path: '/bandi', label: 'Bandi'},
     {path: '/daily-safety-lab', label: 'Daily Safety Lab'},
-    {path: '/team', label: 'Il Team'},
     {path: '/faqs', label: 'FAQs'},
     {path: '/brevetto', label: 'Brevetto'},
   ];
@@ -31,7 +30,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-2xl bg-white/80 border-b border-gray-200 transition-all duration-300">
+    <header className="sticky top-0 z-50 backdrop-blur-xl border-b transition-all duration-300" style={{background: 'rgba(254,252,249,0.85)', borderColor: 'rgba(0,0,0,0.06)'}}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
@@ -113,7 +112,8 @@ export default function Header() {
             animate={{opacity: 1, height: 'auto'}}
             exit={{opacity: 0, height: 0}}
             transition={{duration: 0.25, ease: 'easeInOut'}}
-            className="lg:hidden border-t border-gray-200 bg-white"
+            className="lg:hidden border-t bg-white"
+            style={{borderColor: 'rgba(0,0,0,0.06)', background: '#fefcf9'}}
           >
             <div className="px-4 py-6 space-y-2.5 max-h-[80vh] overflow-y-auto">
               {[...mainNavItems, ...secondaryNavItems].map((item) => {

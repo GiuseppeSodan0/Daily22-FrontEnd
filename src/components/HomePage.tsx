@@ -42,7 +42,7 @@ export default function HomePage() {
       <Hero />
 
       {/* Soluzioni Section */}
-      <section className="py-24 bg-gray-50 relative">
+      <section className="py-28 md:py-32 relative" style={{background: 'linear-gradient(180deg, #f5f0e8 0%, #faf8f5 100%)'}}>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-gray-300 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -51,7 +51,7 @@ export default function HomePage() {
               <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">
                 Soluzioni per ogni esigenza aziendale
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 font-sans">
+            <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>
                 Intelligenza Artificiale al servizio della prevenzione
               </h2>
               <p className="mt-4 text-sm text-gray-500 font-light leading-relaxed">
@@ -62,10 +62,10 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <ScrollReveal delay={0.1}>
-              <TiltCard className="p-8 rounded-3xl bg-white border border-gray-200 hover:border-yellow-400 hover:bg-gray-50/50 transition-colors duration-300 flex flex-col justify-between group relative overflow-hidden">
+              <TiltCard className="p-8 rounded-3xl card-premium flex flex-col justify-between group relative overflow-hidden h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200 group-hover:bg-yellow-100 transition-colors">
+                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
                       <Network className="w-5 h-5" />
                     </span>
                     <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">Piattaforma Predittiva</span>
@@ -85,11 +85,11 @@ export default function HomePage() {
               </TiltCard>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.2}>
-              <TiltCard className="p-8 rounded-3xl bg-white border border-gray-200 hover:border-yellow-400 hover:bg-gray-50/50 transition-colors duration-300 flex flex-col justify-between group relative overflow-hidden">
+            <ScrollReveal delay={0.15}>
+              <TiltCard className="p-8 rounded-3xl card-premium flex flex-col justify-between group relative overflow-hidden h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200 group-hover:bg-yellow-100 transition-colors">
+                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
                       <Cpu className="w-5 h-5" />
                     </span>
                     <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">Hardware IoT</span>
@@ -109,11 +109,11 @@ export default function HomePage() {
               </TiltCard>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.3}>
-              <TiltCard className="p-8 rounded-3xl bg-white border border-gray-200 hover:border-yellow-400 hover:bg-gray-50/50 transition-colors duration-300 flex flex-col justify-between group relative overflow-hidden">
+            <ScrollReveal delay={0.2}>
+              <TiltCard className="p-8 rounded-3xl card-premium flex flex-col justify-between group relative overflow-hidden h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200 group-hover:bg-yellow-100 transition-colors">
+                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
                       <MessageSquare className="w-5 h-5" />
                     </span>
                     <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">Consulente Virtuale</span>
@@ -132,15 +132,12 @@ export default function HomePage() {
                 </Link>
               </TiltCard>
             </ScrollReveal>
-          </div>
 
-          {/* AI & Analisi cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <ScrollReveal delay={0.1}>
-              <div className="p-8 rounded-3xl bg-white border border-gray-200 hover:border-yellow-400 hover:bg-gray-50/50 transition-all duration-300 flex flex-col justify-between group">
+              <div className="p-8 rounded-3xl card-premium flex flex-col justify-between group h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200 group-hover:bg-yellow-100 transition-colors">
+                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
                       <Sparkles className="w-5 h-5" />
                     </span>
                     <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">AI</span>
@@ -152,11 +149,12 @@ export default function HomePage() {
                 </div>
               </div>
             </ScrollReveal>
-            <ScrollReveal delay={0.2}>
-              <div className="p-8 rounded-3xl bg-white border border-gray-200 hover:border-yellow-400 hover:bg-gray-50/50 transition-all duration-300 flex flex-col justify-between group">
+
+            <ScrollReveal delay={0.15}>
+              <div className="p-8 rounded-3xl card-premium flex flex-col justify-between group h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200 group-hover:bg-yellow-100 transition-colors">
+                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
                       <ShieldCheck className="w-5 h-5" />
                     </span>
                     <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">ANALISI</span>
@@ -168,37 +166,37 @@ export default function HomePage() {
                 </div>
               </div>
             </ScrollReveal>
-          </div>
-          {/* dailybydaily */}
-          <ScrollReveal delay={0.1}>
-            <div className="mt-8 p-8 rounded-3xl bg-white border border-gray-200 hover:border-yellow-400 transition-all duration-300 group">
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="p-3 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200 group-hover:bg-yellow-100 transition-colors">
-                    <ShieldCheck className="w-5 h-5" />
-                  </span>
-                  <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">ECOSISTEMA</span>
+
+            <ScrollReveal delay={0.2}>
+              <div className="p-8 rounded-3xl card-premium flex flex-col justify-between group h-full">
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
+                      <ShieldCheck className="w-5 h-5" />
+                    </span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">ECOSISTEMA</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">dailybydaily</h3>
+                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-light">
+                    Ecosistema di app dedicato a sicurezza, benessere e prevenzione nella vita quotidiana. Attraverso applicazioni verticali per lavoro, sport, famiglia, smart working e benessere personale, offre questionari, alert, protocolli e contenuti personalizzati, integrati con dailyplatform e con le tecnologie daily.
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">dailybydaily</h3>
-                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-light">
-                  Ecosistema di app dedicato a sicurezza, benessere e prevenzione nella vita quotidiana. Attraverso applicazioni verticali per lavoro, sport, famiglia, smart working e benessere personale, offre questionari, alert, protocolli e contenuti personalizzati, integrati con dailyplatform e con le tecnologie daily.
-                </p>
+                <Link
+                  to="/servizi"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-yellow-600 hover:text-yellow-700 transition-colors group mt-8"
+                >
+                  Approfondisci dailybydaily
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
               </div>
-              <Link
-                to="/servizi"
-                className="inline-flex items-center gap-2 text-xs font-bold text-yellow-600 hover:text-yellow-700 transition-colors group mt-6"
-              >
-                Approfondisci dailybydaily
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
       {/* Su di noi Section */}
       <ScrollReveal>
-        <section className="py-24 bg-gray-50 relative overflow-hidden">
+        <section className="py-28 md:py-32 relative overflow-hidden" style={{background: '#faf8f5'}}>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-400/10 rounded-full blur-[120px] pointer-events-none" />
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Su di noi</span>
@@ -228,32 +226,9 @@ export default function HomePage() {
         </section>
       </ScrollReveal>
 
-      {/* IoT e IA Section */}
-      <ScrollReveal>
-        <section className="py-24 bg-gray-50 relative overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-400/10 rounded-full blur-[120px] pointer-events-none" />
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white border border-gray-200 mb-6">
-              <ShieldCheck className="w-5 h-5 text-yellow-500" />
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 font-sans">
-              IoT e IA per prevenire i rischi sul posto di lavoro.
-            </h3>
-            <p className="mt-6 text-sm sm:text-base text-gray-600 leading-relaxed italic font-light">
-              "Trasformiamo ogni contesto operativo in un ecosistema connesso, sicuro e consapevole. Non ci limitiamo a reagire ai pericoli: li anticipiamo. Attraverso l'analisi predittiva di dati reali, abilitiamo una prevenzione proattiva in grado di rilevare anomalie, comportamenti critici e condizioni ambientali sfavorevoli prima che si trasformino in incidenti. In questo modo rendiamo la sicurezza sul lavoro intelligente, continua e misurabile, superando i limiti dei tradizionali modelli reattivi."
-            </p>
-            <div className="mt-8 flex justify-center items-center gap-3">
-              <span className="h-px w-8 bg-gray-300" />
-              <span className="text-[10px] text-gray-400 uppercase tracking-widest font-mono font-bold">Daily 22</span>
-              <span className="h-px w-8 bg-gray-300" />
-            </div>
-          </div>
-        </section>
-      </ScrollReveal>
-
       {/* CTA Section */}
       <ScrollReveal>
-        <section className="py-20 bg-gray-50 border-t border-gray-200 relative">
+        <section className="py-24 border-t relative" style={{background: '#faf8f5', borderColor: 'rgba(0,0,0,0.06)'}}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 font-sans">Hai bisogno di una soluzione personalizzata?</h3>

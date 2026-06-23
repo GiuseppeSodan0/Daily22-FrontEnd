@@ -5,11 +5,9 @@ import {useEffect} from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
-import Mission from './components/Mission';
 import WIDIU from './components/WIDIU';
 import ProgettiDetail from './components/ProgettiDetail';
 import ContactForm from './components/ContactForm';
-import Team from './components/Team';
 import FAQs from './components/FAQs';
 import Bandi from './components/Bandi';
 import DailySafetyLab from './components/DailySafetyLab';
@@ -39,12 +37,10 @@ export default function App() {
           >
             <Routes location={location}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/mission" element={<Mission />} />
+              <Route path="/chi-siamo" element={<ChiSiamo />} />
               <Route path="/widiu" element={<WIDIU />} />
               <Route path="/servizi" element={<ProgettiDetail />} />
               <Route path="/contatti" element={<ContactForm />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/chi-siamo" element={<ChiSiamo />} />
               <Route path="/faqs" element={<FAQs />} />
               <Route path="/bandi" element={<Bandi />} />
               <Route path="/daily-safety-lab" element={<DailySafetyLab />} />

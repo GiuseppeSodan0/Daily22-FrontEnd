@@ -42,8 +42,8 @@ export default function SalvatorePopup() {
             animate={{opacity: 1, y: 0, scale: 1}}
             exit={{opacity: 0, y: 20, scale: 0.95}}
             transition={{duration: 0.2}}
-            className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl bg-white border border-gray-200 shadow-[0_16px_48px_rgba(0,0,0,0.12)] overflow-hidden flex flex-col"
-            style={{maxHeight: '480px'}}
+            className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl overflow-hidden flex flex-col"
+            style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 20px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.08)', maxHeight: '480px'}}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 bg-yellow-500 text-white">
@@ -75,8 +75,9 @@ export default function SalvatorePopup() {
                     className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-xs leading-relaxed ${
                       msg.sender === 'user'
                         ? 'bg-yellow-500 text-white rounded-br-md'
-                        : 'bg-gray-100 text-gray-700 rounded-bl-md'
+                        : 'rounded-bl-md'
                     }`}
+                    style={msg.sender === 'bot' ? {background: '#f5f0e8', color: '#57534e'} : {}}
                   >
                     {msg.text}
                   </div>
@@ -85,14 +86,15 @@ export default function SalvatorePopup() {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-gray-200 flex items-center gap-2">
+            <div className="p-3 flex items-center gap-2" style={{borderTop: '1px solid rgba(0,0,0,0.06)'}}>
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Scrivi un messaggio..."
-                className="flex-1 px-4 py-2 rounded-full bg-gray-100 border border-gray-200 text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400"
+                className="flex-1 px-4 py-2 rounded-full text-xs placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/40 transition-all"
+                style={{background: '#f5f0e8', border: '1px solid rgba(0,0,0,0.06)', color: '#1c1917'}}
               />
               <button
                 onClick={handleSend}

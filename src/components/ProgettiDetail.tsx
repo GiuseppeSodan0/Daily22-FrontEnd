@@ -168,14 +168,14 @@ const dailybydailySolutions = [
 
 export default function ProgettiDetail() {
   return (
-    <div className="py-24 bg-gray-50 select-none text-left">
+    <div className="py-24 select-none text-left" style={{background: 'linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)'}}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Title */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Servizi</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 font-sans">Servizi.</h2>
-          <p className="mt-4 text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
+          <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>Servizi.</h2>
+          <p className="mt-4 text-xs sm:text-sm font-light leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
             Un'architettura sinergica dove ciascun modulo dialoga costantemente con gli altri per creare una rete di protezione ininterrotta e digitale intorno al lavoratore.
           </p>
         </div>
@@ -185,7 +185,7 @@ export default function ProgettiDetail() {
           {mainProjects.map((p) => (
             <div
               key={p.id}
-              className="flex flex-col h-full rounded-3xl bg-white hover:bg-gray-50 border border-gray-200 hover:border-yellow-400 transition-all duration-300 p-6 md:p-8 shadow-sm"
+              className="flex flex-col h-full rounded-3xl card-premium transition-all duration-300 p-6 md:p-8 shadow-sm"
             >
               <div className="flex justify-between items-start mb-6">
                 <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-yellow-600">
@@ -196,13 +196,13 @@ export default function ProgettiDetail() {
                 </span>
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{p.title}</h3>
-              <p className="text-xs text-gray-500 mb-4 italic leading-snug">{p.tagline}</p>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6 font-light">{p.description}</p>
+              <h3 className="text-xl font-bold mb-2" style={{color: 'var(--color-ink)'}}>{p.title}</h3>
+              <p className="text-xs mb-4 italic leading-snug" style={{color: 'var(--color-ink-soft)'}}>{p.tagline}</p>
+              <p className="text-xs sm:text-sm leading-relaxed mb-6 font-light" style={{color: 'var(--color-ink-soft)'}}>{p.description}</p>
 
               <div className="space-y-3 pt-6 mt-auto border-t border-gray-200">
                 {p.details.map((d, index) => (
-                  <div key={index} className="flex items-start gap-2 text-xs text-gray-600">
+                  <div key={index} className="flex items-start gap-2 text-xs" style={{color: 'var(--color-ink-soft)'}}>
                     <CheckCircle className="w-3.5 h-3.5 text-yellow-600 shrink-0 mt-0.5" />
                     <span className="font-light">{d}</span>
                   </div>
@@ -224,8 +224,8 @@ export default function ProgettiDetail() {
         <div className="mb-16">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Ecosistema</span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-3 font-sans">I Progetti Verticali daily — L'ecosistema dailybydaily</h3>
-            <p className="mt-4 text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
+            <h3 className="text-2xl sm:text-3xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>I Progetti Verticali daily — L'ecosistema dailybydaily</h3>
+            <p className="mt-4 text-xs sm:text-sm font-light leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
               Soluzioni progettate per specifici ambiti di sicurezza, compliance, benessere e prevenzione, integrate nell'ecosistema tecnologico daily.
             </p>
           </div>
@@ -234,13 +234,13 @@ export default function ProgettiDetail() {
             {dailybydailySolutions.map((sol) => (
               <div
                 key={sol.id}
-                className="p-6 md:p-8 rounded-3xl bg-white border border-gray-200 hover:border-yellow-400 transition-all duration-300 flex flex-col"
+                className="p-6 md:p-8 rounded-3xl card-premium transition-all duration-300 flex flex-col"
               >
-                <h4 className="text-lg font-bold text-gray-900 mb-3">{sol.title}</h4>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 font-light">{sol.description}</p>
+                <h4 className="text-lg font-bold mb-3" style={{color: 'var(--color-ink)'}}>{sol.title}</h4>
+                <p className="text-xs sm:text-sm leading-relaxed mb-4 font-light" style={{color: 'var(--color-ink-soft)'}}>{sol.description}</p>
                 <div className="space-y-2 pt-4 mt-auto border-t border-gray-100">
                   {sol.features.map((f, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-gray-600">
+                    <div key={i} className="flex items-start gap-2 text-xs" style={{color: 'var(--color-ink-soft)'}}>
                       <CheckCircle className="w-3 h-3 text-yellow-600 shrink-0 mt-0.5" />
                       <span className="font-light">{f}</span>
                     </div>
@@ -252,10 +252,10 @@ export default function ProgettiDetail() {
         </div>
 
         {/* Daily Safety Lab */}
-        <div className="p-8 rounded-3xl bg-white border border-gray-200 text-center">
+        <div className="p-8 rounded-3xl text-center" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
           <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Consulenza</span>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-3 mb-6 font-sans">Daily Safety Lab</h3>
-          <p className="text-sm text-gray-600 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+          <h3 className="text-2xl sm:text-3xl font-extrabold mt-3 mb-6 font-sans" style={{color: 'var(--color-ink)'}}>Daily Safety Lab</h3>
+          <p className="text-sm mb-8 max-w-2xl mx-auto font-light leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
             Daily Safety Lab Srl è una società specializzata in sicurezza sul lavoro, consulenza HSE, formazione, qualità, ambiente e compliance aziendale. Supportiamo imprese, organizzazioni e strutture sanitarie nella gestione degli adempimenti normativi, nella valutazione dei rischi e nello sviluppo di sistemi organizzativi più sicuri, efficienti e sostenibili.
           </p>
           <Link

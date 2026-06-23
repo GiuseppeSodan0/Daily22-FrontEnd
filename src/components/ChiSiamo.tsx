@@ -38,7 +38,7 @@ const teamMembers = [
 
 export default function ChiSiamo() {
   return (
-    <section className="relative overflow-hidden pt-24 pb-32 bg-gray-50 select-none text-left">
+    <section className="relative overflow-hidden pt-24 pb-32 select-none text-left" style={{background: 'linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)'}}>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-yellow-400/10 blur-[160px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,12 +52,12 @@ export default function ChiSiamo() {
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto">
             <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Su di noi</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 font-sans">Su di noi.</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>Su di noi.</h2>
           </div>
 
           {/* Intro: daily nasce dall'esperienza */}
-          <div className="p-8 rounded-3xl bg-white border border-gray-200 space-y-6 text-gray-600 leading-relaxed">
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">daily nasce dall'esperienza reale nei luoghi di lavoro</h3>
+          <div className="p-8 rounded-3xl space-y-6 leading-relaxed" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)', color: 'var(--color-ink-soft)'}}>
+            <h3 className="text-xl sm:text-2xl font-bold" style={{color: 'var(--color-ink)'}}>daily nasce dall'esperienza reale nei luoghi di lavoro</h3>
             <p className="text-sm sm:text-base">
               <strong className="text-gray-900">daily</strong> è una startup innovativa nata dall'esperienza ventennale di <strong className="text-yellow-600">Ilaria Leonardis</strong> nel settore della salute e sicurezza sul lavoro.
             </p>
@@ -79,38 +79,38 @@ export default function ChiSiamo() {
 
           {/* Mission + Vision */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-8 rounded-3xl bg-white border border-gray-200 space-y-4">
+            <div className="p-8 rounded-3xl space-y-4" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
               <div className="flex items-center gap-3 mb-4">
                 <span className="p-3 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200">
                   <Target className="w-5 h-5" />
                 </span>
-                <h3 className="text-xl font-bold text-gray-900">La nostra mission</h3>
+                <h3 className="text-xl font-bold" style={{color: 'var(--color-ink)'}}>La nostra mission</h3>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
                 Trasformare la sicurezza sul lavoro in un'esperienza quotidiana, reale, predittiva e partecipata, utilizzando tecnologia avanzata, formazione e analisi dei dati per costruire ambienti lavorativi più sani, protetti e consapevoli.
               </p>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
                 daily aiuta le aziende a superare una visione della sicurezza come semplice obbligo normativo, trasformandola in uno strumento concreto di prevenzione, crescita e miglioramento organizzativo.
               </p>
-              <p className="text-sm text-gray-600 leading-relaxed font-semibold">
+              <p className="text-sm leading-relaxed font-semibold" style={{color: 'var(--color-ink-soft)'}}>
                 La nostra missione è proteggere le persone, migliorare i processi aziendali e rendere la prevenzione più comprensibile, misurabile e integrata nelle attività di ogni giorno.
               </p>
             </div>
 
-            <div className="p-8 rounded-3xl bg-white border border-gray-200 space-y-4">
+            <div className="p-8 rounded-3xl space-y-4" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
               <div className="flex items-center gap-3 mb-4">
                 <span className="p-3 rounded-xl bg-yellow-50 text-yellow-600 border border-yellow-200">
                   <Eye className="w-5 h-5" />
                 </span>
-                <h3 className="text-xl font-bold text-gray-900">La nostra vision</h3>
+                <h3 className="text-xl font-bold" style={{color: 'var(--color-ink)'}}>La nostra vision</h3>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed font-semibold">
+              <p className="text-sm leading-relaxed font-semibold" style={{color: 'var(--color-ink-soft)'}}>
                 Rendere la sicurezza più umana, tecnologica e proattiva
               </p>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
                 daily porta la prevenzione a un nuovo livello: non più soltanto documenti, scadenze e verifiche periodiche, ma un sistema capace di leggere il rischio mentre evolve.
               </p>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
                 La sicurezza tradizionale fotografa il rischio in un momento preciso. daily vuole misurarlo, interpretarlo e prevenirlo nel tempo, integrando dati, tecnologia e conoscenza dei contesti operativi.
               </p>
               <div className="pt-2">
@@ -129,8 +129,8 @@ export default function ChiSiamo() {
                   <Users className="w-5 h-5" />
                 </span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 font-sans">Il nostro team</h3>
-              <p className="mt-4 text-sm text-gray-600 font-light">
+              <h3 className="text-2xl sm:text-3xl font-extrabold font-sans" style={{color: 'var(--color-ink)'}}>Il nostro team</h3>
+              <p className="mt-4 text-sm font-light" style={{color: 'var(--color-ink-soft)'}}>
                 daily nasce dall'incontro tra esperienza HSE, competenze tecnologiche, ricerca, sviluppo software, organizzazione e strategia di mercato. Un team multidisciplinare che lavora con un obiettivo comune: trasformare la sicurezza in un sistema quotidiano di protezione delle persone.
               </p>
             </div>
@@ -139,25 +139,25 @@ export default function ChiSiamo() {
               {teamMembers.map((member) => (
                 <div
                   key={member.name}
-                  className="p-8 rounded-3xl bg-white border border-gray-200 hover:border-yellow-400 transition-all duration-300 text-center group"
+                  className="p-8 rounded-3xl card-premium transition-all duration-300 text-center group"
                 >
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-100 to-amber-100 mx-auto mb-6 flex items-center justify-center border border-yellow-200">
                     <span className="text-3xl font-bold text-yellow-600">{member.name.charAt(0)}</span>
                   </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h4>
+                  <h4 className="text-lg font-bold mb-1" style={{color: 'var(--color-ink)'}}>{member.name}</h4>
                   <p className="text-xs font-bold text-yellow-600 uppercase tracking-widest mb-4 font-mono">{member.role}</p>
-                  <p className="text-xs text-gray-500 leading-relaxed">{member.bio}</p>
+                  <p className="text-xs leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>{member.bio}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Final CTA */}
-          <div className="p-8 rounded-3xl bg-white border border-gray-200 text-center">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">
+          <div className="p-8 rounded-3xl text-center" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
+            <h3 className="text-lg font-bold mb-4" style={{color: 'var(--color-ink)'}}>
               daily. L'istinto di proteggere, l'intelligenza per farlo.
             </h3>
-            <p className="text-sm text-gray-500 mb-6 max-w-xl mx-auto">
+            <p className="text-sm mb-6 max-w-xl mx-auto" style={{color: 'var(--color-ink-soft)'}}>
               Scopri come daily può supportare la tua azienda nella prevenzione dei rischi.
             </p>
             <Link
