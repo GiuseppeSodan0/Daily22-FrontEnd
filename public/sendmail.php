@@ -22,7 +22,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   exit(json_encode(['success' => false, 'message' => 'Email non valida']));
 }
 
-$to = 'info@daily22.it';
+$to = 'segreteria@dy22.it';
 $subject = $oggetto ? "[Daily22] $oggetto" : '[Daily22] Nuova richiesta contatto da sito web';
 
 $body = "Nome: $nome\n";
