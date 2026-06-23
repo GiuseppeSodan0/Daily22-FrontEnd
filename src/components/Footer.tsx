@@ -55,7 +55,6 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li><Link to="/chi-siamo" className="hover:text-yellow-400 transition-colors" style={{color: '#a8a29e'}}>Su di noi</Link></li>
-              <li><Link to="/faqs" className="hover:text-yellow-400 transition-colors" style={{color: '#a8a29e'}}>FAQs</Link></li>
               <li><Link to="/bandi" className="hover:text-yellow-400 transition-colors" style={{color: '#a8a29e'}}>Bandi</Link></li>
               <li><Link to="/daily-safety-lab" className="hover:text-yellow-400 transition-colors" style={{color: '#a8a29e'}}>Daily Safety Lab</Link></li>
             </ul>

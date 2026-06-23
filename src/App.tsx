@@ -8,7 +8,6 @@ import HomePage from './components/HomePage';
 import WIDIU from './components/WIDIU';
 import ProgettiDetail from './components/ProgettiDetail';
 import ContactForm from './components/ContactForm';
-import FAQs from './components/FAQs';
 import Bandi from './components/Bandi';
 import DailySafetyLab from './components/DailySafetyLab';
 import ChiSiamo from './components/ChiSiamo';
@@ -41,7 +40,6 @@ export default function App() {
               <Route path="/widiu" element={<WIDIU />} />
               <Route path="/servizi" element={<ProgettiDetail />} />
               <Route path="/contatti" element={<ContactForm />} />
-              <Route path="/faqs" element={<FAQs />} />
               <Route path="/bandi" element={<Bandi />} />
               <Route path="/daily-safety-lab" element={<DailySafetyLab />} />
               <Route path="/brevetto" element={<Brevetto />} />

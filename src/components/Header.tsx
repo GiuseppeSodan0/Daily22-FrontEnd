@@ -20,7 +20,6 @@ export default function Header() {
   const secondaryNavItems = [
     {path: '/bandi', label: 'Bandi'},
     {path: '/daily-safety-lab', label: 'Daily Safety Lab'},
-    {path: '/faqs', label: 'FAQs'},
     {path: '/brevetto', label: 'Brevetto'},
   ];
 
