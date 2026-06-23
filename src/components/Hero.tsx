@@ -117,7 +117,7 @@ export default function Hero() {
             className="flex justify-center mb-6"
           >
             <motion.img
-              src="/src/assets/images/logo.png"
+              src="/assets/images/logo.png"
               alt="daily"
               className="w-48 sm:w-56 md:w-64 lg:w-72 h-auto"
               animate={{

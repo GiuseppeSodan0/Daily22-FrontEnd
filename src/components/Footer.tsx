@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="space-y-4 lg:col-span-1">
             <Link to="/" className="inline-block group">
               <img
-                src="/src/assets/images/logo_full.png"
+                src="/assets/images/logo_full.png"
                 alt="Daily 22"
                 className="h-8 w-auto group-hover:scale-105 transition-transform duration-300"
               />

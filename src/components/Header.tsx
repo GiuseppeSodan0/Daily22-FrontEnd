@@ -37,7 +37,7 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <img
-              src="/src/assets/images/logo_full.png"
+              src="/assets/images/logo_full.png"
               alt="Daily 22"
               className="h-10 w-auto group-hover:scale-105 transition-transform duration-300"
             />
