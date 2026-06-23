@@ -29,7 +29,7 @@ export default function ContactForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.consentePrivacy) {
       setShowPrivacyError(true);
@@ -37,8 +37,20 @@ export default function ContactForm() {
     }
     setShowPrivacyError(false);
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    try {
+      const form = new FormData();
+      form.append('nome', formData.nome);
+      form.append('email', formData.email);
+      form.append('telefono', formData.telefono);
+      form.append('oggetto', formData.oggetto);
+      form.append('messaggio', formData.messaggio);
+
+      const res = await fetch('/sendmail.php', {method: 'POST', body: form});
+      const data = await res.json();
+
+      if (!data.success) throw new Error(data.message);
+
       setSubmitted(true);
       setFormData({
         nome: '',
@@ -48,7 +60,11 @@ export default function ContactForm() {
         messaggio: '',
         consentePrivacy: false,
       });
-    }, 1500);
+    } catch {
+      alert('Errore nell\'invio del messaggio. Riprova più tardi.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
