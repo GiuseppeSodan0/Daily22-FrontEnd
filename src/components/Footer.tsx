@@ -19,7 +19,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-xs text-gray-500 max-w-xs leading-relaxed">
-              Piattaforma conversazionale con intelligenza artificiale che integra dati biometrici, ambientali e di sicurezza aziendale digitalizzati, trasformandoli in modelli di rischio predittivi.
+              dailyplatform è una piattaforma digitale per la gestione HSE e la sicurezza sul lavoro, progettata per integrare dati biometrici, ambientali, organizzativi e documentali. Attraverso l'Intelligenza Artificiale, analizza le informazioni raccolte e le trasforma in KPI, alert e modelli predittivi utili a prevenire i rischi e supportare le decisioni aziendali.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a href="https://www.facebook.com/DailyPlatform1" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white hover:bg-gray-200 text-gray-400 hover:text-yellow-600 transition-colors">
@@ -40,10 +40,10 @@ export default function Footer() {
               Tecnologia
             </h4>
             <ul className="space-y-2 text-xs text-gray-500">
-              <li><Link to="/progetti" className="hover:text-yellow-600 transition-colors">Dailyplatform</Link></li>
-              <li><Link to="/progetti" className="hover:text-yellow-600 transition-colors">WIDIU</Link></li>
-              <li><Link to="/progetti" className="hover:text-yellow-600 transition-colors">Salvatore AI</Link></li>
-              <li><Link to="/prodotto" className="hover:text-yellow-600 transition-colors">Soluzioni IoT & AI</Link></li>
+              <li><Link to="/servizi" className="hover:text-yellow-600 transition-colors">Dailyplatform</Link></li>
+              <li><Link to="/widiu" className="hover:text-yellow-600 transition-colors">WIDIU</Link></li>
+              <li><Link to="/servizi" className="hover:text-yellow-600 transition-colors">Salvatore AI</Link></li>
+              <li><Link to="/servizi" className="hover:text-yellow-600 transition-colors">dailybydaily</Link></li>
               <li><Link to="/brevetto" className="hover:text-yellow-600 transition-colors">Brevetto</Link></li>
             </ul>
           </div>
@@ -57,8 +57,7 @@ export default function Footer() {
               <li><Link to="/mission" className="hover:text-yellow-600 transition-colors">Mission</Link></li>
               <li><Link to="/team" className="hover:text-yellow-600 transition-colors">Il Team</Link></li>
               <li><Link to="/faqs" className="hover:text-yellow-600 transition-colors">FAQs</Link></li>
-              <li><Link to="/startup" className="hover:text-yellow-600 transition-colors">STARTUP</Link></li>
-              <li><Link to="/smart-start" className="hover:text-yellow-600 transition-colors">SMART & START</Link></li>
+              <li><Link to="/bandi" className="hover:text-yellow-600 transition-colors">Bandi</Link></li>
               <li><Link to="/daily-safety-lab" className="hover:text-yellow-600 transition-colors">Daily Safety Lab</Link></li>
             </ul>
           </div>

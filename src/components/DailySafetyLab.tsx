@@ -77,23 +77,13 @@ export default function DailySafetyLab() {
             </div>
           ))}
 
-          <div className="p-8 rounded-3xl bg-white border border-gray-200 space-y-4">
-            <h3 className="text-lg font-bold text-gray-900">Un team multidisciplinare al servizio delle imprese</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Daily Safety Lab si avvale di professionisti con competenze integrate in materia di sicurezza sul lavoro, ambiente, formazione, qualità, igiene industriale, prevenzione e medicina del lavoro. Il team comprende consulenti HSE, tecnici della prevenzione, docenti qualificati, valutatori di sistemi di gestione, esperti di organizzazione aziendale, igienisti industriali e medici competenti.
-            </p>
-          </div>
-
           <div className="p-8 rounded-3xl bg-white border border-gray-200 text-center">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Perché scegliere Daily Safety Lab</h3>
-            <p className="text-sm text-gray-500 mb-6 max-w-xl mx-auto">
-              Scegliere Daily Safety Lab significa affidarsi a un partner competente per la gestione integrata di sicurezza, ambiente, formazione e compliance.
-            </p>
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Richiedi una consulenza personalizzata</h3>
             <Link
               to="/contatti"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white bg-yellow-600 hover:bg-yellow-500 transition-all"
             >
-              Contattaci per una consulenza personalizzata
+              Contattaci
             </Link>
           </div>
         </motion.div>

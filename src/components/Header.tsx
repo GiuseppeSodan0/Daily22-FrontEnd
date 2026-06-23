@@ -13,13 +13,12 @@ export default function Header() {
   const mainNavItems = [
     {path: '/', label: 'Home'},
     {path: '/mission', label: 'Mission'},
-    {path: '/progetti', label: 'Progetti'},
-    {path: '/prodotto', label: 'Prodotto'},
+    {path: '/servizi', label: 'Servizi'},
+    {path: '/widiu', label: 'WIDIU'},
   ];
 
   const secondaryNavItems = [
-    {path: '/startup', label: 'STARTUP'},
-    {path: '/smart-start', label: 'SMART & START'},
+    {path: '/bandi', label: 'Bandi'},
     {path: '/daily-safety-lab', label: 'Daily Safety Lab'},
     {path: '/team', label: 'Il Team'},
     {path: '/faqs', label: 'FAQs'},

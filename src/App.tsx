@@ -6,14 +6,14 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
 import Mission from './components/Mission';
-import Prodotto from './components/Prodotto';
+import WIDIU from './components/WIDIU';
 import ProgettiDetail from './components/ProgettiDetail';
 import ContactForm from './components/ContactForm';
 import Team from './components/Team';
 import FAQs from './components/FAQs';
-import Startup from './components/Startup';
-import SmartStart from './components/SmartStart';
+import Bandi from './components/Bandi';
 import DailySafetyLab from './components/DailySafetyLab';
+import ChiSiamo from './components/ChiSiamo';
 import Brevetto from './components/Brevetto';
 import PrivacyPolicy from './components/PrivacyPolicy';
 
@@ -40,13 +40,13 @@ export default function App() {
             <Routes location={location}>
               <Route path="/" element={<HomePage />} />
               <Route path="/mission" element={<Mission />} />
-              <Route path="/prodotto" element={<Prodotto />} />
-              <Route path="/progetti" element={<ProgettiDetail />} />
+              <Route path="/widiu" element={<WIDIU />} />
+              <Route path="/servizi" element={<ProgettiDetail />} />
               <Route path="/contatti" element={<ContactForm />} />
               <Route path="/team" element={<Team />} />
+              <Route path="/chi-siamo" element={<ChiSiamo />} />
               <Route path="/faqs" element={<FAQs />} />
-              <Route path="/startup" element={<Startup />} />
-              <Route path="/smart-start" element={<SmartStart />} />
+              <Route path="/bandi" element={<Bandi />} />
               <Route path="/daily-safety-lab" element={<DailySafetyLab />} />
               <Route path="/brevetto" element={<Brevetto />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
