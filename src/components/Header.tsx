@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {motion, AnimatePresence} from 'motion/react';
+import {motion, AnimatePresence, useScroll, useTransform} from 'motion/react';
 import {Menu, X, ArrowUpRight} from 'lucide-react';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const {scrollY} = useScroll();
+  const headerBg = useTransform(scrollY, [0, 600], ['rgba(254,252,249,0)', 'rgba(254,252,249,0.85)']);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -29,7 +32,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl border-b transition-all duration-300" style={{background: 'rgba(254,252,249,0.85)', borderColor: 'rgba(0,0,0,0.06)'}}>
+    <header className="sticky top-0 z-50 backdrop-blur-xl border-b transition-all duration-300" style={{background: headerBg, borderColor: 'rgba(0,0,0,0.06)'}}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           

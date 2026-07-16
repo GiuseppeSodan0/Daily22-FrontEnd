@@ -33,10 +33,13 @@ $body .= "\n--- Messaggio ---\n$messaggio\n";
 $body .= "\n--- Fine messaggio ---\n";
 $body .= "\nInviato dal form contatti Daily22";
 
-$headers = "From: $email\r\n";
+$headers = "From: $to\r\n";
 $headers .= "Reply-To: $email\r\n";
+$headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+$headers .= "MIME-Version: 1.0\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-$sent = mail($to, $subject, $body, $headers);
+$sent = mail($to, $subject, $body, $headers, "-f $to");
 
 if ($sent) {
   echo json_encode(['success' => true, 'message' => 'Email inviata con successo']);
