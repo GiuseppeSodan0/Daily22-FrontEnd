@@ -1,0 +1,103 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Compress images
+        run: |
+          npm install --no-save sharp
+          node -e "
+          const sharp = require('sharp');
+          const fs = require('fs');
+          const path = require('path');
+
+          const dirs = ['public/assets/images', 'src/assets/images'];
+          const THRESHOLD = 200 * 1024;
+
+          async function compressImage(filePath) {
+            const ext = path.extname(filePath).toLowerCase();
+            const stat = fs.statSync(filePath);
+            if (stat.size <= THRESHOLD) return null;
+            const before = stat.size;
+            const buf = fs.readFileSync(filePath);
+            let output;
+            if (ext === '.png') {
+              output = await sharp(buf).png({ quality: 80, compressionLevel: 9, adaptiveFiltering: true }).toBuffer();
+            } else if (ext === '.jpg' || ext === '.jpeg') {
+              output = await sharp(buf).jpeg({ quality: 75, mozjpeg: true }).toBuffer();
+            } else {
+              return null;
+            }
+            if (output.length < before) {
+              fs.writeFileSync(filePath, output);
+              return { file: path.basename(filePath), before, after: output.length, saved: ((1 - output.length / before) * 100).toFixed(1) };
+            }
+            return null;
+          }
+
+          async function main() {
+            let total = 0;
+            for (const dir of dirs) {
+              if (!fs.existsSync(dir)) continue;
+              const files = fs.readdirSync(dir);
+              for (const f of files) {
+                const fp = path.join(dir, f);
+                if (!fs.statSync(fp).isFile()) continue;
+                const ext = path.extname(f).toLowerCase();
+                if (!['.png', '.jpg', '.jpeg'].includes(ext)) continue;
+                try {
+                  const result = await compressImage(fp);
+                  if (result) {
+                    total += result.before - result.after;
+                    console.log(result.file + ': ' + (result.before/1024).toFixed(0) + 'KB -> ' + (result.after/1024).toFixed(0) + 'KB (-' + result.saved + '%)');
+                  }
+                } catch (e) {
+                  console.log('Skipped: ' + f + ' (unsupported format)');
+                }
+              }
+            }
+            console.log('Total saved: ' + (total/1024).toFixed(0) + 'KB');
+          }
+          main();
+          "
+
+      - name: Commit compressed images
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/assets/images/ src/assets/images/
+          git diff --cached --quiet || git commit -m "opt: auto-compress images [skip ci]" && git push
+
+      - name: Type check
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy notification
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: echo "Build succeeded! Server will auto-pull from main."
