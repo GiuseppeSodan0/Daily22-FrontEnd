@@ -166,7 +166,7 @@ export default function CantiereAstratto() {
               Interfaccia Astratta di Cantiere
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight select-none font-sans">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight font-sans">
             La Piantina Telemetrica Vetrosa
           </h2>
           <p className="mt-4 text-sm text-gray-500 font-light leading-relaxed">
@@ -201,7 +201,7 @@ export default function CantiereAstratto() {
               </button>
             </div>
 
-            <p className="text-xs text-gray-500 mb-4 font-light italic">
+            <p className="text-xs text-gray-500 mb-4 font-light">
               Fai clic sui nodi radar interattivi per mappare la telemetria delle zone del cantiere.
             </p>
 
@@ -283,7 +283,7 @@ export default function CantiereAstratto() {
               </div>
 
               {/* Compass decor */}
-              <div className="absolute right-4 bottom-4 flex flex-col items-center gap-1 opacity-20 select-none">
+              <div className="absolute right-4 bottom-4 flex flex-col items-center gap-1 opacity-20">
                 <div className="w-8 h-8 rounded-full border border-white/[0.08] flex items-center justify-center text-[10px] font-mono text-gray-500 font-bold relative">
                   N
                   <span className="absolute top-0 w-0.5 h-2.5 bg-yellow-600 rounded-full" style={{ transform: 'translateY(-1px)' }} />
@@ -295,7 +295,7 @@ export default function CantiereAstratto() {
             {/* Bottom Status bar */}
             <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
               <div className="flex items-center gap-2.5">
-                <div className="p-1.5 rounded-lg bg-yellow-50 text-yellow-600 border border-yellow-200 font-mono text-[10px] font-bold select-none leading-none">
+                <div className="p-1.5 rounded-lg bg-yellow-50 text-yellow-600 border border-yellow-200 font-mono text-[10px] font-bold leading-none">
                   ONLINE
                 </div>
                 <div>

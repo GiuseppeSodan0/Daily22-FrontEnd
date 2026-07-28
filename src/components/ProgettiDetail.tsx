@@ -1,271 +1,768 @@
-import React from 'react';
-import {ShieldCheck, Cpu, MessageSquare, CheckCircle} from 'lucide-react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import {
+  ShieldCheck, Cpu, MessageSquare, CheckCircle, ArrowRight, Activity,
+  ClipboardCheck, Scale, HardHat, Train, Radio, Trophy, HeartHandshake,
+  Sparkles, Home, Coffee, ChevronLeft, ChevronRight, Grid, LayoutList,
+  Check, Info, Sparkle
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { useLanguage } from '../context/LanguageContext';
 
-const mainProjects = [
-  {
-    id: 'dailyplatform',
-    title: 'Dailyplatform',
-    badge: 'Piattaforma IA',
-    tagline: 'La piattaforma intelligente per la sicurezza del futuro',
-    description: 'DailyPlatform è una piattaforma digitale per la gestione HSE e la sicurezza sul lavoro, progettata per integrare dati biometrici, ambientali, organizzativi e documentali. Attraverso l\'Intelligenza Artificiale, analizza le informazioni raccolte e le trasforma in KPI, alert e modelli predittivi utili a prevenire i rischi e supportare le decisioni aziendali.',
-    icon: ShieldCheck,
-    color: 'text-yellow-600 bg-yellow-50 border-yellow-200',
-    details: [
-      'Raccoglie e integra dati biometrici, ambientali e contestuali in tempo reale',
-      'Analizza e interpreta le informazioni con modelli di intelligenza artificiale e machine learning',
-      'Genera modelli predittivi di rischio e alert automatici su base individuale o collettiva',
-      'Digitalizza le informazioni di sicurezza aziendale: DVR, ruoli, DPI, procedure, formazione',
-      'Dialoga con il chatbot Salvatore per supporto conversazionale e formazione continua',
-    ],
-  },
-  {
-    id: 'widiu',
-    title: 'WIDIU',
-    badge: 'Smartwatch Intelligente',
-    tagline: 'Lo smartwatch intelligente per la sicurezza e il benessere',
-    description: 'WIDIU è lo smartwatch sviluppato da daily per supportare la prevenzione dei rischi nei contesti operativi reali. Attraverso sensori biometrici, di movimento e ambientali, raccoglie dati durante l\'attività lavorativa e li integra con DailyPlatform.',
-    icon: Cpu,
-    color: 'text-yellow-600 bg-yellow-50 border-yellow-200',
-    details: [
-      'Rileva parametri biometrici: frequenza cardiaca, HRV, temperatura, stress, postura',
-      'Analizza dati ambientali: temperatura, umidità, rumore, vibrazioni, illuminazione',
-      'Invia i dati in tempo reale a DailyPlatform per elaborazione e correlazione',
-      'Genera alert immediati in caso di condizioni critiche',
-      'Opera anche in modalità Edge AI, senza necessità di connessione',
-    ],
-  },
-  {
-    id: 'salvatore',
-    title: 'SALVATORE',
-    badge: 'ChatBot',
-    tagline: 'Il chatbot IA che rende la sicurezza un dialogo accessibile',
-    description: 'Salvatore è il chatbot IA dedicato alla sicurezza sul lavoro, progettato per offrire assistenza, formazione e supporto alla prevenzione. Interagisce in tempo reale con l\'utente, risponde a domande su rischi, procedure e comportamenti sicuri.',
-    icon: MessageSquare,
-    color: 'text-yellow-600 bg-yellow-50 border-yellow-200',
-    details: [
-      'Dialoga in tempo reale con lavoratori, preposti, RSPP e datori di lavoro',
-      'Fornisce informazioni normative, operative e formative in base al ruolo',
-      'Abbatte le barriere culturali e psicologiche, offrendo un canale riservato',
-      'Supporta la formazione continua con linguaggio semplice e visivo',
-      'Integra dati da DailyPlatform e WIDIU per risposte contestualizzate',
-    ],
-  },
-];
+// Import newly generated scontornata product assets
+import dailyPlatformUi from '../assets/images/Dashboard dailyplatform.png';
+import widiuSmartwatch from '../assets/images/widiu_smartwatch_perfect_1784275575209.jpg';
+import salvatoreRobot from '../assets/images/SALVATORE_ROBOT.png';
 
-const dailybydailySolutions = [
-  {
-    id: 'daily4compliance',
-    title: 'daily4compliance',
-    description: 'daily4compliance è la soluzione dedicata alla gestione degli adempimenti aziendali in materia di sicurezza sul lavoro, ambiente, qualità, privacy e autorizzazioni. Aiuta ogni organizzazione a individuare gli obblighi applicabili in base al settore, alle attività svolte e alle caratteristiche aziendali, trasformandoli in attività chiare, verificabili e sempre sotto controllo.',
-    features: [
-      'Individuazione degli adempimenti in base al settore ATECO',
-      'Gestione di documenti, autorizzazioni e scadenze normative',
-      'Monitoraggio dello stato di conformità aziendale',
-      'Checklist, task e report dedicati alla compliance',
-    ],
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
   },
-  {
-    id: 'daily231',
-    title: 'daily231',
-    description: 'daily231 è la soluzione dedicata alla gestione dei Modelli di Organizzazione, Gestione e Controllo ai sensi del D.Lgs. 231/2001. Supporta aziende, consulenti e Organismi di Vigilanza nella valutazione dei rischi-reato, nella raccolta dei documenti e nel monitoraggio continuo delle misure adottate.',
-    features: [
-      'Analisi dei rischi-reato e delle aree aziendali sensibili',
-      'Gestione del Modello 231, dei protocolli e delle procedure',
-      'Raccolta documentale e flussi informativi verso l\'OdV',
-      'Monitoraggio delle attività, delle evidenze e delle azioni correttive',
-    ],
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.8, ease: 'easeOut' },
   },
-  {
-    id: 'daily4work',
-    title: 'daily4work',
-    description: 'daily4work è la soluzione dedicata alla gestione quotidiana della salute, della sicurezza e del benessere nei luoghi di lavoro. Consente alle aziende di organizzare lavoratori, mansioni, rischi, DPI, formazione, procedure e attività operative attraverso un\'esperienza semplice, accessibile anche da smartphone.',
-    features: [
-      'Gestione di lavoratori, mansioni, reparti e rischi associati',
-      'Controllo di DPI, formazione, procedure e scadenze',
-      'Questionari, segnalazioni e check-in giornalieri',
-      'Alert e indicazioni personalizzate per la prevenzione (incluso woman4work)',
-    ],
-  },
-  {
-    id: 'daily4train',
-    title: 'daily4train',
-    description: 'daily4train è la soluzione dedicata alla gestione e al monitoraggio delle attività dei lavoratori del settore ferroviario, supportando operatori, tecnici e personale viaggiante nella pianificazione, nel controllo e nella sicurezza delle attività quotidiane.',
-    features: [
-      'Pianificazione dei turni e gestione del personale ferroviario',
-      'Monitoraggio delle condizioni di lavoro e dello stato di affaticamento',
-      'Gestione della formazione, delle abilitazioni e degli aggiornamenti',
-      'Controllo delle condizioni operative e della sicurezza dei lavoratori',
-    ],
-  },
-  {
-    id: 'dailyinform',
-    title: 'dailyinform',
-    description: 'dailyinform è l\'app dedicata all\'informazione, ai questionari e all\'ascolto attivo dei lavoratori. Raccoglie autovalutazioni sullo stato fisico, organizzativo e lavorativo e restituisce contenuti informativi, suggerimenti e protocolli di recupero coerenti con le condizioni rilevate.',
-    features: [
-      'Questionari sul benessere e sulle condizioni di lavoro',
-      'Autovalutazioni periodiche semplici e immediate',
-      'Contenuti informativi personalizzati',
-      'Protocolli di pausa, respirazione, idratazione e defaticamento',
-    ],
-  },
-  {
-    id: 'daily4sport',
-    title: 'daily4sport',
-    description: 'daily4sport applica le tecnologie daily al mondo dello sport, supportando atleti, tecnici, società e organizzazioni nella lettura delle condizioni fisiche, ambientali e di recupero. La soluzione favorisce una pratica sportiva più consapevole e orientata alla prevenzione.',
-    features: [
-      'Monitoraggio di attività, fatica e recupero',
-      'Analisi delle condizioni ambientali durante l\'allenamento',
-      'Questionari sul benessere e sulla percezione dello sforzo',
-      'Indicazioni personalizzate per prevenzione e recupero',
-    ],
-  },
-  {
-    id: 'daily4child',
-    title: 'daily4child',
-    description: 'daily4child è il progetto dedicato alla tutela del benessere dei minori e all\'uso consapevole delle tecnologie digitali. Aiuta famiglie e professionisti a osservare abitudini, segnali di stress e qualità del recupero, con un approccio educativo, preventivo e non invasivo.',
-    features: [
-      'Analisi delle abitudini legate a smartphone, social e videogiochi',
-      'Monitoraggio di sonno, postura, stress e recupero',
-      'Questionari per minori e famiglie',
-      'Suggerimenti educativi e strategie preventive personalizzate',
-    ],
-  },
-  {
-    id: 'daily4woman',
-    title: 'daily4woman',
-    description: 'daily4woman è la soluzione dedicata al benessere, alla prevenzione e alla lettura dei segnali che possono influire sulla vita quotidiana delle donne. Integra autovalutazioni, dati e protocolli personalizzati per aiutare ogni utente a riconoscere affaticamento, stress, carico mentale e difficoltà di recupero.',
-    features: [
-      'Monitoraggio del benessere fisico ed emotivo',
-      'Analisi di stress, sonno, energia e carico mentale',
-      'Questionari e percorsi personalizzati',
-      'Suggerimenti pratici per recupero e prevenzione',
-    ],
-  },
-  {
-    id: 'dailyathome',
-    title: 'dailyathome',
-    description: 'dailyathome è la soluzione dedicata al lavoro da remoto e allo smart working. Aiuta il lavoratore a organizzare meglio la giornata, riconoscere i segnali di affaticamento e migliorare postura, concentrazione, recupero e qualità dell\'ambiente domestico di lavoro.',
-    features: [
-      'Controllo di postura, pause e organizzazione della giornata',
-      'Valutazione di stress, concentrazione e affaticamento digitale',
-      'Analisi del comfort della postazione domestica',
-      'Protocolli di recupero e suggerimenti per il lavoro da remoto',
-    ],
-  },
-  {
-    id: 'dailyOnOff',
-    title: 'dailyOn&Off',
-    description: 'dailyOn&Off è la soluzione dedicata alla gestione dell\'attivazione, del carico e del recupero. Aiuta la persona a riconoscere quando è il momento di sostenere la performance e quando è necessario rallentare, recuperare e ristabilire un equilibrio fisico e mentale.',
-    features: [
-      'Rilevazione dei segnali di affaticamento e sovraccarico',
-      'Analisi dei momenti di attività e recupero',
-      'Suggerimenti per pause e defaticamento',
-      'Protocolli personalizzati per favorire il riequilibrio',
-    ],
-  },
-];
+};
 
 export default function ProgettiDetail() {
+  const { t, lang } = useLanguage();
+  const isEn = lang === 'en';
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [viewMode, setViewMode] = useState<'carousel' | 'grid'>('carousel');
+
+  const mainProjects = [
+    {
+      id: 'dailyplatform',
+      title: 'dailyplatform',
+      badge: isEn ? 'AI Platform' : 'Piattaforma IA',
+      tagline: t('progetti.platformTagline'),
+      description: t('progetti.platformDesc'),
+      icon: ShieldCheck,
+      color: 'text-[#2C2C2E] bg-[#F2C400]/10 border-[#F2C400]/20',
+      image: dailyPlatformUi,
+      details: [
+        t('progetti.platformD1'),
+        t('progetti.platformD2'),
+        t('progetti.platformD3'),
+        t('progetti.platformD4'),
+        t('progetti.platformD5'),
+      ],
+    },
+    {
+      id: 'widiu',
+      title: 'WIDIU',
+      badge: 'Smartwatch',
+      tagline: t('progetti.widiuTagline'),
+      description: t('progetti.widiuDesc'),
+      icon: Cpu,
+      color: 'text-[#2C2C2E] bg-[#F2C400]/10 border-[#F2C400]/20',
+      image: widiuSmartwatch,
+      details: [
+        t('progetti.widiuD1'),
+        t('progetti.widiuD2'),
+        t('progetti.widiuD3'),
+        t('progetti.widiuD4'),
+        t('progetti.widiuD5'),
+      ],
+    },
+    {
+      id: 'salvatore',
+      title: 'SALVATORE',
+      badge: 'Chatbot',
+      tagline: t('progetti.salvatoreTagline'),
+      description: t('progetti.salvatoreDesc'),
+      icon: MessageSquare,
+      color: 'text-[#2C2C2E] bg-[#F2C400]/10 border-[#F2C400]/20',
+      image: salvatoreRobot,
+      details: [
+        t('progetti.salvatoreD1'),
+        t('progetti.salvatoreD2'),
+        t('progetti.salvatoreD3'),
+        t('progetti.salvatoreD4'),
+        t('progetti.salvatoreD5'),
+      ],
+    },
+    {
+      id: 'vera',
+      title: 'Vera',
+      badge: 'IoT Monitoring',
+      tagline: 'IOT DATA ANALYSIS AND MONITORING SOFTWARE',
+      description: t('progetti.veraDesc'),
+      icon: Activity,
+      color: 'text-[#2C2C2E] bg-[#F2C400]/10 border-[#F2C400]/20',
+      image: "/assets/images/Dashboard Vera.png",
+      details: [
+        t('progetti.veraD1'),
+        t('progetti.veraD2'),
+        t('progetti.veraD3'),
+        t('progetti.veraD4'),
+      ],
+    },
+  ];
+
+  const dailybydailySolutions = [
+    {
+      id: 'daily4compliance',
+      title: 'daily4compliance',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Requirements, Deadlines & Regulatory Verification' : 'Adempimenti, Scadenze & Verifica Normativa',
+      icon: ClipboardCheck,
+      description: t('progetti.d4cDesc'),
+      highlights: isEn ? [
+        'Guided ATECO requirement analysis',
+        'Checklist management & field verification',
+        'Task tracking & deadline management'
+      ] : [
+        'Analisi adempimenti guidata per ATECO',
+        'Gestione checklist e verifiche sul campo',
+        'Task e tracciabilità scadenze'
+      ],
+      features: [
+        t('progetti.d4cF1'),
+        t('progetti.d4cF2'),
+        t('progetti.d4cF3'),
+        t('progetti.d4cF4'),
+      ],
+    },
+    {
+      id: 'daily231',
+      title: 'daily231',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? '231 Model & Organizational Risk Prevention' : 'Modello 231 & Prevenzione Rischi Organizzativi',
+      icon: Scale,
+      description: t('progetti.d231Desc'),
+      highlights: isEn ? [
+        '231 crime-risk mapping',
+        'Information flows for Supervisory Board',
+        'Whistleblowing management & protocols'
+      ] : [
+        'Mappatura rischi-reato 231',
+        'Flussi informativi per l’OdV',
+        'Gestione Whistleblowing e protocolli'
+      ],
+      features: [
+        t('progetti.d231F1'),
+        t('progetti.d231F2'),
+        t('progetti.d231F3'),
+        t('progetti.d231F4'),
+      ],
+    },
+    {
+      id: 'daily4work',
+      title: 'daily4work',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Tasks, PPE, Training & Check-in' : 'Mansioni, DPI, Formazione & Check-in',
+      icon: HardHat,
+      description: t('progetti.d4wDesc'),
+      highlights: isEn ? [
+        'Operational task, PPE, and risk management',
+        'Transparent check-ins & incident reporting',
+        'Integration with WIDIU, Vera & Salvatore'
+      ] : [
+        'Gestione operativa mansioni, DPI e rischi',
+        'Segnalazioni e check-in trasparenti',
+        'Integrazione con WIDIU, Vera e Salvatore'
+      ],
+      features: [
+        t('progetti.d4wF1'),
+        t('progetti.d4wF2'),
+        t('progetti.d4wF3'),
+        t('progetti.d4wF4'),
+      ],
+    },
+    {
+      id: 'daily4train',
+      title: 'daily4train',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Skills, Fitness & Railway Sector' : 'Competenze, Idoneità & Settore Ferroviario',
+      icon: Train,
+      description: t('progetti.d4tDesc'),
+      highlights: isEn ? [
+        'Shift, qualification & skill monitoring',
+        'High-responsibility operational focus',
+        'Medical fitness scheduler & continuity'
+      ] : [
+        'Monitoraggio turni, qualifiche ed abilità',
+        'Focus operativo ad alta responsabilità',
+        'Scadenziario idoneità e continuità'
+      ],
+      features: [
+        t('progetti.d4tF1'),
+        t('progetti.d4tF2'),
+        t('progetti.d4tF3'),
+        t('progetti.d4tF4'),
+      ],
+    },
+    {
+      id: 'dailyinform',
+      title: 'dailyinform',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Active Listening & Prevention Pills' : 'Ascolto Attivo & Pillole di Prevenzione',
+      icon: Radio,
+      description: t('progetti.dinfDesc'),
+      highlights: isEn ? [
+        'Quick surveys & self-assessments',
+        'Interception of stress & fatigue signals',
+        'Rapid deployment of procedures & pills'
+      ] : [
+        'Questionari e autovalutazioni veloci',
+        'Intercettazione segnali di stress e affaticamento',
+        'Diffusione rapida di procedure e pillole'
+      ],
+      features: [
+        t('progetti.dinfF1'),
+        t('progetti.dinfF2'),
+        t('progetti.dinfF3'),
+        t('progetti.dinfF4'),
+      ],
+    },
+    {
+      id: 'daily4sport',
+      title: 'daily4sport',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Performance, Dual Career & Prevention' : 'Performance, Dual Career & Prevenzione',
+      icon: Trophy,
+      description: t('progetti.d4sDesc'),
+      highlights: isEn ? [
+        'Balancing performance & dual career studies',
+        'Tools for clubs & student-athletes',
+        'Injury prevention & growth pathways'
+      ] : [
+        'Equilibrio performance e percorso di studio',
+        'Strumenti per società e atleti',
+        'Prevenzione infortuni e crescita'
+      ],
+      features: [
+        t('progetti.d4sF1'),
+        t('progetti.d4sF2'),
+        t('progetti.d4sF3'),
+        t('progetti.d4sF4'),
+      ],
+    },
+    {
+      id: 'daily4child',
+      title: 'daily4child',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Prevention & Well-being in Schools and Families' : 'Prevenzione & Benessere in Scuole e Famiglie',
+      icon: HeartHandshake,
+      description: t('progetti.d4chDesc'),
+      highlights: isEn ? [
+        'Prevention in educational contexts',
+        'Child protection & maximum privacy',
+        'Inclusive awareness pathways'
+      ] : [
+        'Prevenzione nei contesti educativi',
+        'Tutela dei minori e massima privacy',
+        'Percorsi di consapevolezza inclusivi'
+      ],
+      features: [
+        t('progetti.d4chF1'),
+        t('progetti.d4chF2'),
+        t('progetti.d4chF3'),
+        t('progetti.d4chF4'),
+      ],
+    },
+    {
+      id: 'daily4woman',
+      title: 'daily4woman',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Gender Equality, Health & Organizational Well-being' : 'Parità, Salute & Benessere Organizzativo',
+      icon: Sparkles,
+      description: t('progetti.d4woDesc'),
+      highlights: isEn ? [
+        'Promoting equality & inclusive environments',
+        'Psychological safety & work-life balance',
+        'Confidential listening & prevention'
+      ] : [
+        'Promozione parità e ambienti inclusivi',
+        'Sicurezza psicologica e conciliazione',
+        'Ascolto riservato e prevenzione'
+      ],
+      features: [
+        t('progetti.d4woF1'),
+        t('progetti.d4woF2'),
+        t('progetti.d4woF3'),
+        t('progetti.d4woF4'),
+      ],
+    },
+    {
+      id: 'dailyathome',
+      title: 'dailyathome',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Domestic Prevention & Safe Routines' : 'Prevenzione Domestica & Routine Sicure',
+      icon: Home,
+      description: t('progetti.dahDesc'),
+      highlights: isEn ? [
+        'Prevention in living and care environments',
+        'Protection reminders & safe habits',
+        'Support for vulnerability, autonomy & comfort'
+      ] : [
+        'Prevenzione negli ambienti di vita e cura',
+        'Promemoria e abitudini di protezione',
+        'Supporto a fragilità, autonomia e comfort'
+      ],
+      features: [
+        t('progetti.dahF1'),
+        t('progetti.dahF2'),
+        t('progetti.dahF3'),
+        t('progetti.dahF4'),
+      ],
+    },
+    {
+      id: 'dailyOnOff',
+      title: 'dailyOn&Off',
+      badge: isEn ? 'daily Vertical App' : 'App Verticale daily',
+      payoff: isEn ? 'Micro-breaks, Breathing & Recovery' : 'Micro-pause, Respirazione & Recupero',
+      icon: Coffee,
+      description: t('progetti.donoffDesc'),
+      highlights: isEn ? [
+        'Short breathing & hydration protocols',
+        'Break management & decompression',
+        'Rebalancing fatigue and stress'
+      ] : [
+        'Protocolli brevi di respirazione e idratazione',
+        'Gestione delle pause e decompressione',
+        'Riequilibrio da affaticamento e stress'
+      ],
+      features: [
+        t('progetti.donoffF1'),
+        t('progetti.donoffF2'),
+        t('progetti.donoffF3'),
+        t('progetti.donoffF4'),
+      ],
+    },
+  ];
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % dailybydailySolutions.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + dailybydailySolutions.length) % dailybydailySolutions.length);
+  };
+
   return (
-    <div className="py-24 select-none text-left" style={{background: 'linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)'}}>
+    <div className="py-36 bg-[#F0EFEB] text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Servizi</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>Servizi.</h2>
-          <p className="mt-4 text-xs sm:text-sm font-light leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
-            Un'architettura sinergica dove ciascun modulo dialoga costantemente con gli altri per creare una rete di protezione ininterrotta e digitale intorno al lavoratore.
-          </p>
-        </div>
-
-        {/* Main Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-24">
-          {mainProjects.map((p) => (
-            <div
-              key={p.id}
-              className="flex flex-col h-full rounded-3xl card-premium transition-all duration-300 p-6 md:p-8 shadow-sm"
-            >
-              <div className="flex justify-between items-start mb-6">
-                <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-yellow-600">
-                  {p.badge}
-                </span>
-                <span className={`p-2.5 rounded-xl border ${p.color}`}>
-                  <p.icon className="w-5 h-5 stroke-[2]" />
-                </span>
-              </div>
-
-              <h3 className="text-xl font-bold mb-2" style={{color: 'var(--color-ink)'}}>{p.title}</h3>
-              <p className="text-xs mb-4 italic leading-snug" style={{color: 'var(--color-ink-soft)'}}>{p.tagline}</p>
-              <p className="text-xs sm:text-sm leading-relaxed mb-6 font-light" style={{color: 'var(--color-ink-soft)'}}>{p.description}</p>
-
-              <div className="space-y-3 pt-6 mt-auto border-t border-gray-200">
-                {p.details.map((d, index) => (
-                  <div key={index} className="flex items-start gap-2 text-xs" style={{color: 'var(--color-ink-soft)'}}>
-                    <CheckCircle className="w-3.5 h-3.5 text-yellow-600 shrink-0 mt-0.5" />
-                    <span className="font-light">{d}</span>
-                  </div>
-                ))}
-              </div>
-              {p.id === 'widiu' && (
-                <Link
-                  to="/widiu"
-                  className="inline-flex items-center gap-1 text-[10px] font-bold text-yellow-600 hover:text-yellow-700 transition-colors mt-4 uppercase tracking-wider font-mono"
-                >
-                  Scopri WIDIU →
-                </Link>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* dailybydaily Ecosystem */}
-        <div className="mb-16">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Ecosistema</span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>I Progetti Verticali daily — L'ecosistema dailybydaily</h3>
-            <p className="mt-4 text-xs sm:text-sm font-light leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
-              Soluzioni progettate per specifici ambiti di sicurezza, compliance, benessere e prevenzione, integrate nell'ecosistema tecnologico daily.
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-24"
+        >
+          {/* Title Header */}
+          <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">{t('progetti.headerBadge')}</span>
+            <h2 className="text-3xl sm:text-4xl font-bold mt-4 font-sans text-[#2C2C2E] tracking-tight">{t('progetti.headerTitle')}</h2>
+            <p className="mt-4 text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed">
+              {t('progetti.headerSubtitle')}
             </p>
+          </motion.div>
+
+          {/* Main Projects Column - Stacked horizontal layouts for high visual rhythm */}
+          <div className="flex flex-col gap-12 lg:gap-16">
+            {mainProjects.map((p, idx) => {
+              const isEven = idx % 2 === 1; // WIDIU is index 1, so isEven is true (image left, text right)
+              return (
+                <motion.div
+                  variants={itemVariants}
+                  key={p.id}
+                  className="w-full rounded-[32px] bg-white border border-[#F2C400]/15 p-8 sm:p-10 lg:p-12 shadow-[0_4px_24px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_50px_rgba(242,196,0,0.11)] hover:border-[#F2C400]/30 transition-all duration-500 relative overflow-hidden group"
+                >
+                  {/* Decorative gold ambient glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#F2C400]/0 to-[#F2C400]/4 transition-opacity duration-500 opacity-0 group-hover:opacity-100 pointer-events-none z-0" />
+
+                  <div className="relative z-10 flex flex-col lg:flex-row items-stretch lg:items-center gap-8 lg:gap-16">
+                    {/* Image Block: On desktop, alternating left/right using custom layout ordering. On mobile, always on top */}
+                    <div className={`w-full lg:w-1/2 flex-shrink-0 ${isEven ? 'lg:order-first' : 'lg:order-last'}`}>
+                      <div className={`relative w-full rounded-2xl overflow-hidden bg-[#F0EFEB]/40 border border-[#F2C400]/10 flex items-center justify-center p-6 sm:p-8 hover:border-[#F2C400]/25 transition-colors duration-500 ${
+                        p.id === 'salvatore' ? 'salvatore-image-wrapper' : p.id === 'vera' ? 'vera-card-image-wrapper min-h-[300px]' : 'aspect-[4/3]'
+                      }`}>
+                        <motion.img
+                          src={p.image}
+                          alt={p.title}
+                          referrerPolicy="no-referrer"
+                          className={
+                            p.id === 'salvatore' 
+                              ? "salvatore-image" 
+                              : p.id === 'vera' 
+                                ? "vera-dashboard-image transition-transform duration-700 ease-out" 
+                                : "w-full h-full object-contain transition-transform duration-700 ease-out"
+                          }
+                          whileHover={{ scale: 1.06, y: -4 }}
+                          style={p.id === 'salvatore' || p.id === 'vera' ? {} : { mixBlendMode: 'multiply' }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Text Block */}
+                    <div className="w-full lg:w-1/2 flex flex-col justify-between h-full">
+                      <div>
+                        {/* Badge & Icon Header */}
+                        <div className="flex justify-between items-center mb-6">
+                          <span className="inline-flex items-center gap-2 text-[10px] uppercase font-mono font-bold tracking-widest text-[#2C2C2E]/60 bg-[#2C2C2E]/5 px-3 py-1.5 rounded-full border border-[#2C2C2E]/10">
+                            <p.icon className="w-4 h-4 text-[#F2C400] stroke-[2.5]" />
+                            <span>{p.badge}</span>
+                          </span>
+                        </div>
+
+                        <h3 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] mb-2 tracking-tight group-hover:text-[#F2C400] transition-colors duration-300">
+                          {p.title}
+                        </h3>
+                        <p className="text-xs mb-4 font-mono text-[#5E5E62] font-semibold tracking-wide uppercase">{p.tagline}</p>
+                        <p className="text-xs sm:text-sm leading-relaxed mb-8 font-mono text-[#5E5E62]">{p.description}</p>
+                      </div>
+
+                      <div className="pt-6 border-t border-[#2C2C2E]/10 flex flex-col items-stretch gap-6">
+                        <div className="space-y-3.5 font-mono text-xs text-[#5E5E62] w-full">
+                          {p.details.map((d, index) => (
+                            <div key={index} className="flex items-start gap-2.5 group/item">
+                              <CheckCircle className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5 transition-transform duration-300 group-hover/item:scale-110" />
+                              <span className="group-hover:text-[#2C2C2E] transition-colors duration-200">{d}</span>
+                            </div>
+                          ))}
+                        </div>
+                        {(p.id === 'dailyplatform' || p.id === 'widiu' || p.id === 'vera' || p.id === 'salvatore') && (
+                          <div className="w-full flex justify-center sm:justify-end mt-2">
+                            <Link
+                              to={
+                                p.id === 'dailyplatform' 
+                                  ? "/dailyplatform" 
+                                  : p.id === 'widiu' 
+                                    ? "/widiu" 
+                                    : p.id === 'vera'
+                                      ? "/vera"
+                                      : "/salvatore"
+                              }
+                              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F2C400] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-widest hover:bg-[#F2C400]/90 hover:brightness-105 transition-all duration-300 shadow-[0_4px_14px_rgba(242,196,0,0.2)] hover:shadow-[0_6px_20px_rgba(242,196,0,0.35)] active:scale-95 whitespace-nowrap"
+                            >
+                              {p.id === 'dailyplatform' 
+                                ? t('progetti.discoverPlatform') 
+                                : p.id === 'widiu' 
+                                  ? t('progetti.discoverWidiu') 
+                                  : p.id === 'vera'
+                                    ? t('progetti.discoverVera')
+                                    : t('progetti.discoverSalvatore')}
+                              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {dailybydailySolutions.map((sol) => (
-              <div
-                key={sol.id}
-                className="p-6 md:p-8 rounded-3xl card-premium transition-all duration-300 flex flex-col"
-              >
-                <h4 className="text-lg font-bold mb-3" style={{color: 'var(--color-ink)'}}>{sol.title}</h4>
-                <p className="text-xs sm:text-sm leading-relaxed mb-4 font-light" style={{color: 'var(--color-ink-soft)'}}>{sol.description}</p>
-                <div className="space-y-2 pt-4 mt-auto border-t border-gray-100">
-                  {sol.features.map((f, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs" style={{color: 'var(--color-ink-soft)'}}>
-                      <CheckCircle className="w-3 h-3 text-yellow-600 shrink-0 mt-0.5" />
-                      <span className="font-light">{f}</span>
-                    </div>
+          {/* dailybydaily Ecosystem */}
+          <div className="space-y-10 relative">
+            {/* Background Decorative Gold Dot Accents */}
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-gradient-to-r from-[#F2C400]/0 via-[#F2C400]/8 to-[#F2C400]/0 rounded-full blur-3xl pointer-events-none z-0" />
+
+            <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto relative z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F2C400]/15 border border-[#F2C400]/30 text-[#2C2C2E] text-[11px] font-bold font-mono uppercase tracking-widest mb-3">
+                <Sparkle className="w-3.5 h-3.5 text-[#F2C400] fill-[#F2C400]" />
+                <span>dailybydaily</span>
+              </div>
+              <h3 className="text-3xl sm:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">dailybydaily</h3>
+              <p className="mt-1 text-base sm:text-lg font-semibold text-[#2C2C2E] font-sans">
+                {isEn ? 'The daily ecosystem of vertical apps' : 'L’ecosistema di app verticali daily'}
+              </p>
+              <p className="mt-3 text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed max-w-2xl mx-auto">
+                {t('progetti.ecoSub')}
+              </p>
+            </motion.div>
+
+            {/* View Mode & Ecosystem Info Bar (No Categories) */}
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-[#2C2C2E]/10 pb-6 relative z-10">
+              {/* Left Ecosystem Counter Indicator */}
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#F2C400] animate-pulse"></span>
+                <span className="text-xs font-mono font-bold text-[#2C2C2E] uppercase tracking-wider">
+                  {isEn ? 'Integrated Ecosystem (10 Vertical Apps)' : 'Ecosistema Integrato (10 App Verticali)'}
+                </span>
+              </div>
+
+              {/* View Mode Toggle: Slider Carousel vs Grid */}
+              <div className="flex items-center gap-1 bg-white p-1 rounded-full border border-[#2C2C2E]/10 shrink-0">
+                <button
+                  onClick={() => setViewMode('carousel')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
+                    viewMode === 'carousel'
+                      ? 'bg-[#F2C400] text-[#2C2C2E] shadow-sm'
+                      : 'text-[#5E5E62] hover:text-[#2C2C2E]'
+                  }`}
+                  title={isEn ? 'Slider / Carousel View' : 'Vista Slider / Carousel'}
+                >
+                  <LayoutList className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Slider</span>
+                </button>
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
+                    viewMode === 'grid'
+                      ? 'bg-[#F2C400] text-[#2C2C2E] shadow-sm'
+                      : 'text-[#5E5E62] hover:text-[#2C2C2E]'
+                  }`}
+                  title={isEn ? 'Grid View' : 'Vista Griglia'}
+                >
+                  <Grid className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{isEn ? 'Grid' : 'Griglia'}</span>
+                </button>
+              </div>
+            </motion.div>
+
+            {/* Render Mode 1: Carousel / Slider */}
+            {viewMode === 'carousel' ? (
+              <div className="space-y-6 relative z-10">
+                {/* Controls Bar */}
+                <div className="flex items-center justify-between px-2">
+                  <span className="text-xs font-mono font-bold text-[#5E5E62] uppercase tracking-wider">
+                    App <span className="text-[#2C2C2E]">{currentIndex + 1}</span> {isEn ? 'of' : 'di'} <span className="text-[#2C2C2E]">{dailybydailySolutions.length}</span>
+                  </span>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={prevSlide}
+                      className="w-10 h-10 rounded-full bg-white border border-[#2C2C2E]/10 text-[#2C2C2E] flex items-center justify-center hover:bg-[#F2C400] hover:border-[#F2C400] transition-all duration-300 shadow-sm active:scale-95"
+                      aria-label={isEn ? 'Previous' : 'Precedente'}
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={nextSlide}
+                      className="w-10 h-10 rounded-full bg-white border border-[#2C2C2E]/10 text-[#2C2C2E] flex items-center justify-center hover:bg-[#F2C400] hover:border-[#F2C400] transition-all duration-300 shadow-sm active:scale-95"
+                      aria-label={isEn ? 'Next' : 'Successiva'}
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Slider Card View */}
+                <div className="relative min-h-[460px] flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    {dailybydailySolutions.map((sol, index) => {
+                      if (index !== currentIndex) return null;
+                      const IconComponent = sol.icon;
+                      return (
+                        <motion.div
+                          key={sol.id}
+                          initial={{ opacity: 0, x: 40, scale: 0.98 }}
+                          animate={{ opacity: 1, x: 0, scale: 1 }}
+                          exit={{ opacity: 0, x: -40, scale: 0.98 }}
+                          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                          className="w-full bg-white rounded-[28px] border border-[#2C2C2E]/10 p-6 sm:p-8 lg:p-10 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_50px_rgba(242,196,0,0.15)] hover:border-[#F2C400] transition-all duration-500 relative overflow-hidden group"
+                        >
+                          {/* Top Ambient Glow */}
+                          <div className="absolute inset-0 bg-gradient-to-tr from-[#F2C400]/0 via-[#F2C400]/0 to-[#F2C400]/6 transition-opacity duration-500 pointer-events-none rounded-[28px]" />
+
+                          {/* Top Decorative Yellow Dots Grid Accent */}
+                          <div className="absolute top-6 right-6 flex items-center gap-1.5 opacity-40 group-hover:opacity-100 transition-opacity">
+                            <span className="w-2 h-2 rounded-full bg-[#F2C400]"></span>
+                            <span className="w-2 h-2 rounded-full bg-[#2C2C2E]"></span>
+                            <span className="w-2 h-2 rounded-full bg-[#F2C400]/50"></span>
+                          </div>
+
+                          <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
+                            {/* Card Header */}
+                            <div>
+                              <div className="flex items-center justify-between gap-4 mb-5">
+                                <div className="w-14 h-14 rounded-2xl bg-[#F2C400]/15 border border-[#F2C400]/35 text-[#2C2C2E] flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-[#F2C400] transition-all duration-300 shadow-sm">
+                                  <IconComponent className="w-7 h-7 stroke-[2]" />
+                                </div>
+                                <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#2C2C2E]/80 bg-[#2C2C2E]/5 px-3.5 py-1.5 rounded-full border border-[#2C2C2E]/10">
+                                  {sol.badge}
+                                </span>
+                              </div>
+
+                              <h4 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] tracking-tight group-hover:text-[#2C2C2E] transition-colors">
+                                {sol.title}
+                              </h4>
+                              <p className="text-xs font-mono font-semibold text-[#F2C400] uppercase tracking-wider mt-1 mb-4">
+                                {sol.payoff}
+                              </p>
+
+                              <p className="text-xs sm:text-sm font-mono text-[#5E5E62] leading-relaxed">
+                                {sol.description}
+                              </p>
+                            </div>
+
+                            {/* Middle Box: Punti Chiave / Benefit */}
+                            <div className="bg-[#F0EFEB]/70 rounded-2xl p-4 sm:p-5 border border-[#2C2C2E]/5 space-y-3">
+                              <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/70 uppercase tracking-widest block">
+                                {isEn ? 'Key Points & Benefits' : 'Punti Chiave & Benefit'}
+                              </span>
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                {sol.highlights.map((h, i) => (
+                                  <div key={i} className="flex items-center gap-2 text-xs font-mono text-[#2C2C2E] bg-white px-3 py-2 rounded-xl border border-[#2C2C2E]/5 shadow-2xs">
+                                    <CheckCircle className="w-3.5 h-3.5 text-[#F2C400] shrink-0" />
+                                    <span className="truncate">{h}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Features List & CTA Footer */}
+                            <div className="pt-4 border-t border-[#2C2C2E]/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs font-mono text-[#5E5E62]">
+                                {sol.features.map((f, i) => (
+                                  <div key={i} className="flex items-start gap-2">
+                                    <Check className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5 stroke-[3]" />
+                                    <span>{f}</span>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <Link
+                                to="/contatti"
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#2C2C2E] text-[#F2C400] hover:bg-[#F2C400] hover:text-[#2C2C2E] text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 shadow-sm shrink-0 group/btn"
+                              >
+                                <span>{isEn ? 'Request Info' : 'Richiedi Info'}</span>
+                                <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                              </Link>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </AnimatePresence>
+                </div>
+
+                {/* Dot Pagination */}
+                <div className="flex items-center justify-center gap-2 pt-2">
+                  {dailybydailySolutions.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentIndex(idx)}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                        idx === currentIndex
+                          ? 'w-8 bg-[#F2C400]'
+                          : 'w-2.5 bg-[#2C2C2E]/20 hover:bg-[#2C2C2E]/40'
+                      }`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
                   ))}
                 </div>
               </div>
-            ))}
+            ) : (
+              /* Render Mode 2: Airy Grid View */
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                {dailybydailySolutions.map((sol) => {
+                  const IconComponent = sol.icon;
+                  return (
+                    <motion.div
+                      key={sol.id}
+                      variants={itemVariants}
+                      className="bg-white rounded-[28px] border border-[#2C2C2E]/10 p-6 sm:p-8 hover:border-[#F2C400] hover:shadow-[0_20px_40px_rgba(242,196,0,0.12)] transition-all duration-500 relative flex flex-col justify-between group"
+                    >
+                      {/* Top Ambient Glow */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-[#F2C400]/0 via-[#F2C400]/0 to-[#F2C400]/5 transition-opacity duration-500 pointer-events-none rounded-[28px]" />
+
+                      {/* Accent Dots */}
+                      <div className="absolute top-5 right-5 flex items-center gap-1 opacity-30 group-hover:opacity-100 transition-opacity">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#F2C400]"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#2C2C2E]"></span>
+                      </div>
+
+                      <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
+                        <div>
+                          <div className="flex items-center justify-between gap-3 mb-4">
+                            <div className="w-12 h-12 rounded-xl bg-[#F2C400]/15 border border-[#F2C400]/30 text-[#2C2C2E] flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-[#F2C400] transition-all duration-300">
+                              <IconComponent className="w-6 h-6 stroke-[2]" />
+                            </div>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2C2C2E]/80 bg-[#2C2C2E]/5 px-3 py-1 rounded-full border border-[#2C2C2E]/10">
+                              {sol.badge}
+                            </span>
+                          </div>
+
+                          <h4 className="text-xl sm:text-2xl font-bold font-sans text-[#2C2C2E] tracking-tight">
+                            {sol.title}
+                          </h4>
+                          <p className="text-[11px] font-mono font-semibold text-[#F2C400] uppercase tracking-wide mt-1 mb-3">
+                            {sol.payoff}
+                          </p>
+
+                          <p className="text-xs sm:text-sm font-mono text-[#5E5E62] leading-relaxed mb-4">
+                            {sol.description}
+                          </p>
+
+                          {/* Punti chiave */}
+                          <div className="bg-[#F0EFEB]/60 rounded-xl p-3.5 border border-[#2C2C2E]/5 space-y-2 mb-4">
+                            <span className="text-[9px] font-mono font-bold text-[#2C2C2E]/60 uppercase tracking-widest block">
+                              {isEn ? 'Key Points' : 'Punti Chiave'}
+                            </span>
+                            <div className="space-y-1.5">
+                              {sol.highlights.map((h, i) => (
+                                <div key={i} className="flex items-center gap-2 text-xs font-mono text-[#2C2C2E]">
+                                  <CheckCircle className="w-3.5 h-3.5 text-[#F2C400] shrink-0" />
+                                  <span>{h}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="pt-4 border-t border-[#2C2C2E]/10 space-y-4">
+                          <div className="space-y-2 text-xs font-mono text-[#5E5E62]">
+                            {sol.features.map((f, i) => (
+                              <div key={i} className="flex items-start gap-2">
+                                <Check className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5 stroke-[3]" />
+                                <span>{f}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <Link
+                            to="/contatti"
+                            className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#2C2C2E]/5 border border-[#2C2C2E]/10 text-xs font-mono font-bold text-[#2C2C2E] hover:bg-[#F2C400] hover:border-[#F2C400] hover:text-[#2C2C2E] transition-all duration-300 group/btn"
+                          >
+                            <span className="uppercase tracking-wider">{isEn ? 'Learn More' : 'Scopri di più'}</span>
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        </div>
 
-        {/* Daily Safety Lab */}
-        <div className="p-8 rounded-3xl text-center" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
-          <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Consulenza</span>
-          <h3 className="text-2xl sm:text-3xl font-extrabold mt-3 mb-6 font-sans" style={{color: 'var(--color-ink)'}}>Daily Safety Lab</h3>
-          <p className="text-sm mb-8 max-w-2xl mx-auto font-light leading-relaxed" style={{color: 'var(--color-ink-soft)'}}>
-            Daily Safety Lab Srl è una società specializzata in sicurezza sul lavoro, consulenza HSE, formazione, qualità, ambiente e compliance aziendale. Supportiamo imprese, organizzazioni e strutture sanitarie nella gestione degli adempimenti normativi, nella valutazione dei rischi e nello sviluppo di sistemi organizzativi più sicuri, efficienti e sostenibili.
-          </p>
-          <Link
-            to="/daily-safety-lab"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white bg-yellow-600 hover:bg-yellow-500 transition-all"
+          {/* Daily Safety Lab */}
+          <motion.div 
+            variants={itemVariants}
+            className="p-10 card-premium text-center space-y-6"
           >
-            Scopri Daily Safety Lab
-          </Link>
-        </div>
+            <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">{t('progetti.consultancyBadge')}</span>
+            <h3 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] tracking-tight">Daily Safety Lab</h3>
+            <p className="text-xs sm:text-sm text-[#5E5E62] max-w-2xl mx-auto font-mono leading-relaxed">
+              {t('progetti.dslDesc')}
+            </p>
+            <div className="pt-2">
+              <Link
+                to="/daily-safety-lab"
+                className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase"
+              >
+                {t('progetti.discoverDsl')}
+                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+              </Link>
+            </div>
+          </motion.div>
 
+        </motion.div>
       </div>
     </div>
   );

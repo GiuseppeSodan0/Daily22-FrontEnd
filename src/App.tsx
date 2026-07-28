@@ -11,8 +11,10 @@ import ContactForm from './components/ContactForm';
 import Bandi from './components/Bandi';
 import DailySafetyLab from './components/DailySafetyLab';
 import ChiSiamo from './components/ChiSiamo';
-import Brevetto from './components/Brevetto';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import Vera from './components/Vera';
+import DailyPlatform from './components/DailyPlatform';
+import Salvatore from './components/Salvatore';
 
 export default function App() {
   const location = useLocation();
@@ -22,7 +24,7 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    <div className="bg-gray-50 text-gray-900 min-h-screen flex flex-col justify-between selection:bg-yellow-400/30 selection:text-yellow-900">
+    <div className="bg-[#F0EFEB] text-[#2C2C2E] min-h-screen flex flex-col justify-between selection:bg-[#F2C400]/30 selection:text-[#2C2C2E]">
       <Header />
 
       <main className="flex-grow">
@@ -39,10 +41,18 @@ export default function App() {
               <Route path="/chi-siamo" element={<ChiSiamo />} />
               <Route path="/widiu" element={<WIDIU />} />
               <Route path="/servizi" element={<ProgettiDetail />} />
+              <Route path="/services" element={<ProgettiDetail />} />
+              <Route path="/about" element={<ChiSiamo />} />
+              <Route path="/contact" element={<ContactForm />} />
+              <Route path="/dailyplatform" element={<DailyPlatform />} />
+              <Route path="/servizi/dailyplatform" element={<DailyPlatform />} />
+              <Route path="/vera" element={<Vera />} />
+              <Route path="/servizi/vera" element={<Vera />} />
+              <Route path="/salvatore" element={<Salvatore />} />
+              <Route path="/servizi/salvatore" element={<Salvatore />} />
               <Route path="/contatti" element={<ContactForm />} />
               <Route path="/bandi" element={<Bandi />} />
               <Route path="/daily-safety-lab" element={<DailySafetyLab />} />
-              <Route path="/brevetto" element={<Brevetto />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             </Routes>
           </motion.div>

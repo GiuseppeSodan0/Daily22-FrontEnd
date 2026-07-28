@@ -8,10 +8,19 @@ import {
   Cpu,
   MessageSquare,
   Sparkles,
+  ArrowUpRight,
+  LineChart,
+  Workflow,
+  FolderOpen,
 } from 'lucide-react';
 import Hero from './Hero';
 import SalvatorePopup from './SalvatorePopup';
 import {useTilt} from '../hooks/useTilt';
+import InteractiveImage from './InteractiveImage';
+import WidiuWorkerInteractive from './WidiuWorkerInteractive';
+import corpMeeting from '../assets/images/corp_meeting_1780517573052.png';
+import laptopStation from '../assets/images/laptop_station_1780517590251.png';
+import {useLanguage} from '../context/LanguageContext';
 
 function TiltCard({children, className}: {children: React.ReactNode; className?: string}) {
   const {ref, style, shineStyle} = useTilt();
@@ -26,10 +35,10 @@ function TiltCard({children, className}: {children: React.ReactNode; className?:
 function ScrollReveal({children, delay = 0}: {children: React.ReactNode; delay?: number}) {
   return (
     <motion.div
-      initial={{opacity: 0, y: 40}}
-      whileInView={{opacity: 1, y: 0}}
+      initial={{opacity: 0, y: 15, filter: 'blur(8px)'}}
+      whileInView={{opacity: 1, y: 0, filter: 'blur(0px)'}}
       viewport={{once: true, margin: '-80px'}}
-      transition={{duration: 0.6, delay, ease: 'easeOut'}}
+      transition={{duration: 0.8, delay, ease: 'easeOut'}}
     >
       {children}
     </motion.div>
@@ -37,158 +46,184 @@ function ScrollReveal({children, delay = 0}: {children: React.ReactNode; delay?:
 }
 
 export default function HomePage() {
+  const {t} = useLanguage();
+
   return (
     <>
       <Hero />
 
       {/* Soluzioni Section */}
-      <section className="py-28 md:py-32 relative" style={{background: 'linear-gradient(180deg, #f5f0e8 0%, #faf8f5 100%)'}}>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-gray-300 to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section 
+        className="soluzioni-home-section py-28 md:py-32 relative bg-[#F0EFEB] bg-cover bg-center bg-no-repeat overflow-hidden"
+        style={{ backgroundImage: `url(${laptopStation})` }}
+      >
+        <div 
+          className="absolute inset-0 pointer-events-none z-[1]"
+          style={{
+            background: 'linear-gradient(135deg, rgba(240, 239, 235, 0.88), rgba(242, 196, 0, 0.14))',
+          }}
+        />
+        
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-[#2C2C2E]/20 to-transparent z-10" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <ScrollReveal>
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">
-                Soluzioni per ogni esigenza aziendale
+            <div className="text-center max-w-3xl mx-auto mb-20">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">
+                {t('home.soluzioniSubtitle')}
               </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>
-                Intelligenza Artificiale al servizio della prevenzione
+              <h2 className="text-3xl sm:text-4xl font-bold mt-4 font-sans text-[#2C2C2E] tracking-tight">
+                {t('home.soluzioniTitle')}
               </h2>
-              <p className="mt-4 text-sm text-gray-500 font-light leading-relaxed">
-                Un'unione indissolubile tra hardware sensoriale wearable, elaborazione cloud centralizzata e agenti conversazionali per la massima prevenzione del rischio.
+              <p className="mt-4 text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed max-w-2xl mx-auto">
+                {t('home.soluzioniDesc')}
               </p>
             </div>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <ScrollReveal delay={0.1}>
-              <TiltCard className="p-8 rounded-3xl card-premium flex flex-col justify-between group relative overflow-hidden h-full">
+              <TiltCard className="p-8 card-premium flex flex-col justify-between group relative overflow-hidden h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
-                      <Network className="w-5 h-5" />
+                    <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20 group-hover:bg-[#F2C400]/20 group-hover:border-[#F2C400]/40 transition-all duration-300">
+                      <Network className="w-5 h-5 text-[#2C2C2E]" />
                     </span>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">Piattaforma Predittiva</span>
+                    <span className="text-[10px] font-bold text-[#2C2C2E]/50 uppercase font-mono tracking-widest">{t('home.dailyplatformTitle')}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">DAILYPLATFORM</h3>
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-light">
-                    dailyplatform è una piattaforma digitale per la gestione HSE e la sicurezza sul lavoro, progettata per integrare dati biometrici, ambientali, organizzativi e documentali. Attraverso l'Intelligenza Artificiale, analizza le informazioni raccolte e le trasforma in KPI, alert e modelli predittivi utili a prevenire i rischi e supportare le decisioni aziendali.
+                  <h3 className="text-lg font-bold text-[#2C2C2E] mb-3 font-sans lowercase tracking-tight">dailyplatform</h3>
+                  <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-normal">
+                    {t('home.dailyplatformDesc')}
                   </p>
                 </div>
                 <Link
-                  to="/servizi"
-                  className="inline-flex items-center gap-2 text-xs font-bold text-yellow-600 hover:text-yellow-700 transition-colors group mt-8"
+                  to="/dailyplatform"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#2C2C2E] hover:text-[#F2C400] transition-colors group mt-8 font-mono uppercase tracking-wider"
                 >
-                  Approfondisci Dailyplatform
+                  {t('home.dailyplatformLink')}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </TiltCard>
             </ScrollReveal>
 
             <ScrollReveal delay={0.15}>
-              <TiltCard className="p-8 rounded-3xl card-premium flex flex-col justify-between group relative overflow-hidden h-full">
+              <TiltCard className="p-8 card-premium flex flex-col justify-between group relative overflow-hidden h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
-                      <Cpu className="w-5 h-5" />
+                    <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20 group-hover:bg-[#F2C400]/20 group-hover:border-[#F2C400]/40 transition-all duration-300">
+                      <Cpu className="w-5 h-5 text-[#2C2C2E]" />
                     </span>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">Hardware IoT</span>
+                    <span className="text-[10px] font-bold text-[#2C2C2E]/50 uppercase font-mono tracking-widest">{t('home.widiuTitle')}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">WIDIU</h3>
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-light">
-                    Smartwatch intelligente per la sicurezza sul lavoro, dotato di sensori biometrici e ambientali che rilevano parametri fisiologici, condizioni operative e fattori di rischio. Attraverso l'Intelligenza Artificiale, i dati raccolti vengono trasformati in indicatori, alert e modelli predittivi utili a prevenire situazioni critiche e proteggere i lavoratori.
+                  <h3 className="text-lg font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">WIDIU</h3>
+                  <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-normal">
+                    {t('home.widiuDesc')}
                   </p>
                 </div>
                 <Link
                   to="/widiu"
-                  className="inline-flex items-center gap-2 text-xs font-bold text-yellow-600 hover:text-yellow-700 transition-colors group mt-8"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#2C2C2E] hover:text-[#F2C400] transition-colors group mt-8 font-mono uppercase tracking-wider"
                 >
-                  Approfondisci WIDIU
+                  {t('home.widiuLink')}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </TiltCard>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <TiltCard className="p-8 rounded-3xl card-premium flex flex-col justify-between group relative overflow-hidden h-full">
+              <TiltCard className="p-8 card-premium flex flex-col justify-between group relative overflow-hidden h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
-                      <MessageSquare className="w-5 h-5" />
+                    <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20 group-hover:bg-[#F2C400]/20 group-hover:border-[#F2C400]/40 transition-all duration-300">
+                      <MessageSquare className="w-5 h-5 text-[#2C2C2E]" />
                     </span>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">Consulente Virtuale</span>
+                    <span className="text-[10px] font-bold text-[#2C2C2E]/50 uppercase font-mono tracking-widest">{t('home.salvatoreTitle')}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">SALVATORE</h3>
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-light">
-                    Salvatore è il chatbot IA dedicato alla sicurezza sul lavoro, progettato per offrire assistenza, formazione e supporto alla prevenzione. Interagisce in tempo reale con l'utente, risponde a domande su rischi, procedure e comportamenti sicuri e fornisce indicazioni personalizzate in base al ruolo e al contesto aziendale.
+                  <h3 className="text-lg font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">SALVATORE</h3>
+                  <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-normal">
+                    {t('home.salvatoreDesc')}
                   </p>
                 </div>
                 <Link
-                  to="/servizi"
-                  className="inline-flex items-center gap-2 text-xs font-bold text-yellow-600 hover:text-yellow-700 transition-colors group mt-8"
+                  to="/salvatore"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#2C2C2E] hover:text-[#F2C400] transition-colors group mt-8 font-mono uppercase tracking-wider"
                 >
-                  Approfondisci Salvatore
+                  {t('home.salvatoreLink')}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </TiltCard>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <div className="p-8 rounded-3xl card-premium flex flex-col justify-between group h-full">
+              <TiltCard className="p-8 card-premium flex flex-col justify-between group relative overflow-hidden h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
-                      <Sparkles className="w-5 h-5" />
+                    <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20 group-hover:bg-[#F2C400]/20 group-hover:border-[#F2C400]/40 transition-all duration-300">
+                      <FolderOpen className="w-5 h-5 text-[#2C2C2E]" />
                     </span>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">AI</span>
+                    <span className="text-[10px] font-bold text-[#2C2C2E]/50 uppercase font-mono tracking-widest">{t('home.veraTitle')}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Intelligenza Artificiale</h3>
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-light">
-                    L'Intelligenza Artificiale analizza dati biometrici, ambientali, organizzativi e operativi per individuare segnali di rischio, riconoscere pattern e generare indicatori predittivi utili a prevenire situazioni critiche e migliorare la sicurezza sul lavoro.
+                  <h3 className="text-lg font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">Vera</h3>
+                  <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-normal">
+                    {t('home.veraDesc')}
                   </p>
                 </div>
-              </div>
+                <Link
+                  to="/vera"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#2C2C2E] hover:text-[#F2C400] transition-colors group mt-8 font-mono uppercase tracking-wider"
+                >
+                  {t('home.veraLink')}
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </TiltCard>
             </ScrollReveal>
 
             <ScrollReveal delay={0.15}>
-              <div className="p-8 rounded-3xl card-premium flex flex-col justify-between group h-full">
+              <TiltCard className="p-8 card-premium flex flex-col justify-between group relative overflow-hidden h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
-                      <ShieldCheck className="w-5 h-5" />
+                    <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20 group-hover:bg-[#F2C400]/20 group-hover:border-[#F2C400]/40 transition-all duration-300">
+                      <Workflow className="w-5 h-5 text-[#2C2C2E]" />
                     </span>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">ANALISI</span>
+                    <span className="text-[10px] font-bold text-[#2C2C2E]/50 uppercase font-mono tracking-widest">{t('home.dailybydailyTitle')}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Analisi Personalizzata</h3>
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-light">
-                    Daily sviluppa soluzioni personalizzate per la sicurezza sul lavoro, adattate alle esigenze specifiche di industria, edilizia, sanità e sport. L'analisi integra dati operativi, ambientali e organizzativi per individuare i rischi più rilevanti e definire strategie di prevenzione mirate per ogni contesto.
-                  </p>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.2}>
-              <div className="p-8 rounded-3xl card-premium flex flex-col justify-between group h-full">
-                <div>
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="p-3 rounded-xl bg-yellow-50/80 text-yellow-600 border border-yellow-200/60 group-hover:bg-yellow-100 group-hover:border-yellow-300 transition-all duration-300">
-                      <ShieldCheck className="w-5 h-5" />
-                    </span>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase font-mono tracking-widest">ECOSISTEMA</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">dailybydaily</h3>
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-light">
-                    Ecosistema di app dedicato a sicurezza, benessere e prevenzione nella vita quotidiana. Attraverso applicazioni verticali per lavoro, sport, famiglia, smart working e benessere personale, offre questionari, alert, protocolli e contenuti personalizzati, integrati con dailyplatform e con le tecnologie daily.
+                  <h3 className="text-lg font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">{t('home.dailybydailyHeadline')}</h3>
+                  <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-normal">
+                    {t('home.dailybydailyDesc')}
                   </p>
                 </div>
                 <Link
                   to="/servizi"
-                  className="inline-flex items-center gap-2 text-xs font-bold text-yellow-600 hover:text-yellow-700 transition-colors group mt-8"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#2C2C2E] hover:text-[#F2C400] transition-colors group mt-8 font-mono uppercase tracking-wider"
                 >
-                  Approfondisci dailybydaily
+                  {t('home.dailybydailyLink')}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
-              </div>
+              </TiltCard>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.2}>
+              <TiltCard className="p-8 card-premium flex flex-col justify-between group relative overflow-hidden h-full">
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20 group-hover:bg-[#F2C400]/20 group-hover:border-[#F2C400]/40 transition-all duration-300">
+                      <ShieldCheck className="w-5 h-5 text-[#2C2C2E]" />
+                    </span>
+                    <span className="text-[10px] font-bold text-[#2C2C2E]/50 uppercase font-mono tracking-widest">{t('home.dailySafetyLabTag')}</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-[#2C2C2E] mb-3 font-sans tracking-tight">{t('home.dailySafetyLabTitle')}</h3>
+                  <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-normal">
+                    {t('home.dailySafetyLabDesc')}
+                  </p>
+                </div>
+                <Link
+                  to="/daily-safety-lab"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#2C2C2E] hover:text-[#F2C400] transition-colors group mt-8 font-mono uppercase tracking-wider"
+                >
+                  {t('home.dailySafetyLabLink')}
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </TiltCard>
             </ScrollReveal>
           </div>
         </div>
@@ -196,49 +231,57 @@ export default function HomePage() {
 
       {/* Su di noi Section */}
       <ScrollReveal>
-        <section className="py-28 md:py-32 relative overflow-hidden" style={{background: '#faf8f5'}}>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-400/10 rounded-full blur-[120px] pointer-events-none" />
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Su di noi</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 font-sans">
-              daily nasce per portare la prevenzione a un nuovo livello.
-            </h2>
-            <p className="mt-6 text-sm sm:text-base text-gray-600 leading-relaxed font-light max-w-3xl mx-auto">
-              Siamo una startup innovativa italiana che integra Intelligenza Artificiale, IoT, sensoristica avanzata e competenze HSE per rendere la sicurezza più semplice, continua e predittiva.
-            </p>
-            <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed font-light max-w-3xl mx-auto">
-              Attraverso dailyplatform, lo smartwatch WIDIU, il chatbot Salvatore e l'ecosistema delle app dailybydaily, raccogliamo e analizziamo dati biometrici, ambientali, operativi e organizzativi per riconoscere segnali di rischio e supportare aziende e lavoratori prima che si verifichino condizioni critiche.
-            </p>
-            <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed font-light max-w-3xl mx-auto">
-              Mettiamo la persona al centro della tecnologia, trasformando dati e segnali spesso invisibili in strumenti concreti di prevenzione, consapevolezza e protezione.
-            </p>
-            <p className="mt-6 text-lg font-semibold text-yellow-600 italic">
-              daily. L'istinto di proteggere, l'intelligenza per farlo.
-            </p>
-            <Link
-              to="/chi-siamo"
-              className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 shadow-[0_4px_20px_rgba(234,179,8,0.2)] group"
-            >
-              Scopri chi siamo
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 stroke-[2.5]" />
-            </Link>
+        <section className="py-28 md:py-32 relative overflow-hidden bg-[#F0EFEB]">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#F2C400]/6 rounded-full blur-[130px] pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              
+              <div className="text-left lg:col-span-7 space-y-6">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">{t('home.aboutBadge')}</span>
+                <h2 className="text-3xl sm:text-4xl font-bold text-[#2C2C2E] font-sans tracking-tight leading-tight">
+                  {t('home.aboutTitle')}
+                </h2>
+                <div className="space-y-4 text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono">
+                  <p>{t('home.aboutP1')}</p>
+                  <p>{t('home.aboutP2')}</p>
+                  <p>{t('home.aboutP3')}</p>
+                </div>
+                <p className="text-sm sm:text-base font-bold text-[#F2C400] font-mono uppercase tracking-wide">
+                  {t('home.aboutClaim')}
+                </p>
+                <div className="pt-4">
+                  <Link
+                    to="/chi-siamo"
+                    className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase group"
+                  >
+                    {t('home.aboutLink')}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 stroke-[2.5]" />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 w-full flex items-center justify-center">
+                <WidiuWorkerInteractive />
+              </div>
+
+            </div>
           </div>
         </section>
       </ScrollReveal>
 
       {/* CTA Section */}
       <ScrollReveal>
-        <section className="py-24 border-t relative" style={{background: '#faf8f5', borderColor: 'rgba(0,0,0,0.06)'}}>
+        <section className="py-24 border-t relative bg-[#F0EFEB]" style={{borderColor: 'rgba(44, 44, 46, 0.08)'}}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 font-sans">Hai bisogno di una soluzione personalizzata?</h3>
-              <p className="text-xs sm:text-sm text-gray-500 mt-2 font-light">I nostri consulenti sono pronti a risponderti.</p>
+            <div className="text-left">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#2C2C2E] font-sans tracking-tight">{t('home.ctaTitle')}</h3>
+              <p className="text-xs sm:text-sm text-[#5E5E62] mt-2 font-mono">{t('home.ctaSubtitle')}</p>
             </div>
             <Link
               to="/contatti"
-              className="px-6 py-3.5 rounded-full text-xs font-bold text-white bg-yellow-500 hover:bg-yellow-600 transition-all font-sans whitespace-nowrap shrink-0 hover:scale-105 active:scale-95 shadow-[0_4px_20px_rgba(234,179,8,0.2)]"
+              className="cta-button px-8 py-4 text-xs font-bold tracking-wider uppercase font-mono whitespace-nowrap shrink-0"
             >
-              Contattaci ora
+              {t('home.ctaButton')}
             </Link>
           </div>
         </section>

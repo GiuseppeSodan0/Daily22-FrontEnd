@@ -189,15 +189,15 @@ export default function InteractivePanel() {
       if (query.includes('81/08') || query.includes('decreto') || query.includes('legge') || query.includes('norme')) {
         responseText = `Il Testo Unico sulla Sicurezza (D.Lgs. 9 aprile 2008 n. 81) è la legge statale cardine. Impone l'obbligo inderogabile di valutare tutti i rischi corporativi (redigendo il DVR), nominare il medico competente, l'RSPP e adempiere a formazione continua. Tramite il modulo "daily 4 Compliance" gestiamo la conformità digitale in background, allineandoci spontaneamente ai dettami normativi più rigorosi.`;
       } else if (query.includes('widiu') || query.includes('indossabile') || query.includes('sensore')) {
-        responseText = `Il sistema WIDIU è il wearable brevettato da Daily 22. Consiste in un modulo ultraleggero integrabile in elmetti, imbracature o gilet, contenente giroscopio a 6 assi, sensore ottico PPG per battito cardiaco, termometro ed opzionalmente rilevatori di monossido di carbonio CO. Invia dati ogni millisecondo tramite onde protette verso DAILYPLATFORM per calcolare indici di sforzo biometrico.`;
+        responseText = `Il sistema WIDIU è il wearable brevettato da Daily 22. Consiste in un modulo ultraleggero integrabile in elmetti, imbracature o gilet, contenente giroscopio a 6 assi, sensore ottico PPG per battito cardiaco, termometro ed opzionalmente rilevatori di monossido di carbonio CO. Invia dati ogni millisecondo tramite onde protette verso dailyplatform per calcolare indici di sforzo biometrico.`;
       } else if (query.includes('dpi') || query.includes('elmetto') || query.includes('scarpe') || query.includes('protezione')) {
-        responseText = `I Dispositivi di Protezione Individuale (DPI) sono regolamentati dal Titolo III del D.Lgs. 81/08. Devono disporre di certificazione CE e devono essere forniti gratuitamente dal Datore di Lavoro. DAILYPLATFORM calcola le mansioni giornaliere dei dipendenti indicando automaticamente a schermo i DPI specifici necessari (es. EN 397 per elmetti, EN 361 per imbracature).`;
+        responseText = `I Dispositivi di Protezione Individuale (DPI) sono regolamentati dal Titolo III del D.Lgs. 81/08. Devono disporre di certificazione CE e devono essere forniti gratuitamente dal Datore di Lavoro. dailyplatform calcola le mansioni giornaliere dei dipendenti indicando automaticamente a schermo i DPI specifici necessari (es. EN 397 per elmetti, EN 361 per imbracature).`;
       } else if (query.includes('dvr') || query.includes('valutazione rischi')) {
         responseText = `Il DVR (Documento di Valutazione dei Rischi) descrive l'analisi preventiva di tutti i fattori di rischio presenti negli ambienti lavorativi aziendali. Con "daily 4 Compliance" trasformiamo questo faldone statico in una cartella cloud dinamica in tempo reale, mappandola con l'afflusso biometrico delle squadre sul campo.`;
       } else if (query.includes('caduta') || query.includes('allerta') || query.includes('emergenza')) {
-        responseText = `In caso di forze gravitazionali impreviste o discese ad alta velocità (CADUTA UOMO A TERRA), l'accelerometro interno di WIDIU trasmette un impulso radio con priorità assoluta. DAILYPLATFORM fa scattare sirene sul monitor della direzione, attivando una rete vocale d'emergenza e l'esatta localizzazione spaziale.`;
+        responseText = `In caso di forze gravitazionali impreviste o discese ad alta velocità (CADUTA UOMO A TERRA), l'accelerometro interno di WIDIU trasmette un impulso radio con priorità assoluta. dailyplatform fa scattare sirene sul monitor della direzione, attivando una rete vocale d'emergenza e l'esatta localizzazione spaziale.`;
       } else {
-        responseText = `Interessante quesito! Per questa specifica casistica, offriamo moduli mirati di consulenza legale ed ingegneristica. Dailyplatform utilizza reti neurali profonde per prevenire incidenti in cantiere elaborando curve comportamentali e biologiche personalizzate. Se desideri dettagli, inviaci una richiesta nella tab "Contatti"!`;
+        responseText = `Interessante quesito! Per questa specifica casistica, offriamo moduli mirati di consulenza legale ed ingegneristica. dailyplatform utilizza reti neurali profonde per prevenire incidenti in cantiere elaborando curve comportamentali e biologiche personalizzate. Se desideri dettagli, inviaci una richiesta nella tab "Contatti"!`;
       }
 
       setMessages((prev) => [
@@ -272,7 +272,7 @@ export default function InteractivePanel() {
             }`}
           >
             <TrendingUp className="w-4 h-4 stroke-[2]" />
-            DAILYPLATFORM Compliance
+            dailyplatform Compliance
           </button>
         </div>
 
@@ -311,7 +311,7 @@ export default function InteractivePanel() {
                           <AlertTriangle className="w-12 h-12 text-yellow-600 animate-bounce mb-2" />
                           <p className="text-base font-bold text-yellow-600 uppercase tracking-widest">CADUTA RILEVATA!</p>
                           <p className="text-xs text-gray-500 max-w-xs mt-2 leading-relaxed">
-                            Forza centrifuga accelerata. Invio alert immediato a Dailyplatform e ai soccorsi di cantiere.
+                            Forza centrifuga accelerata. Invio alert immediato a dailyplatform e ai soccorsi di cantiere.
                           </p>
                           <button
                             onClick={resetFallStatus}
@@ -471,7 +471,7 @@ export default function InteractivePanel() {
                         <span className="text-gray-400 text-xs font-bold font-mono">/100</span>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-500 mt-2 italic font-light leading-relaxed">
+                    <p className="text-xs text-gray-500 mt-2 font-light leading-relaxed">
                       {vitals.safetyScore > 80 
                         ? 'Afflusso idoneo e conforme. Meno dello 0.02% di rischio stimato dalle reti neurali.'
                         : vitals.safetyScore > 40
@@ -599,7 +599,7 @@ export default function InteractivePanel() {
                         <TrendingUp className="w-5 h-5" />
                       </span>
                       <div>
-                        <h3 className="text-base font-bold text-gray-900 font-sans">DAILYPLATFORM Dashboard</h3>
+                        <h3 className="text-base font-bold text-gray-900 font-sans">dailyplatform Dashboard</h3>
                         <p className="text-xs text-gray-400 font-mono uppercase tracking-wider">Centro Gestione Predittivo Cantieri</p>
                       </div>
                     </div>
@@ -644,7 +644,7 @@ export default function InteractivePanel() {
                   </div>
 
                   <div className="p-4 rounded-xl bg-gray-50/[0.5] border border-gray-100 text-[11px] text-yellow-600 font-light mt-6">
-                    💡 <strong>Sicurezza Integrata:</strong> DAILYPLATFORM calcola i premi assicurativi INAIL attesi in base alla conformità dinamica registrata dalle macchine.
+                    💡 <strong>Sicurezza Integrata:</strong> dailyplatform calcola i premi assicurativi INAIL attesi in base alla conformità dinamica registrata dalle macchine.
                   </div>
                 </div>
 
@@ -692,8 +692,8 @@ export default function InteractivePanel() {
                     </div>
                   </div>
 
-                  <p className="text-[11px] text-gray-400 font-light leading-relaxed mt-8 border-t border-gray-100 pt-4 select-none">
-                    "Adottando DAILYPLATFORM, gli RSPP riscontrano un abbattimento reale delle sanzioni civili ed infortuni di oltre il 92.4%."
+                  <p className="text-[11px] text-gray-400 font-light leading-relaxed mt-8 border-t border-gray-100 pt-4">
+                    "Adottando dailyplatform, gli RSPP riscontrano un abbattimento reale delle sanzioni civili ed infortuni di oltre il 92.4%."
                   </p>
                 </div>
               </motion.div>

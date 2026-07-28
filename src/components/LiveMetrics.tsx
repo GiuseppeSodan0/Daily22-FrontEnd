@@ -85,7 +85,7 @@ export default function LiveMetrics() {
             Dati in tempo reale
           </h2>
           <p className="mt-4 text-sm text-gray-500 font-light leading-relaxed">
-            I sensori WIDIU monitorano costantemente parametri biometrici e ambientali, elaborati da DailyPlatform per una prevenzione predittiva.
+            I sensori WIDIU monitorano costantemente parametri biometrici e ambientali, elaborati da dailyplatform per una prevenzione predittiva.
           </p>
         </motion.div>
 

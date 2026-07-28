@@ -1,249 +1,907 @@
-import React from 'react';
-import {motion} from 'motion/react';
-import {Link} from 'react-router-dom';
-import {ArrowRight, ShieldCheck, Cpu, Thermometer, Activity, Bell, BarChart3} from 'lucide-react';
+import React, { useState } from 'react';
+import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  ShieldCheck,
+  Cpu,
+  Thermometer,
+  Activity,
+  Bell,
+  BarChart3,
+  ArrowUpRight,
+  Lock,
+  Shield,
+  FileText,
+  Stethoscope,
+  EyeOff,
+  UserCheck,
+  Brain,
+} from 'lucide-react';
+import InteractiveImage from './InteractiveImage';
+import supervisorIot from '../assets/images/supervisor_iot_1780517606283.png';
+import widiuImage from '../WIDIU.png';
+import { useLanguage } from '../context/LanguageContext';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.8, ease: 'easeOut' },
+  },
+};
 
 export default function WIDIU() {
+  const { t, lang } = useLanguage();
+  const isEn = lang === 'en';
+  const [activeCat, setActiveCat] = useState('biometrici');
+  const [hoveredFlowStep, setHoveredFlowStep] = useState<number | null>(null);
+  const [hoveredRiskCard, setHoveredRiskCard] = useState<number | null>(null);
+
+  const SENSOR_CATEGORIES = [
+    {
+      id: 'biometrici',
+      title: t('widiu.s1Title'),
+      icon: Activity,
+      short: t('widiu.s1Short'),
+      metrics: isEn
+        ? ['Heart rate', 'HRV variability', 'Skin temp', 'Estimated fatigue']
+        : ['Frequenza cardiaca', 'Variabilità HRV', 'Temperatura cutanea', 'Fatica stimata'],
+      desc: t('widiu.s1Desc'),
+      telemetry: { hr: '74 BPM', hrv: '58 ms', temp: '36.5 °C', fatigue: 'Low-Medium' }
+    },
+    {
+      id: 'movimento',
+      title: t('widiu.s2Title'),
+      icon: Cpu,
+      short: t('widiu.s2Short'),
+      metrics: isEn
+        ? ['3D Acceleration', 'Axis inclination', 'Fall detection', 'Man-down status']
+        : ['Accelerazione 3D', 'Inclinazione asse', 'Rilevamento caduta', 'Stato uomo a terra'],
+      desc: t('widiu.s2Desc'),
+      telemetry: { g_force: '1.02 G', angle: '12° (Eretto)', impact: 'None', active_time: '180 min' }
+    },
+    {
+      id: 'ambientali',
+      title: t('widiu.s3Title'),
+      icon: Thermometer,
+      short: t('widiu.s3Short'),
+      metrics: isEn
+        ? ['Temp & Humidity', 'Barometric pressure', 'Noise level (dB)', 'Air quality']
+        : ['Temperatura & Umidità', 'Pressione atmosferica', 'Livello acustico (dB)', 'Qualità dell\'aria'],
+      desc: t('widiu.s3Desc'),
+      telemetry: { temp_amb: '24.2 °C', hum: '48%', noise: '62 dB', air_quality: 'Optimal' }
+    },
+    {
+      id: 'contesto',
+      title: t('widiu.s4Title'),
+      icon: ShieldCheck,
+      short: t('widiu.s4Short'),
+      metrics: isEn
+        ? ['DVR association', 'Role & risks', 'PPE status', 'Schedulers']
+        : ['Associazione DVR', 'Mansione e rischi', 'Stato DPI consigliati', 'Scadenziari'],
+      desc: t('widiu.s4Desc'),
+      telemetry: { dvr_match: 'Compliant', role: 'HSE Operator', dpi: 'Helmet + Shoes', shift: 'Shift A' }
+    }
+  ];
+
+  const flowSteps = [
+    {
+      step: '1',
+      title: t('widiu.flow1Title'),
+      icon: Activity,
+      desc: t('widiu.flow1Desc')
+    },
+    {
+      step: '2',
+      title: t('widiu.flow2Title'),
+      icon: Cpu,
+      desc: t('widiu.flow2Desc')
+    },
+    {
+      step: '3',
+      title: t('widiu.flow3Title'),
+      icon: BarChart3,
+      desc: t('widiu.flow3Desc')
+    },
+    {
+      step: '4',
+      title: t('widiu.flow4Title'),
+      icon: Bell,
+      desc: t('widiu.flow4Desc')
+    },
+    {
+      step: '5',
+      title: t('widiu.flow5Title'),
+      icon: ShieldCheck,
+      desc: t('widiu.flow5Desc')
+    }
+  ];
+
   return (
-    <div className="py-24 select-none text-left" style={{background: 'linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)'}}>
+    <div className="py-24 md:py-32 bg-[#F0EFEB] text-[#2C2C2E] overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Hero */}
-        <div className="text-center max-w-4xl mx-auto mb-20">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">WIDIU</span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mt-4 tracking-tight leading-tight font-sans" style={{color: 'var(--color-ink)'}}>
-            Lo smartwatch intelligente per la sicurezza sul lavoro
-          </h2>
-          <p className="mt-6 text-sm sm:text-base leading-relaxed font-light max-w-3xl mx-auto" style={{color: 'var(--color-ink-soft)'}}>
-            WIDIU è lo smartwatch sviluppato da daily per supportare la prevenzione dei rischi nei contesti operativi reali.
-          </p>
-          <p className="mt-4 text-sm sm:text-base leading-relaxed font-light max-w-3xl mx-auto" style={{color: 'var(--color-ink-soft)'}}>
-            Attraverso sensori biometrici, di movimento e ambientali, raccoglie dati durante l'attività lavorativa e li integra con le informazioni relative a mansione, ambiente, organizzazione e condizioni operative.
-          </p>
-          <p className="mt-4 text-sm sm:text-base leading-relaxed font-light max-w-3xl mx-auto" style={{color: 'var(--color-ink-soft)'}}>
-            L'Intelligenza Artificiale analizza i dati e riconosce variazioni, correlazioni e pattern potenzialmente rilevanti, trasformandoli in indicatori di rischio, alert e informazioni utili per intervenire prima che una condizione critica possa evolvere.
-          </p>
-          <p className="mt-4 text-sm sm:text-base leading-relaxed font-light max-w-3xl mx-auto italic" style={{color: 'var(--color-ink-soft)'}}>
-            WIDIU non osserva soltanto ciò che è accaduto. Aiuta a comprendere ciò che sta cambiando.
-          </p>
-          <Link
-            to="/contatti"
-            className="mt-8 inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold text-white bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 shadow-[0_4px_25px_rgba(234,179,8,0.2)] hover:shadow-[0_4px_30px_rgba(234,179,8,0.35)] group"
-          >
-            Scopri WIDIU
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 stroke-[2.5]" />
-          </Link>
-        </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-32"
+        >
+          {/* Hero Section */}
+          <section className="pt-8 text-left">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              <motion.div variants={itemVariants} className="lg:col-span-6 space-y-6 text-left">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F2C400]/10 border border-[#F2C400]/25 text-xs font-bold font-mono tracking-widest uppercase text-[#2C2C2E]/80">
+                  <Cpu className="w-3.5 h-3.5 text-[#F2C400]" />
+                  {t('widiu.heroBadge')}
+                </span>
+                
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-none text-[#2C2C2E]">
+                  {t('widiu.heroTitle')}
+                </h1>
+                
+                <p className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight text-[#2C2C2E]/90 text-balance leading-snug">
+                  {t('widiu.heroSub')}
+                </p>
+                
+                <div className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62] space-y-4">
+                  <p>{t('widiu.heroP1')}</p>
+                  <p>{t('widiu.heroP2')}</p>
+                  <p>{t('widiu.heroP3')}</p>
+                  <p>{t('widiu.heroP4')}</p>
+                </div>
+                
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <Link
+                    to="/contatti"
+                    className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase"
+                  >
+                    {t('widiu.heroCta')}
+                    <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                  </Link>
+                </div>
+              </motion.div>
 
-        {/* Prima che il rischio diventi un evento */}
-        <div className="mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Perché WIDIU</span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>
-                Prima che il rischio diventi un evento
+              <motion.div variants={itemVariants} className="lg:col-span-6 w-full flex justify-center items-center">
+                <div className="relative w-full max-w-[480px] flex items-center justify-center">
+                  {/* Decorative brand yellow tech dots */}
+                  <div className="absolute -top-3 left-6 w-3.5 h-3.5 rounded-full bg-[#F2C400] shadow-[0_0_12px_rgba(242,196,0,0.7)] z-10 pointer-events-none" />
+                  <div className="absolute top-1/4 -right-3 w-2.5 h-2.5 rounded-full bg-[#F2C400]/80 shadow-[0_0_8px_rgba(242,196,0,0.5)] z-10 pointer-events-none" />
+                  <div className="absolute -bottom-3 right-12 w-3 h-3 rounded-full bg-[#F2C400]/90 shadow-[0_0_10px_rgba(242,196,0,0.6)] z-10 pointer-events-none" />
+                  <div className="absolute bottom-1/3 -left-3 w-2 h-2 rounded-full bg-[#F2C400]/60 z-10 pointer-events-none" />
+                  <div className="absolute top-6 right-10 w-2 h-2 rounded-full bg-[#F2C400]/75 z-10 pointer-events-none" />
+
+                  <InteractiveImage
+                    src={widiuImage}
+                    alt="Smartwatch WIDIU - Wearable intelligente per la sicurezza"
+                    aspectRatio="square"
+                    objectFit="contain"
+                    className="w-full h-auto max-h-[440px] object-contain drop-shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-transform duration-500 hover:scale-[1.02]"
+                  />
+                </div>
+              </motion.div>
+
+            </div>
+          </section>
+
+          {/* Perché WIDIU - Connected Journey */}
+          <motion.div variants={itemVariants} className="space-y-12">
+            <div className="space-y-3 text-left">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">{t('widiu.whyBadge')}</span>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">
+                {t('widiu.whyTitle')}
               </h3>
-              <p className="mt-4 text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                La sicurezza tradizionale valuta il rischio attraverso documenti, sopralluoghi, procedure e verifiche periodiche. Strumenti indispensabili, che però descrivono spesso una condizione rilevata in un momento preciso.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Durante il lavoro, invece, il rischio può cambiare rapidamente.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Affaticamento, stress fisiologico stimato, postura, movimenti ripetitivi, condizioni ambientali sfavorevoli e variazioni operative possono combinarsi e rendere un'attività meno sicura.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed font-light font-semibold" style={{color: 'var(--color-ink-soft)'}}>
-                WIDIU nasce per leggere questi segnali mentre evolvono e trasformarli in informazioni utili alla prevenzione.
+              <p className="text-xs sm:text-sm font-mono text-[#5E5E62] max-w-3xl">
+                {t('widiu.whySub')}
               </p>
             </div>
-            <div className="p-8 rounded-3xl space-y-4" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
+
+            {/* Interactive, Connected Journey Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative">
+              {/* Decorative connecting lines (hidden on mobile) */}
+              <div className="hidden lg:block absolute top-[15%] left-[28%] right-[28%] h-0.5 border-t border-dashed border-[#F2C400]/30 -z-10" />
+
+              {/* Step 1 */}
+              <div 
+                onMouseEnter={() => setHoveredRiskCard(0)}
+                onMouseLeave={() => setHoveredRiskCard(null)}
+                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#2C2C2E]/10 hover:border-[#F2C400]/40 transition-all duration-300 relative overflow-hidden group bg-white/40 cursor-pointer"
+                style={{
+                  transform: hoveredRiskCard === 0 ? 'translateY(-6px)' : 'translateY(0px)',
+                }}
+              >
+                {/* Top Right Glow */}
+                <div 
+                  className="absolute -top-10 -right-10 w-[140px] h-[140px] rounded-full pointer-events-none transition-opacity duration-300"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(242, 196, 0, 0.45), transparent 65%)',
+                    opacity: hoveredRiskCard === 0 ? 0.24 : 0.16
+                  }}
+                />
+
+                <div className="space-y-4 z-10">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-[#2C2C2E]/40 font-mono">
+                      {isEn ? 'PHASE 01 / STATIC' : 'FASE 01 / STATICA'}
+                    </span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#2C2C2E]/20 group-hover:bg-[#F2C400] transition-colors duration-300 shadow-[0_0_8px_rgba(242,196,0,0)] group-hover:shadow-[0_0_12px_#F2C400]" />
+                  </div>
+                  <h4 className="text-lg font-bold text-[#2C2C2E] font-sans">
+                    {isEn ? 'Traditional Safety' : 'Sicurezza Tradizionale'}
+                  </h4>
+                  <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62]">
+                    {isEn
+                      ? 'Risk Assessment Documents (DVR), written procedures, and periodic inspections are fundamental, but capture a static snapshot of workplace risk.'
+                      : 'I documenti di valutazione (DVR), le procedure scritte e i sopralluoghi periodici sono fondamentali, ma catturano una fotografia istantanea e immutabile del rischio aziendale.'}
+                  </p>
+                </div>
+                <div className="mt-6 pt-4 border-t border-[#2C2C2E]/5 text-[11px] font-mono text-[#5E5E62]/60 z-10">
+                  {isEn ? 'Spot and bureaucratic measurement' : 'Rilevamento spot e burocratico'}
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div 
+                onMouseEnter={() => setHoveredRiskCard(1)}
+                onMouseLeave={() => setHoveredRiskCard(null)}
+                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#2C2C2E]/10 hover:border-[#F2C400]/40 transition-all duration-300 relative overflow-hidden group bg-white/40 cursor-pointer"
+                style={{
+                  transform: hoveredRiskCard === 1 ? 'translateY(-6px)' : 'translateY(0px)',
+                }}
+              >
+                {/* Top Right Glow */}
+                <div 
+                  className="absolute -top-10 -right-10 w-[140px] h-[140px] rounded-full pointer-events-none transition-opacity duration-300"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(242, 196, 0, 0.45), transparent 65%)',
+                    opacity: hoveredRiskCard === 1 ? 0.34 : 0.26
+                  }}
+                />
+
+                <div className="space-y-4 z-10">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-[#2C2C2E]/40 font-mono">
+                      {isEn ? 'PHASE 02 / EVOLUTION' : 'FASE 02 / EVOLUZIONE'}
+                    </span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#2C2C2E]/20 group-hover:bg-[#F2C400] transition-colors duration-300 shadow-[0_0_8px_rgba(242,196,0,0)] group-hover:shadow-[0_0_12px_#F2C400]" />
+                  </div>
+                  <h4 className="text-lg font-bold text-[#2C2C2E] font-sans">
+                    {isEn ? 'Risk Dynamics' : 'Dinamica del Rischio'}
+                  </h4>
+                  <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62]">
+                    {isEn
+                      ? 'During the work shift, actual risk fluctuates constantly. Accumulated fatigue, awkward postures, and environmental spikes alter operational tolerance second by second.'
+                      : 'Durante il turno di lavoro, il rischio reale oscilla di continuo. L\'accumulo di stanchezza, le posture incongrue e gli sbalzi ambientali modificano la tollerabilità operativa secondo dopo secondo.'}
+                  </p>
+                </div>
+                <div className="mt-6 pt-4 border-t border-[#2C2C2E]/5 text-[11px] font-mono text-[#5E5E62]/60 z-10">
+                  {isEn ? 'Variable and biometric factors' : 'Fattori variabili e biometrici'}
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div 
+                onMouseEnter={() => setHoveredRiskCard(2)}
+                onMouseLeave={() => setHoveredRiskCard(null)}
+                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#F2C400]/30 hover:border-[#F2C400]/60 transition-all duration-300 relative overflow-hidden group bg-white/80 cursor-pointer"
+                style={{
+                  transform: hoveredRiskCard === 2 ? 'translateY(-6px)' : 'translateY(0px)',
+                }}
+              >
+                {/* Top Right Glow */}
+                <div 
+                  className="absolute -top-10 -right-10 w-[140px] h-[140px] rounded-full pointer-events-none transition-opacity duration-300"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(242, 196, 0, 0.45), transparent 65%)',
+                    opacity: hoveredRiskCard === 2 ? 0.46 : 0.38
+                  }}
+                />
+
+                <div className="space-y-4 z-10">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-[#2C2C2E] font-mono">
+                      {isEn ? 'PHASE 03 / ACTIVE PREVENTION' : 'FASE 03 / PREVENZIONE ATTIVA'}
+                    </span>
+                    <span className="w-3 h-3 rounded-full bg-[#F2C400] transition-colors duration-300 shadow-[0_0_12px_rgba(242,196,0,0.8)] group-hover:scale-125" />
+                  </div>
+                  <h4 className="text-lg font-bold text-[#2C2C2E] font-sans">
+                    {isEn ? 'WIDIU\'s Response' : 'La Risposta di WIDIU'}
+                  </h4>
+                  <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#2C2C2E]">
+                    {isEn
+                      ? 'By integrating real-time personal and environmental sensors with Artificial Intelligence, WIDIU decodes these fluctuations before they solidify into an incident, closing the prevention loop.'
+                      : 'Integrando sensori della persona e dell\'ambiente in tempo reale con l\'Intelligenza Artificiale, WIDIU decodifica queste oscillazioni prima che si consolidino in un infortunio, chiudendo il cerchio della prevenzione.'}
+                  </p>
+                </div>
+                <div className="mt-6 pt-4 border-t border-[#2C2C2E]/10 text-[11px] font-mono text-[#2C2C2E]/80 font-bold z-10">
+                  {isEn ? 'Instant connection to dailyplatform' : 'Connessione istantanea a dailyplatform'}
+                </div>
+              </div>
+            </div>
+
+            {/* Connecting visual element - Text + Concept Cards Layout (No Images) */}
+            <div className="p-8 sm:p-10 rounded-[32px] bg-white/50 border border-black/5 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-[#F2C400]/5 blur-[80px] pointer-events-none" />
+              
+              <div className="lg:col-span-6 space-y-4 text-left">
+                <span className="text-[9px] font-mono font-bold text-[#F2C400] uppercase tracking-widest block">
+                  {isEn ? 'System Integration' : 'Integrazione di Sistema'}
+                </span>
+                <h4 className="text-xl sm:text-2xl font-bold text-[#2C2C2E] font-sans tracking-tight">
+                  {isEn ? 'The integration that makes the difference' : 'L\'integrazione che fa la differenza'}
+                </h4>
+                <p className="text-xs sm:text-sm font-mono text-[#5E5E62] leading-relaxed">
+                  {isEn
+                    ? 'The WIDIU smartwatch is not an isolated technology: it constantly communicates with dailyplatform to merge physical sensing with job task knowledge and company DVRs. This enables identifying personalized anomalies on the worker\'s actual profile.'
+                    : 'Lo smartwatch WIDIU non è un\'isola tecnologica: dialoga costantemente con dailyplatform per unire la sensoristica fisica alla conoscenza delle mansioni lavorative e dei DVR aziendali. Questo consente di identificare anomalie personalizzate sul profilo effettivo del lavoratore.'}
+                </p>
+                <div className="pt-2 flex items-center gap-2 text-xs font-mono font-bold text-[#2C2C2E]/85">
+                  <span className="w-2 h-2 rounded-full bg-[#F2C400] animate-pulse" />
+                  {isEn ? 'Real-time synchronization with local servers' : 'Sincronizzazione in tempo reale con i server locali'}
+                </div>
+              </div>
+
+              {/* Graphical Integration Block (NO IMAGES) */}
+              <div className="lg:col-span-6 flex flex-col sm:flex-row gap-4 items-center justify-center relative w-full h-full min-h-[220px]">
+                {/* Micro Concept Cards with dashed connections */}
+                <div className="flex flex-col gap-3 w-full sm:w-1/2">
+                  <div className="p-4 rounded-xl bg-white border border-[#F2C400]/15 shadow-sm space-y-1 transition-all duration-300 hover:border-[#F2C400]/40">
+                    <span className="text-[9px] font-mono font-bold text-[#2C2C2E]/50 block">
+                      {isEn ? 'PHYSICAL INPUT' : 'INPUT FISICO'}
+                    </span>
+                    <h5 className="text-xs font-bold font-sans text-[#2C2C2E]">Smartwatch WIDIU</h5>
+                    <p className="text-[10px] font-mono text-[#5E5E62]">
+                      {isEn ? 'Biometrics, postures, and acceleration in real time.' : 'Dati biometrici, posture e accelerazione in tempo reale.'}
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white border border-black/5 shadow-sm space-y-1 transition-all duration-300 hover:border-[#F2C400]/40">
+                    <span className="text-[9px] font-mono font-bold text-[#2C2C2E]/50 block">
+                      {isEn ? 'REGULATORY INPUT' : 'INPUT NORMATIVO'}
+                    </span>
+                    <h5 className="text-xs font-bold font-sans text-[#2C2C2E]">DVR & {isEn ? 'Tasks' : 'Mansioni'}</h5>
+                    <p className="text-[10px] font-mono text-[#5E5E62]">
+                      {isEn ? 'Risk factors and exposure limits.' : 'Fattori di rischio associati e limiti di esposizione previsti.'}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Connection line representation */}
+                <div className="hidden sm:flex flex-col items-center justify-center h-full w-8">
+                  <div className="w-[1px] h-12 border-l border-dashed border-[#F2C400]/40" />
+                  <div className="w-3 h-3 rounded-full bg-[#F2C400] shadow-[0_0_8px_#F2C400] flex items-center justify-center my-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#2C2C2E]" />
+                  </div>
+                  <div className="w-[1px] h-12 border-l border-dashed border-[#F2C400]/40" />
+                </div>
+
+                <div className="w-full sm:w-1/2">
+                  <div className="p-5 rounded-2xl bg-[#2C2C2E] border border-[#F2C400]/30 shadow-md text-[#F0EFEB] space-y-2 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-[100px] h-[100px] rounded-full bg-[#F2C400]/5 blur-[30px] pointer-events-none" />
+                    <span className="text-[8px] font-mono font-bold text-[#F2C400] uppercase tracking-widest">
+                      {isEn ? 'PREVENTIVE OUTPUT' : 'OUTPUT PREVENTIVO'}
+                    </span>
+                    <h5 className="text-xs font-bold font-sans tracking-tight text-white">dailyplatform AI</h5>
+                    <p className="text-[10.5px] font-mono text-[#F0EFEB]/85 leading-relaxed">
+                      {isEn
+                        ? 'Continuous processing and proactive alerts tailored for the operator.'
+                        : 'Elaborazione continua e alert proattivi su misura per l\'operatore.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Sezione Sensori - Cosa rileva WIDIU (Reattiva ed Interattiva) */}
+          <div className="space-y-12">
+            <motion.div variants={itemVariants} className="text-left max-w-3xl">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block mb-2">
+                {isEn ? 'Sensors' : 'Sensori'}
+              </span>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">
+                {isEn ? 'What WIDIU detects' : 'Cosa rileva WIDIU'}
+              </h3>
+              <p className="text-xs sm:text-sm font-mono text-[#5E5E62] leading-relaxed mt-2">
+                {isEn
+                  ? 'A single intelligent device capable of mapping multiple dimensions simultaneously. Hover over categories to inspect details and estimated real-time telemetry.'
+                  : 'Un unico dispositivo intelligente in grado di mappare molteplici dimensioni simultaneamente. Passa con il mouse sulle categorie per osservare i dettagli e la telemetria stimata in tempo reale.'}
+              </p>
+            </motion.div>
+
+            {/* Interactive Hub */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+              
+              {/* Left Column: Main WIDIU Image and Active Status */}
+              <div className="lg:col-span-5 flex flex-col justify-between bg-white/45 p-6 sm:p-8 rounded-[32px] border border-black/5 relative overflow-hidden h-full">
+                <div className="absolute top-0 left-0 w-full h-full bg-[#F2C400]/3 blur-[120px] pointer-events-none" />
+                
+                <div className="space-y-4 text-left z-10">
+                  <span className="text-[10px] font-mono font-bold text-[#F2C400] uppercase tracking-widest">
+                    {isEn ? 'Active Device ●' : 'Dispositivo Attivo ●'}
+                  </span>
+                  <h4 className="text-xl font-bold font-sans text-[#2C2C2E] tracking-tight">
+                    {isEn ? 'WIDIU in Action' : 'WIDIU in Azione'}
+                  </h4>
+                  <p className="text-xs font-mono text-[#5E5E62] leading-relaxed">
+                    {isEn
+                      ? 'A concentrated stack of wearable technology engineered to map physical strain, biometric parameters, and working microclimate, all in a single wrist-worn device.'
+                      : 'Un concentrato di tecnologia wearable progettato per mappare le sollecitazioni fisiche, i parametri biometrici e il microclima di lavoro, tutto in un unico dispositivo da polso.'}
+                  </p>
+                </div>
+
+                {/* Main WIDIU Image Frame */}
+                <div className="my-8 flex justify-center items-center z-10 relative">
+                  {/* Dynamic Alert Pulse Rings */}
+                  <div className="absolute w-[240px] h-[240px] rounded-full border border-[#F2C400]/30 animate-[ping_3s_infinite] pointer-events-none z-0" />
+                  <div className="absolute w-[280px] h-[280px] rounded-full border border-red-500/10 animate-[ping_4.5s_infinite] pointer-events-none z-0" />
+
+                  <div className="relative w-full max-w-[320px] aspect-square rounded-[24px] overflow-hidden bg-white/95 border border-[#F2C400]/25 p-6 shadow-[0_12px_40px_rgba(242,196,0,0.06)] hover:border-[#F2C400]/45 transition-all duration-500 group flex items-center justify-center z-10">
+                    <InteractiveImage
+                      src={widiuImage}
+                      alt="WIDIU Smartwatch"
+                      aspectRatio="square"
+                      objectFit="contain"
+                      className="w-full h-full"
+                    />
+                    <div className="absolute inset-0 bg-[#F2C400]/2 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500" />
+                    
+                    {/* Active Alert Overlay Indicator (Intelligent Preventative Alert) */}
+                    <div className="absolute bottom-4 left-4 right-4 bg-[#2C2C2E]/95 border border-[#F2C400]/40 backdrop-blur-md rounded-xl p-2.5 flex items-center justify-between shadow-lg animate-pulse">
+                      <div className="flex items-center gap-2">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                        </span>
+                        <div className="text-left">
+                          <span className="text-[8px] font-mono text-[#F2C400] font-bold uppercase tracking-wider block leading-none">
+                            {isEn ? 'Detection' : 'Rilevamento'}
+                          </span>
+                          <span className="text-[10px] font-sans font-bold text-white tracking-tight leading-none block mt-0.5">
+                            {isEn ? 'Elevated Fatigue Threshold' : 'Soglia Fatica Elevata'}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-[8px] font-mono px-2 py-0.5 rounded-md bg-[#F2C400]/20 text-[#F2C400] font-bold border border-[#F2C400]/30">
+                        {isEn ? 'ALERT SENT' : 'ALERT INVIATO'}
+                      </span>
+                    </div>
+
+                    {/* Beacon light indicator at top of watch */}
+                    <div className="absolute top-4 right-4 flex items-center gap-1 bg-[#F2C400] text-[#2C2C2E] font-mono text-[9px] font-bold px-2.5 py-0.5 rounded-full border border-white/20 shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2C2C2E] animate-ping" />
+                      {isEn ? 'PREVENTION' : 'PREVENZIONE'}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer status line */}
+                <div className="border-t border-[#2C2C2E]/5 pt-4 text-left z-10">
+                  <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/40 uppercase tracking-widest">
+                    {isEn ? 'Continuous integration with dailyplatform' : 'Integrazione continua con dailyplatform'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Column: 2x2 Grid of equal-sized cards */}
+              <div className="lg:col-span-7 widiu-sensor-cards grid grid-cols-1 md:grid-cols-2 gap-[18px] items-stretch">
+                {SENSOR_CATEGORIES.map((cat) => {
+                  const Icon = cat.icon;
+                  const isActive = activeCat === cat.id;
+                  return (
+                    <div
+                      key={cat.id}
+                      onMouseEnter={() => setActiveCat(cat.id)}
+                      className={`widiu-sensor-card p-6 sm:p-7 rounded-[28px] border transition-all duration-300 flex flex-col justify-between min-h-[190px] h-full relative overflow-hidden group bg-white/50 ${
+                        isActive 
+                          ? 'border-[#F2C400] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.02)]' 
+                          : 'border-black/5 hover:border-[#F2C400]/30 hover:bg-white/70'
+                      }`}
+                    >
+                      <div className="space-y-4 text-left">
+                        <div className="flex items-center justify-between">
+                          <div className={`p-2.5 rounded-xl transition-all duration-300 ${
+                            isActive ? 'bg-[#F2C400] text-[#2C2C2E]' : 'bg-[#2C2C2E]/5 text-[#2C2C2E] group-hover:bg-[#F2C400]/10'
+                          }`}>
+                            <Icon className="w-5 h-5 stroke-[1.75]" />
+                          </div>
+                          <span className="text-[9px] font-mono font-bold text-[#2C2C2E]/40 uppercase tracking-widest">
+                            {cat.short}
+                          </span>
+                        </div>
+
+                        <div className="space-y-2">
+                          <h4 className="text-base font-bold font-sans text-[#2C2C2E] tracking-tight group-hover:text-[#F2C400] transition-colors duration-200">
+                            {cat.title}
+                          </h4>
+                          <p className="text-[11px] leading-relaxed font-mono text-[#5E5E62]">
+                            {cat.desc}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Display a compact list of metrics at the bottom of each card to keep them completely equal in structure */}
+                      <div className="mt-4 pt-3 border-t border-black/[0.03] flex flex-wrap gap-1">
+                        {cat.metrics.map((metric) => (
+                          <span 
+                            key={metric} 
+                            className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-[#2C2C2E]/5 text-[#2C2C2E]/80 border border-black/[0.02]"
+                          >
+                            {metric}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+            </div>
+          </div>
+          {/* Come funziona (Stesso approccio di dailyplatform) */}
+          <div className="space-y-12">
+            <motion.div variants={itemVariants} className="text-left max-w-3xl">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block mb-2">
+                {isEn ? 'Process' : 'Processo'}
+              </span>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">
+                {isEn ? 'How it works' : 'Come funziona'}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#5E5E62] font-mono mt-3 leading-relaxed">
+                {isEn
+                  ? 'WIDIU\'s journey is designed as a continuous, transparent sequential flow: from biological field measurements to strategic HSE decisions.'
+                  : 'Il percorso di WIDIU è progettato come un flusso sequenziale continuo e trasparente: dalla misurazione biologica sul campo fino alle decisioni HSE strategiche.'}
+              </p>
+            </motion.div>
+
+            {/* Sequential Flow - Horizontal on Desktop, Vertical on Mobile */}
+            <div className="relative py-8 px-4 bg-white/40 border border-black/5 rounded-[32px] overflow-hidden">
+              {/* Dynamic Connecting Line - Desktop Only */}
+              <div className="hidden lg:block absolute top-[4.5rem] left-[10%] right-[10%] h-[3px] bg-gray-200 z-0 overflow-hidden">
+                <motion.div 
+                  className="h-full bg-[#F2C400]" 
+                  initial={{ width: '0%' }}
+                  animate={{ 
+                    width: hoveredFlowStep !== null ? `${(hoveredFlowStep / 4) * 100}%` : '20%' 
+                  }}
+                  transition={{ type: 'spring', stiffness: 80, damping: 15 }}
+                />
+              </div>
+
+              {/* Steps Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-4 relative z-10">
+                {flowSteps.map((stepItem, idx) => {
+                  const isHovered = hoveredFlowStep === idx;
+                  const IconComponent = stepItem.icon;
+                  return (
+                    <div 
+                      key={idx} 
+                      onMouseEnter={() => setHoveredFlowStep(idx)}
+                      onMouseLeave={() => setHoveredFlowStep(null)}
+                      className="flex flex-col items-center lg:items-start text-center lg:text-left px-4 group transition-all duration-300"
+                    >
+                      {/* Numeric Badge & Connecting Dot */}
+                      <div className="flex flex-col items-center lg:items-start w-full relative">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 border ${isHovered ? 'bg-[#F2C400] text-[#2C2C2E] border-[#F2C400] scale-110 shadow-[0_8px_20px_rgba(242,196,0,0.25)]' : 'bg-white text-[#2C2C2E]/60 border-black/5 group-hover:border-[#F2C400]/40'}`}>
+                          <IconComponent className="w-6 h-6 stroke-[1.75]" />
+                        </div>
+                        
+                        <div className="absolute top-1 left-2 sm:left-4 lg:-top-5 lg:left-0">
+                          <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/30 group-hover:text-[#F2C400] transition-colors duration-300">
+                            STEP {stepItem.step}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Content details */}
+                      <div className="mt-5 space-y-2">
+                        <h3 className={`text-base font-bold font-sans tracking-tight uppercase transition-colors duration-300 ${isHovered ? 'text-[#F2C400]' : 'text-[#2C2C2E]'}`}>
+                          {stepItem.title}
+                        </h3>
+                        <p className="text-xs text-[#5E5E62] leading-relaxed font-mono font-light">
+                          {stepItem.desc}
+                        </p>
+                      </div>
+
+                      {/* Visual separator for mobile vertical layout */}
+                      {idx < 4 && (
+                        <div className="lg:hidden w-[2px] h-10 bg-gradient-to-b from-[#F2C400] to-transparent mt-6 self-center" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Alert dinamici e Dati in prevenzione (Symmetric layout) */}
+          <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch text-left">
+            
+            {/* Card 1: Alert Dinamici */}
+            <div className="p-8 md:p-10 card-premium flex flex-col justify-between h-full bg-white/50 border border-black/5 rounded-[28px] hover:border-[#F2C400]/30 transition-all duration-300">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <span className="p-3 rounded-xl bg-[#F2C400]/15 text-[#2C2C2E]">
+                    <Bell className="w-6 h-6" />
+                  </span>
+                  <h4 className="text-xl font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
+                    {isEn ? 'Dynamic Alerts' : 'Alert dinamici'}
+                  </h4>
+                </div>
+                
+                <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62]">
+                  {isEn
+                    ? 'WIDIU is designed to support a progressive and contextualized alert system, not dependent on a single parameter but generated by combining fatigue, physiology, and environment.'
+                    : 'WIDIU è progettato per supportare un sistema di alert progressivi e contestualizzati, non dipendenti da un singolo parametro ma generati combinando fatica, fisiologia e ambiente.'}
+                </p>
+                
+                <div className="space-y-3 pt-2">
+                  <p className="text-xs font-bold font-mono text-[#2C2C2E]">
+                    {isEn
+                      ? 'Based on company configuration, alerts suggest immediate actions such as:'
+                      : 'In base alla configurazione aziendale, gli alert suggeriscono azioni immediate come:'}
+                  </p>
+                  <ul className="space-y-2">
+                    {(isEn
+                      ? [
+                          'Verify the real conditions of the worker',
+                          'Take a scheduled recovery break',
+                          'Hydrate and regenerate physical energy',
+                          'Check exposure to the working environment',
+                          'Correct improper working posture',
+                          'Temporarily halt risk-prone activity',
+                          'Request prompt supervisor intervention',
+                        ]
+                      : [
+                          'Verificare le condizioni reali del lavoratore',
+                          'Effettuare una pausa di recupero programmata',
+                          'Idratarsi e rigenerare le energie fisiche',
+                          'Controllare l\'esposizione all\'ambiente di lavoro',
+                          'Correggere la postura lavorativa scorretta',
+                          'Interrompere temporaneamente l\'attività a rischio',
+                          'Richiedere l\'intervento tempestivo del preposto',
+                        ]
+                    ).map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-xs font-mono text-[#5E5E62]">
+                        <ArrowRight className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-4 border-t border-black/[0.04]">
+                <p className="text-xs sm:text-sm font-mono text-[#2C2C2E] font-medium leading-relaxed">
+                  {isEn
+                    ? 'Alerts help manage emerging criticalities on the spot to prevent accidents.'
+                    : 'Gli avvisi aiutano a gestire sul momento le criticità emergenti per prevenire gli incidenti.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: Dati in Prevenzione */}
+            <div className="p-8 md:p-10 card-premium flex flex-col justify-between h-full bg-white/50 border border-black/5 rounded-[28px] hover:border-[#F2C400]/30 transition-all duration-300">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <span className="p-3 rounded-xl bg-[#F2C400]/15 text-[#2C2C2E]">
+                    <BarChart3 className="w-6 h-6" />
+                  </span>
+                  <h4 className="text-xl font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
+                    {isEn ? 'Data in Prevention' : 'Dati in prevenzione'}
+                  </h4>
+                </div>
+                
+                <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62]">
+                  {isEn
+                    ? 'Information collected by WIDIU is reorganized by dailyplatform to feed HSE compliance and protect worker integrity.'
+                    : 'Le informazioni raccolte da WIDIU vengono riorganizzate da dailyplatform per alimentare la compliance HSE e proteggere l\'integrità del lavoratore.'}
+                </p>
+                
+                <div className="space-y-3 pt-2">
+                  <p className="text-xs font-bold font-mono text-[#2C2C2E]">
+                    {isEn
+                      ? 'Collected data provides companies with integrated operational tools including:'
+                      : 'I dati raccolti offrono alle aziende strumenti operativi integrati tra cui:'}
+                  </p>
+                  <ul className="space-y-2">
+                    {(isEn
+                      ? [
+                          'Biometric, environmental, and operational indicators',
+                          'Dedicated dashboards for risks and historical trends',
+                          'Configurable real-time predictive alerts',
+                          'Dynamic area risk exposure maps',
+                          'Detailed and executive HSE periodic reports',
+                          'Statistical analysis of recurring issues',
+                          'Integrated mitigation protocols and DVR support',
+                        ]
+                      : [
+                          'Indicatori biometrici, ambientali e operativi',
+                          'Dashboard dedicate per rischi e trend storici',
+                          'Alert predittivi configurabili in tempo reale',
+                          'Mappe dinamiche di esposizione ai rischi d\'area',
+                          'Report periodici dettagliati e sintetici HSE',
+                          'Analisi statistica delle criticità ricorrenti',
+                          'Protocolli integrati di mitigazione e supporto DVR',
+                        ]
+                    ).map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-xs font-mono text-[#5E5E62]">
+                        <ArrowRight className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-4 border-t border-black/[0.04]">
+                <p className="text-xs sm:text-sm font-mono text-[#2C2C2E] font-medium leading-relaxed">
+                  {isEn
+                    ? 'The goal is not accumulating data, but making it immediately understandable and actionable.'
+                    : 'L\'obiettivo non è accumulare dati, ma renderli immediatamente comprensibili e utilizzabili.'}
+                </p>
+              </div>
+            </div>
+
+          </motion.div>
+
+          {/* Privacy, sicurezza e compliance */}
+          <motion.div variants={itemVariants} className="space-y-10 text-left">
+            <div className="space-y-3 max-w-3xl">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
+                Compliance & Trust
+              </span>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">
+                {isEn ? 'Privacy, security & compliance' : 'Privacy, sicurezza e compliance'}
+              </h3>
+              <p className="text-sm sm:text-base font-semibold font-sans text-[#2C2C2E]/90">
+                {isEn
+                  ? 'Predictive prevention must protect people in their data as well.'
+                  : 'La prevenzione predittiva deve proteggere le persone anche nei dati.'}
+              </p>
+              <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62]">
+                {isEn
+                  ? 'WIDIU is engineered to support workplace safety in accordance with data protection, transparency, and proportionality principles. Biometric, environmental, and operational data must be processed exclusively for specified, legitimate prevention purposes, excluding any improper use or generalized performance monitoring.'
+                  : 'WIDIU è progettato per supportare la sicurezza sul lavoro nel rispetto dei principi di protezione dei dati, trasparenza e proporzionalità. I dati biometrici, ambientali e operativi devono essere trattati solo per finalità determinate, legittime e connesse alla prevenzione, evitando qualsiasi utilizzo improprio o forma di controllo generalizzato della prestazione lavorativa.'}
+              </p>
+            </div>
+
+            {/* 4 Card Normative */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+              {/* Card 1: GDPR */}
+              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#F2C400]/30 transition-all duration-300">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2C400]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
+                      GDPR
+                    </span>
+                    <ShieldCheck className="w-5 h-5 text-[#F2C400]" />
+                  </div>
+                  <h4 className="text-base font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
+                    {isEn ? 'Personal and Health Data Protection' : 'Protezione dei dati personali e sanitari'}
+                  </h4>
+                  <p className="text-xs leading-relaxed font-mono text-[#5E5E62]">
+                    {isEn
+                      ? 'Processing data collected from wearable devices must comply with principles of lawfulness, transparency, minimization, purpose limitation, security, and confidentiality. Data revealing health status requires heightened safeguards.'
+                      : 'Il trattamento dei dati raccolti da dispositivi wearable deve rispettare i principi di liceità, trasparenza, minimizzazione, limitazione della finalità, sicurezza e riservatezza. I dati che possono rivelare lo stato di salute richiedono garanzie rafforzate.'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 2: D.Lgs. 81/2008 */}
+              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#F2C400]/30 transition-all duration-300">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2C400]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
+                      D.Lgs. 81/2008
+                    </span>
+                    <FileText className="w-5 h-5 text-[#F2C400]" />
+                  </div>
+                  <h4 className="text-base font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
+                    {isEn ? 'Workplace Health and Safety' : 'Salute e sicurezza nei luoghi di lavoro'}
+                  </h4>
+                  <p className="text-xs leading-relaxed font-mono text-[#5E5E62]">
+                    {isEn
+                      ? 'Data collected from sensors and IoT devices can support risk assessment, prevention measures, training, and improvement of safety conditions, always respecting regulatory roles and duties.'
+                      : 'I dati raccolti da sensori e dispositivi IoT possono supportare la valutazione dei rischi, le misure di prevenzione, la formazione e il miglioramento delle condizioni di sicurezza, sempre nel rispetto dei ruoli e delle responsabilità previste dalla normativa.'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 3: AI Act */}
+              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#F2C400]/30 transition-all duration-300">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2C400]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
+                      AI Act
+                    </span>
+                    <Brain className="w-5 h-5 text-[#F2C400]" />
+                  </div>
+                  <h4 className="text-base font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
+                    {isEn ? 'Trustworthy and Supervised Artificial Intelligence' : 'Intelligenza Artificiale affidabile e supervisionata'}
+                  </h4>
+                  <p className="text-xs leading-relaxed font-mono text-[#5E5E62]">
+                    {isEn
+                      ? 'When AI systems process data to identify anomalies, estimate risk levels, or support workplace decisions, transparency, traceability, data quality, human oversight, accuracy, and cybersecurity must be guaranteed.'
+                      : 'Quando sistemi di IA elaborano dati per individuare anomalie, stimare livelli di rischio o supportare decisioni in ambito lavorativo, devono essere garantiti trasparenza, tracciabilità, qualità dei dati, supervisione umana, accuratezza e cybersicurezza.'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 4: MDR */}
+              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#F2C400]/30 transition-all duration-300">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2C400]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
+                      MDR
+                    </span>
+                    <Stethoscope className="w-5 h-5 text-[#F2C400]" />
+                  </div>
+                  <h4 className="text-base font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
+                    {isEn ? 'Medical Devices, where applicable' : 'Dispositivi medici, ove applicabile'}
+                  </h4>
+                  <p className="text-xs leading-relaxed font-mono text-[#5E5E62]">
+                    {isEn
+                      ? 'The MDR regulation applies only if the device is intended for medical or clinical purposes. If used for workplace risk prevention and environmental monitoring without diagnostic intent, compliance with GDPR and D.Lgs. 81/2008 remains central.'
+                      : 'Il Regolamento MDR rileva solo se il dispositivo è destinato a finalità mediche o cliniche. Se il sistema è utilizzato per prevenzione dei rischi lavorativi e monitoraggio ambientale senza finalità diagnostiche, resta comunque centrale il rispetto di GDPR e D.Lgs. 81/2008.'}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Box di chiusura WIDIU */}
+            <div className="p-8 md:p-10 rounded-[28px] bg-gradient-to-br from-white to-[#F0EFEB] border border-[#F2C400]/25 shadow-sm space-y-4">
               <div className="flex items-center gap-3">
-                <ShieldCheck className="w-6 h-6 text-yellow-600" />
-                <h4 className="text-lg font-bold" style={{color: 'var(--color-ink)'}}>Che cos'è WIDIU</h4>
+                <span className="p-2.5 rounded-xl bg-[#F2C400]/20 text-[#2C2C2E]">
+                  <EyeOff className="w-5 h-5" />
+                </span>
+                <h4 className="text-xl font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
+                  {isEn ? 'Protect, not monitor' : 'Proteggere, non controllare'}
+                </h4>
               </div>
-              <p className="text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                WIDIU è uno smartwatch intelligente per la sicurezza sul lavoro, progettato per integrare il monitoraggio della persona, del movimento e dell'ambiente in un unico sistema.
-              </p>
-              <p className="text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Il dispositivo raccoglie dati attraverso sensori indossabili e dialoga con DailyPlatform, dove le informazioni vengono organizzate, contestualizzate e analizzate attraverso modelli di Intelligenza Artificiale.
-              </p>
-              <p className="text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Il risultato è una lettura più dinamica delle condizioni di lavoro, capace di supportare lavoratori, preposti, RSPP, HSE Manager e datori di lavoro nell'individuazione delle situazioni che richiedono maggiore attenzione.
+              <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62]">
+                {isEn
+                  ? 'WIDIU\'s objective is not monitoring the worker, but empowering more timely, measurable, and aware prevention. System architecture adheres to privacy by design and default, ensuring role-based access, pseudonymization where applicable, cybersecurity, traceability, and data usage strictly aligned with health and safety protection.'
+                  : 'L’obiettivo di WIDIU non è sorvegliare il lavoratore, ma supportare una prevenzione più tempestiva, misurabile e consapevole. La progettazione del sistema deve seguire i principi di privacy by design e privacy by default, prevedendo accessi profilati, pseudonimizzazione ove possibile, sicurezza informatica, tracciabilità e utilizzo dei dati coerente con le finalità di tutela della salute e sicurezza.'}
               </p>
             </div>
-          </div>
-        </div>
+          </motion.div>
 
-        {/* Cosa rileva WIDIU */}
-        <div className="mb-20">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Sensori</span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>Cosa rileva WIDIU</h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-8 rounded-3xl card-premium transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-2xl bg-yellow-50 text-yellow-600 flex items-center justify-center mb-6 border border-yellow-200 group-hover:bg-yellow-100 transition-all">
-                <Activity className="w-5 h-5" />
-              </div>
-              <h4 className="text-lg font-bold mb-3" style={{color: 'var(--color-ink)'}}>Parametri biometrici</h4>
-              <p className="text-xs sm:text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                WIDIU può rilevare e analizzare parametri fisiologici come frequenza cardiaca, variabilità cardiaca, temperatura cutanea e indicatori aggregati collegati allo stress fisiologico stimato e al recupero.
-              </p>
-              <p className="text-xs mt-2 font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Le informazioni vengono interpretate nel tempo e messe in relazione con il contesto operativo, senza sostituire valutazioni cliniche o sanitarie.
-              </p>
+          {/* CTA Box */}
+          <motion.div variants={itemVariants} className="p-10 card-premium text-center space-y-6 rounded-[28px]">
+            <h3 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] tracking-tight">
+              {isEn ? 'WIDIU - The intelligent smartwatch for workplace safety' : 'WIDIU - Lo smartwatch intelligente per la sicurezza sul lavoro'}
+            </h3>
+            <p className="text-xs sm:text-sm text-[#5E5E62] max-w-xl mx-auto font-mono leading-relaxed">
+              {isEn
+                ? 'Discover how to integrate WIDIU into your organization and transform data into daily prevention.'
+                : 'Scopri come integrare WIDIU nella tua organizzazione e trasformare i dati in prevenzione quotidiana.'}
+            </p>
+            <div className="pt-2">
+              <Link
+                to="/contatti"
+                className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase"
+              >
+                {isEn ? 'Explore WIDIU' : 'Scopri WIDIU'}
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 stroke-[2.5]" />
+              </Link>
             </div>
+          </motion.div>
 
-            <div className="p-8 rounded-3xl card-premium transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-2xl bg-yellow-50 text-yellow-600 flex items-center justify-center mb-6 border border-yellow-200 group-hover:bg-yellow-100 transition-all">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <h4 className="text-lg font-bold mb-3" style={{color: 'var(--color-ink)'}}>Movimento e postura</h4>
-              <p className="text-xs sm:text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Accelerometro e giroscopio consentono di osservare movimento, postura, variazioni improvvise, inattività prolungata e possibili eventi di caduta o "man down".
-              </p>
-              <p className="text-xs mt-2 font-light" style={{color: 'var(--color-ink-soft)'}}>
-                L'analisi può contribuire a individuare posture incongrue, movimenti ripetitivi e condizioni associate a sovraccarico o affaticamento.
-              </p>
-            </div>
-
-            <div className="p-8 rounded-3xl card-premium transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-2xl bg-yellow-50 text-yellow-600 flex items-center justify-center mb-6 border border-yellow-200 group-hover:bg-yellow-100 transition-all">
-                <Thermometer className="w-5 h-5" />
-              </div>
-              <h4 className="text-lg font-bold mb-3" style={{color: 'var(--color-ink)'}}>Condizioni ambientali</h4>
-              <p className="text-xs sm:text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                WIDIU può integrarsi con sensori ambientali per rilevare temperatura, umidità, pressione, rumore, vibrazioni, illuminazione e qualità dell'aria.
-              </p>
-              <p className="text-xs mt-2 font-light" style={{color: 'var(--color-ink-soft)'}}>
-                I dati della persona e dell'ambiente vengono letti insieme, offrendo una visione più completa del rischio effettivo.
-              </p>
-            </div>
-
-            <div className="p-8 rounded-3xl card-premium transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-2xl bg-yellow-50 text-yellow-600 flex items-center justify-center mb-6 border border-yellow-200 group-hover:bg-yellow-100 transition-all">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h4 className="text-lg font-bold mb-3" style={{color: 'var(--color-ink)'}}>Contesto lavorativo</h4>
-              <p className="text-xs sm:text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Le rilevazioni acquistano significato quando vengono correlate con mansione, attività, luogo di lavoro, attrezzature, DPI, procedure e rischi specifici.
-              </p>
-              <p className="text-xs mt-2 font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Per questo WIDIU è integrato con DailyPlatform e con la conoscenza organizzativa dell'azienda.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Come funziona */}
-        <div className="mb-20">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-600 font-mono">Processo</span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold mt-3 font-sans" style={{color: 'var(--color-ink)'}}>Come funziona</h3>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {[
-              {step: '1', title: 'Rileva', desc: 'Lo smartwatch e i sensori collegati raccolgono dati biometrici, ambientali e di movimento durante l\'attività lavorativa.'},
-              {step: '2', title: 'Contestualizza', desc: 'DailyPlatform mette in relazione le rilevazioni con il ruolo del lavoratore, la mansione, l\'ambiente, le attività svolte e i rischi associati.'},
-              {step: '3', title: 'Analizza', desc: 'L\'Intelligenza Artificiale riconosce variazioni e combinazioni di segnali, confrontandole con soglie, trend e pattern rilevanti.'},
-              {step: '4', title: 'Segnala', desc: 'Quando viene individuata una condizione che richiede attenzione, il sistema può generare alert differenziati per livello di rischio.'},
-              {step: '5', title: 'Supporta la prevenzione', desc: 'Le informazioni raccolte alimentano dashboard, report e protocolli di miglioramento, aiutando l\'azienda a definire interventi più mirati.'},
-            ].map((item) => (
-              <div key={item.step} className="p-6 rounded-3xl card-premium transition-all duration-300 text-center group">
-                <div className="w-10 h-10 rounded-full bg-yellow-500 text-white font-bold text-sm flex items-center justify-center mx-auto mb-4">{item.step}</div>
-                <h4 className="text-base font-bold mb-2" style={{color: 'var(--color-ink)'}}>{item.title}</h4>
-                <p className="text-xs leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Alert dinamici */}
-        <div className="mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="p-8 rounded-3xl space-y-4" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
-              <div className="flex items-center gap-3">
-                <Bell className="w-6 h-6 text-yellow-600" />
-                <h4 className="text-lg font-bold" style={{color: 'var(--color-ink)'}}>Alert dinamici e prevenzione in tempo reale</h4>
-              </div>
-              <p className="text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                WIDIU è progettato per supportare un sistema di alert progressivi e contestualizzati.
-              </p>
-              <p className="text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Gli avvisi non dipendono necessariamente da un singolo valore, ma possono essere generati dalla combinazione di più fattori: affaticamento, variazioni fisiologiche, postura, movimento, condizioni ambientali e caratteristiche dell'attività svolta.
-              </p>
-              <div className="space-y-2 pt-2">
-                <p className="text-xs font-semibold" style={{color: 'var(--color-ink-soft)'}}>In base alla configurazione aziendale, gli alert possono suggerire azioni come:</p>
-                <ul className="space-y-1.5">
-                  {[
-                    'Verificare le condizioni del lavoratore',
-                    'Effettuare una pausa',
-                    'Idratarsi o recuperare',
-                    'Controllare l\'ambiente di lavoro',
-                    'Correggere la postura',
-                    'Interrompere temporaneamente un\'attività',
-                    'Richiedere l\'intervento di un preposto o responsabile',
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-xs" style={{color: 'var(--color-ink-soft)'}}>
-                      <ArrowRight className="w-3 h-3 text-yellow-600 shrink-0 mt-0.5" />
-                      <span className="font-light">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <p className="text-xs italic font-light" style={{color: 'var(--color-ink-soft)'}}>
-                WIDIU non sostituisce il giudizio delle persone responsabili della sicurezza, ma fornisce loro informazioni più tempestive per decidere meglio.
-              </p>
-            </div>
-            <div className="p-8 rounded-3xl space-y-4" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
-              <div className="flex items-center gap-3">
-                <BarChart3 className="w-6 h-6 text-yellow-600" />
-                <h4 className="text-lg font-bold" style={{color: 'var(--color-ink)'}}>Dati che diventano prevenzione</h4>
-              </div>
-              <p className="text-sm leading-relaxed font-light" style={{color: 'var(--color-ink-soft)'}}>
-                Le informazioni raccolte da WIDIU vengono trasformate in strumenti concreti per la gestione HSE:
-              </p>
-              <ul className="space-y-1.5">
-                {[
-                  'Indicatori biometrici, ambientali e operativi',
-                  'Dashboard dedicate a rischi e trend',
-                  'Alert in tempo reale',
-                  'Mappe dinamiche delle condizioni di esposizione',
-                  'Report giornalieri, settimanali e mensili',
-                  'Analisi delle criticità ricorrenti',
-                  'Protocolli di mitigazione e miglioramento',
-                  'Supporto alla valutazione dei rischi e alle decisioni aziendali',
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-xs" style={{color: 'var(--color-ink-soft)'}}>
-                    <ArrowRight className="w-3 h-3 text-yellow-600 shrink-0 mt-0.5" />
-                    <span className="font-light">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-xs italic font-light pt-2" style={{color: 'var(--color-ink-soft)'}}>
-                L'obiettivo non è accumulare dati, ma renderli comprensibili e utilizzabili.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="p-8 md:p-12 rounded-3xl text-center" style={{background: '#fefcf9', border: '1px solid rgba(0,0,0,0.06)'}}>
-          <h3 className="text-2xl sm:text-3xl font-extrabold font-sans mb-4" style={{color: 'var(--color-ink)'}}>
-            WIDIU. Lo smartwatch intelligente per la sicurezza sul lavoro.
-          </h3>
-          <p className="text-sm mb-8 max-w-xl mx-auto font-light" style={{color: 'var(--color-ink-soft)'}}>
-            Scopri come integrare WIDIU nella tua organizzazione e trasformare i dati in prevenzione.
-          </p>
-          <Link
-            to="/contatti"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold text-white bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 shadow-[0_4px_25px_rgba(234,179,8,0.2)] group"
-          >
-            Scopri WIDIU
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 stroke-[2.5]" />
-          </Link>
-        </div>
-
+        </motion.div>
       </div>
     </div>
   );
