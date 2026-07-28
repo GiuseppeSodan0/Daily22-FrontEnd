@@ -97,6 +97,13 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy notification
+      - name: Deploy via SSH
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: echo "Build succeeded! Server will auto-pull from main."
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -avz --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" dist/ root@daily22.it:/var/www/vhosts/daily22.it/httpdocs/
+          rm -f ~/.ssh/deploy_key
+          echo "Deploy complete! https://daily22.it is live."
