@@ -44,7 +44,7 @@ jobs:
             const buf = fs.readFileSync(filePath);
             let output;
             if (ext === '.png') {
-              output = await sharp(buf).png({ quality: 80, compressionLevel: 9, adaptiveFiltering: true }).toBuffer();
+              output = await sharp(buf).png({ quality: 95, compressionLevel: 9, adaptiveFiltering: true }).toBuffer();
             } else if (ext === '.jpg' || ext === '.jpeg') {
               output = await sharp(buf).jpeg({ quality: 75, mozjpeg: true }).toBuffer();
             } else {
