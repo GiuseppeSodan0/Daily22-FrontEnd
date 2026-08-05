@@ -52,7 +52,7 @@ import {
 import InteractiveImage from './InteractiveImage';
 
 // Import images representing the dailyplatform dashboard and ecosystem
-import dailyPlatformUi from '../assets/images/dashboard dailyplatform.png';
+import dailyPlatformUi from '../assets/images/Dashboard dailyplatform.png';
 import supervisorIot from '../assets/images/supervisor_iot_1780517606283.png';
 import archivioDailyplatform from '../assets/images/Archivio dailyplatform.png';
 

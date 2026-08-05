@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
 
 // Import newly generated scontornata product assets
-import dailyPlatformUi from '../assets/images/dashboard dailyplatform.png';
+import dailyPlatformUi from '../assets/images/Dashboard dailyplatform.png';
 import dashboardVera from '../assets/images/dashboard vera.png';
 import widiuSmartwatch from '../assets/images/widiu_smartwatch_perfect_1784275575209.jpg';
 import salvatoreRobot from '../assets/images/SALVATORE_ROBOT.png';
