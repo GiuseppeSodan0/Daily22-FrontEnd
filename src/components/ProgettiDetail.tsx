@@ -10,7 +10,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
 
 // Import newly generated scontornata product assets
-import dailyPlatformUi from '../assets/images/Dashboard dailyplatform.png';
+import dailyPlatformUi from '../assets/images/dashboard dailyplatform.png';
+import dashboardVera from '../assets/images/dashboard vera.png';
 import widiuSmartwatch from '../assets/images/widiu_smartwatch_perfect_1784275575209.jpg';
 import salvatoreRobot from '../assets/images/SALVATORE_ROBOT.png';
 
@@ -48,7 +49,7 @@ export default function ProgettiDetail() {
       tagline: t('progetti.platformTagline'),
       description: t('progetti.platformDesc'),
       icon: ShieldCheck,
-      color: 'text-[#2C2C2E] bg-[#F2C400]/10 border-[#F2C400]/20',
+      color: 'text-[#2C2C2E] bg-[#f6c73b]/10 border-[#f6c73b]/20',
       image: dailyPlatformUi,
       details: [
         t('progetti.platformD1'),
@@ -61,11 +62,11 @@ export default function ProgettiDetail() {
     {
       id: 'widiu',
       title: 'WIDIU',
-      badge: 'Smartwatch',
+      badge: isEn ? 'PATENTED SMARTWATCH' : 'SMARTWATCH BREVETTATO',
       tagline: t('progetti.widiuTagline'),
       description: t('progetti.widiuDesc'),
       icon: Cpu,
-      color: 'text-[#2C2C2E] bg-[#F2C400]/10 border-[#F2C400]/20',
+      color: 'text-[#2C2C2E] bg-[#f6c73b]/10 border-[#f6c73b]/20',
       image: widiuSmartwatch,
       details: [
         t('progetti.widiuD1'),
@@ -77,12 +78,12 @@ export default function ProgettiDetail() {
     },
     {
       id: 'salvatore',
-      title: 'SALVATORE',
-      badge: 'Chatbot',
+      title: 'Salvatore',
+      badge: 'AI AGENT',
       tagline: t('progetti.salvatoreTagline'),
       description: t('progetti.salvatoreDesc'),
       icon: MessageSquare,
-      color: 'text-[#2C2C2E] bg-[#F2C400]/10 border-[#F2C400]/20',
+      color: 'text-[#2C2C2E] bg-[#f6c73b]/10 border-[#f6c73b]/20',
       image: salvatoreRobot,
       details: [
         t('progetti.salvatoreD1'),
@@ -95,12 +96,12 @@ export default function ProgettiDetail() {
     {
       id: 'vera',
       title: 'Vera',
-      badge: 'IoT Monitoring',
-      tagline: 'IOT DATA ANALYSIS AND MONITORING SOFTWARE',
+      badge: isEn ? 'IOT DATA ANALYSIS AND MONITORING SOFTWARE' : 'IOT DATA ANALYSIS E SOFTWARE DI MONITORAGGIO',
+      tagline: 'Vera',
       description: t('progetti.veraDesc'),
       icon: Activity,
-      color: 'text-[#2C2C2E] bg-[#F2C400]/10 border-[#F2C400]/20',
-      image: "/assets/images/Dashboard Vera.png",
+      color: 'text-[#2C2C2E] bg-[#f6c73b]/10 border-[#f6c73b]/20',
+      image: dashboardVera,
       details: [
         t('progetti.veraD1'),
         t('progetti.veraD2'),
@@ -352,7 +353,7 @@ export default function ProgettiDetail() {
   };
 
   return (
-    <div className="py-36 bg-[#F0EFEB] text-left">
+    <div className="py-36 bg-[#F0EFEB] text-left services-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <motion.div
@@ -370,23 +371,24 @@ export default function ProgettiDetail() {
             </p>
           </motion.div>
 
-          {/* Main Projects Column - Stacked horizontal layouts for high visual rhythm */}
+          {/* Main Projects Column - Alternating image/text layouts */}
           <div className="flex flex-col gap-12 lg:gap-16">
-            {mainProjects.map((p, idx) => {
-              const isEven = idx % 2 === 1; // WIDIU is index 1, so isEven is true (image left, text right)
+            {mainProjects.map((p) => {
+              // dailyplatform & salvatore -> image-left; widiu & vera -> text-left
+              const isImageLeft = p.id === 'dailyplatform' || p.id === 'salvatore';
               return (
                 <motion.div
                   variants={itemVariants}
                   key={p.id}
-                  className="w-full rounded-[32px] bg-white border border-[#F2C400]/15 p-8 sm:p-10 lg:p-12 shadow-[0_4px_24px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_50px_rgba(242,196,0,0.11)] hover:border-[#F2C400]/30 transition-all duration-500 relative overflow-hidden group"
+                  className={`w-full rounded-[32px] bg-white border border-[#f6c73b]/15 p-8 sm:p-10 lg:p-12 shadow-[0_4px_24px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_50px_rgba(246,199,59,0.11)] hover:border-[#f6c73b]/30 transition-all duration-500 relative overflow-hidden group service-row ${isImageLeft ? 'image-left' : 'text-left'}`}
                 >
                   {/* Decorative gold ambient glow on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#F2C400]/0 to-[#F2C400]/4 transition-opacity duration-500 opacity-0 group-hover:opacity-100 pointer-events-none z-0" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#f6c73b]/0 to-[#f6c73b]/4 transition-opacity duration-500 opacity-0 group-hover:opacity-100 pointer-events-none z-0" />
 
                   <div className="relative z-10 flex flex-col lg:flex-row items-stretch lg:items-center gap-8 lg:gap-16">
-                    {/* Image Block: On desktop, alternating left/right using custom layout ordering. On mobile, always on top */}
-                    <div className={`w-full lg:w-1/2 flex-shrink-0 ${isEven ? 'lg:order-first' : 'lg:order-last'}`}>
-                      <div className={`relative w-full rounded-2xl overflow-hidden bg-[#F0EFEB]/40 border border-[#F2C400]/10 flex items-center justify-center p-6 sm:p-8 hover:border-[#F2C400]/25 transition-colors duration-500 ${
+                    {/* Image Block: image-left (image first on desktop) vs text-left (image last on desktop) */}
+                    <div className={`w-full lg:w-1/2 flex-shrink-0 ${isImageLeft ? 'lg:order-first' : 'lg:order-last'}`}>
+                      <div className={`relative w-full rounded-2xl overflow-hidden bg-[#F0EFEB]/40 border border-[#f6c73b]/10 flex items-center justify-center p-6 sm:p-8 hover:border-[#f6c73b]/25 transition-colors duration-500 service-visual service-image-wrapper service-card-image ${
                         p.id === 'salvatore' ? 'salvatore-image-wrapper' : p.id === 'vera' ? 'vera-card-image-wrapper min-h-[300px]' : 'aspect-[4/3]'
                       }`}>
                         <motion.img
@@ -406,18 +408,18 @@ export default function ProgettiDetail() {
                       </div>
                     </div>
 
-                    {/* Text Block */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-between h-full">
+                    {/* Text Block: image-left (text last on desktop) vs text-left (text first on desktop) */}
+                    <div className={`w-full lg:w-1/2 flex flex-col justify-between h-full service-content ${isImageLeft ? 'lg:order-last' : 'lg:order-first'}`}>
                       <div>
                         {/* Badge & Icon Header */}
                         <div className="flex justify-between items-center mb-6">
-                          <span className="inline-flex items-center gap-2 text-[10px] uppercase font-mono font-bold tracking-widest text-[#2C2C2E]/60 bg-[#2C2C2E]/5 px-3 py-1.5 rounded-full border border-[#2C2C2E]/10">
-                            <p.icon className="w-4 h-4 text-[#F2C400] stroke-[2.5]" />
+                          <span className="inline-flex items-center gap-2 text-[10px] uppercase font-mono font-bold tracking-widest text-[#2C2C2E]/60 bg-[#2C2C2E]/5 px-3 py-1.5 rounded-2xl border border-[#2C2C2E]/10 whitespace-normal break-words max-w-full text-left leading-tight">
+                            <p.icon className="w-4 h-4 text-[#f6c73b] stroke-[2.5] shrink-0" />
                             <span>{p.badge}</span>
                           </span>
                         </div>
 
-                        <h3 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] mb-2 tracking-tight group-hover:text-[#F2C400] transition-colors duration-300">
+                        <h3 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] mb-2 tracking-tight group-hover:text-[#f6c73b] transition-colors duration-300">
                           {p.title}
                         </h3>
                         <p className="text-xs mb-4 font-mono text-[#5E5E62] font-semibold tracking-wide uppercase">{p.tagline}</p>
@@ -428,32 +430,18 @@ export default function ProgettiDetail() {
                         <div className="space-y-3.5 font-mono text-xs text-[#5E5E62] w-full">
                           {p.details.map((d, index) => (
                             <div key={index} className="flex items-start gap-2.5 group/item">
-                              <CheckCircle className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5 transition-transform duration-300 group-hover/item:scale-110" />
+                              <CheckCircle className="w-3.5 h-3.5 text-[#f6c73b] shrink-0 mt-0.5 transition-transform duration-300 group-hover/item:scale-110" />
                               <span className="group-hover:text-[#2C2C2E] transition-colors duration-200">{d}</span>
                             </div>
                           ))}
                         </div>
-                        {(p.id === 'dailyplatform' || p.id === 'widiu' || p.id === 'vera' || p.id === 'salvatore') && (
+                        {p.id === 'dailyplatform' && (
                           <div className="w-full flex justify-center sm:justify-end mt-2">
                             <Link
-                              to={
-                                p.id === 'dailyplatform' 
-                                  ? "/dailyplatform" 
-                                  : p.id === 'widiu' 
-                                    ? "/widiu" 
-                                    : p.id === 'vera'
-                                      ? "/vera"
-                                      : "/salvatore"
-                              }
-                              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F2C400] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-widest hover:bg-[#F2C400]/90 hover:brightness-105 transition-all duration-300 shadow-[0_4px_14px_rgba(242,196,0,0.2)] hover:shadow-[0_6px_20px_rgba(242,196,0,0.35)] active:scale-95 whitespace-nowrap"
+                              to="/dailyplatform"
+                              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#f6c73b] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-widest hover:bg-[#f6c73b]/90 hover:brightness-105 transition-all duration-300 shadow-[0_4px_14px_rgba(246,199,59,0.2)] hover:shadow-[0_6px_20px_rgba(246,199,59,0.35)] active:scale-95 whitespace-nowrap"
                             >
-                              {p.id === 'dailyplatform' 
-                                ? t('progetti.discoverPlatform') 
-                                : p.id === 'widiu' 
-                                  ? t('progetti.discoverWidiu') 
-                                  : p.id === 'vera'
-                                    ? t('progetti.discoverVera')
-                                    : t('progetti.discoverSalvatore')}
+                              {t('progetti.discoverPlatform')}
                               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                             </Link>
                           </div>
@@ -467,301 +455,143 @@ export default function ProgettiDetail() {
           </div>
 
           {/* dailybydaily Ecosystem */}
-          <div className="space-y-10 relative">
+          <div className="space-y-8 relative dailybydaily-section">
             {/* Background Decorative Gold Dot Accents */}
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-gradient-to-r from-[#F2C400]/0 via-[#F2C400]/8 to-[#F2C400]/0 rounded-full blur-3xl pointer-events-none z-0" />
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-gradient-to-r from-[#f6c73b]/0 via-[#f6c73b]/8 to-[#f6c73b]/0 rounded-full blur-3xl pointer-events-none z-0" />
 
-            <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F2C400]/15 border border-[#F2C400]/30 text-[#2C2C2E] text-[11px] font-bold font-mono uppercase tracking-widest mb-3">
-                <Sparkle className="w-3.5 h-3.5 text-[#F2C400] fill-[#F2C400]" />
-                <span>dailybydaily</span>
-              </div>
-              <h3 className="text-3xl sm:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">dailybydaily</h3>
-              <p className="mt-1 text-base sm:text-lg font-semibold text-[#2C2C2E] font-sans">
-                {isEn ? 'The daily ecosystem of vertical apps' : 'L’ecosistema di app verticali daily'}
-              </p>
-              <p className="mt-3 text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed max-w-2xl mx-auto">
-                {t('progetti.ecoSub')}
-              </p>
-            </motion.div>
-
-            {/* View Mode & Ecosystem Info Bar (No Categories) */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-[#2C2C2E]/10 pb-6 relative z-10">
-              {/* Left Ecosystem Counter Indicator */}
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#F2C400] animate-pulse"></span>
-                <span className="text-xs font-mono font-bold text-[#2C2C2E] uppercase tracking-wider">
-                  {isEn ? 'Integrated Ecosystem (10 Vertical Apps)' : 'Ecosistema Integrato (10 App Verticali)'}
-                </span>
+            {/* Header row with left-aligned intro copy and right-aligned slider arrows */}
+            <motion.div variants={itemVariants} className="dailybydaily-header-row flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-[#2C2C2E]/10 pb-6 relative z-10">
+              <div className="dailybydaily-copy text-left max-w-3xl space-y-2">
+                <h2 className="text-3xl sm:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">dailybydaily</h2>
+                <h3 className="text-base sm:text-lg font-semibold text-[#2C2C2E] font-sans">
+                  {isEn ? 'The daily ecosystem of vertical apps' : 'L’ecosistema di app verticali daily'}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed">
+                  {t('progetti.ecoSub')}
+                </p>
               </div>
 
-              {/* View Mode Toggle: Slider Carousel vs Grid */}
-              <div className="flex items-center gap-1 bg-white p-1 rounded-full border border-[#2C2C2E]/10 shrink-0">
+              {/* Slider Arrow Controls */}
+              <div className="dailybydaily-slider-controls flex items-center gap-3 shrink-0 self-start md:self-center">
                 <button
-                  onClick={() => setViewMode('carousel')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
-                    viewMode === 'carousel'
-                      ? 'bg-[#F2C400] text-[#2C2C2E] shadow-sm'
-                      : 'text-[#5E5E62] hover:text-[#2C2C2E]'
-                  }`}
-                  title={isEn ? 'Slider / Carousel View' : 'Vista Slider / Carousel'}
+                  onClick={prevSlide}
+                  className="w-11 h-11 rounded-full border border-[#2C2C2E]/18 bg-[#f6c73b] text-[#2C2C2E] hover:bg-[#2C2C2E] hover:text-white transition-all duration-300 shadow-sm flex items-center justify-center cursor-pointer group shrink-0"
+                  aria-label={isEn ? 'App precedente' : 'App precedente'}
                 >
-                  <LayoutList className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Slider</span>
+                  <ChevronLeft className="w-5 h-5 transition-transform group-hover:-translate-x-0.5" />
                 </button>
                 <button
-                  onClick={() => setViewMode('grid')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
-                    viewMode === 'grid'
-                      ? 'bg-[#F2C400] text-[#2C2C2E] shadow-sm'
-                      : 'text-[#5E5E62] hover:text-[#2C2C2E]'
-                  }`}
-                  title={isEn ? 'Grid View' : 'Vista Griglia'}
+                  onClick={nextSlide}
+                  className="w-11 h-11 rounded-full border border-[#2C2C2E]/18 bg-[#f6c73b] text-[#2C2C2E] hover:bg-[#2C2C2E] hover:text-white transition-all duration-300 shadow-sm flex items-center justify-center cursor-pointer group shrink-0"
+                  aria-label={isEn ? 'App successiva' : 'App successiva'}
                 >
-                  <Grid className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">{isEn ? 'Grid' : 'Griglia'}</span>
+                  <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
                 </button>
               </div>
             </motion.div>
 
-            {/* Render Mode 1: Carousel / Slider */}
-            {viewMode === 'carousel' ? (
-              <div className="space-y-6 relative z-10">
-                {/* Controls Bar */}
-                <div className="flex items-center justify-between px-2">
-                  <span className="text-xs font-mono font-bold text-[#5E5E62] uppercase tracking-wider">
-                    App <span className="text-[#2C2C2E]">{currentIndex + 1}</span> {isEn ? 'of' : 'di'} <span className="text-[#2C2C2E]">{dailybydailySolutions.length}</span>
-                  </span>
+            {/* Slider Container */}
+            <div className="dailybydaily-slider space-y-6 relative z-10">
+              {/* Slider Card View */}
+              <div className="relative min-h-[460px] flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  {dailybydailySolutions.map((sol, index) => {
+                    if (index !== currentIndex) return null;
+                    const IconComponent = sol.icon;
+                    return (
+                      <motion.div
+                        key={sol.id}
+                        initial={{ opacity: 0, x: 40, scale: 0.98 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: -40, scale: 0.98 }}
+                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="app-card dailybydaily-card slider-card w-full bg-[#2C2C2E] text-white rounded-[28px] border border-[#2C2C2E] p-6 sm:p-8 lg:p-10 shadow-[0_10px_30px_rgba(0,0,0,0.2)] hover:shadow-[0_20px_50px_rgba(246,199,59,0.2)] hover:border-[#f6c73b] transition-all duration-500 relative overflow-hidden group"
+                      >
+                        {/* Top Ambient Glow */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-[#f6c73b]/0 via-[#f6c73b]/0 to-[#f6c73b]/10 transition-opacity duration-500 pointer-events-none rounded-[28px]" />
 
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={prevSlide}
-                      className="w-10 h-10 rounded-full bg-white border border-[#2C2C2E]/10 text-[#2C2C2E] flex items-center justify-center hover:bg-[#F2C400] hover:border-[#F2C400] transition-all duration-300 shadow-sm active:scale-95"
-                      aria-label={isEn ? 'Previous' : 'Precedente'}
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={nextSlide}
-                      className="w-10 h-10 rounded-full bg-white border border-[#2C2C2E]/10 text-[#2C2C2E] flex items-center justify-center hover:bg-[#F2C400] hover:border-[#F2C400] transition-all duration-300 shadow-sm active:scale-95"
-                      aria-label={isEn ? 'Next' : 'Successiva'}
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Slider Card View */}
-                <div className="relative min-h-[460px] flex items-center justify-center">
-                  <AnimatePresence mode="wait">
-                    {dailybydailySolutions.map((sol, index) => {
-                      if (index !== currentIndex) return null;
-                      const IconComponent = sol.icon;
-                      return (
-                        <motion.div
-                          key={sol.id}
-                          initial={{ opacity: 0, x: 40, scale: 0.98 }}
-                          animate={{ opacity: 1, x: 0, scale: 1 }}
-                          exit={{ opacity: 0, x: -40, scale: 0.98 }}
-                          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                          className="w-full bg-white rounded-[28px] border border-[#2C2C2E]/10 p-6 sm:p-8 lg:p-10 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_50px_rgba(242,196,0,0.15)] hover:border-[#F2C400] transition-all duration-500 relative overflow-hidden group"
-                        >
-                          {/* Top Ambient Glow */}
-                          <div className="absolute inset-0 bg-gradient-to-tr from-[#F2C400]/0 via-[#F2C400]/0 to-[#F2C400]/6 transition-opacity duration-500 pointer-events-none rounded-[28px]" />
-
-                          {/* Top Decorative Yellow Dots Grid Accent */}
-                          <div className="absolute top-6 right-6 flex items-center gap-1.5 opacity-40 group-hover:opacity-100 transition-opacity">
-                            <span className="w-2 h-2 rounded-full bg-[#F2C400]"></span>
-                            <span className="w-2 h-2 rounded-full bg-[#2C2C2E]"></span>
-                            <span className="w-2 h-2 rounded-full bg-[#F2C400]/50"></span>
-                          </div>
-
-                          <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
-                            {/* Card Header */}
-                            <div>
-                              <div className="flex items-center justify-between gap-4 mb-5">
-                                <div className="w-14 h-14 rounded-2xl bg-[#F2C400]/15 border border-[#F2C400]/35 text-[#2C2C2E] flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-[#F2C400] transition-all duration-300 shadow-sm">
-                                  <IconComponent className="w-7 h-7 stroke-[2]" />
-                                </div>
-                                <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#2C2C2E]/80 bg-[#2C2C2E]/5 px-3.5 py-1.5 rounded-full border border-[#2C2C2E]/10">
-                                  {sol.badge}
-                                </span>
+                        <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
+                          {/* Card Header */}
+                          <div>
+                            <div className="flex items-center justify-between gap-4 mb-5">
+                              <div className="w-14 h-14 rounded-2xl bg-[#f6c73b] text-[#2C2C2E] flex items-center justify-center shrink-0 group-hover:scale-105 transition-all duration-300 shadow-sm">
+                                <IconComponent className="w-7 h-7 stroke-[2.2]" />
                               </div>
-
-                              <h4 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] tracking-tight group-hover:text-[#2C2C2E] transition-colors">
-                                {sol.title}
-                              </h4>
-                              <p className="text-xs font-mono font-semibold text-[#F2C400] uppercase tracking-wider mt-1 mb-4">
-                                {sol.payoff}
-                              </p>
-
-                              <p className="text-xs sm:text-sm font-mono text-[#5E5E62] leading-relaxed">
-                                {sol.description}
-                              </p>
-                            </div>
-
-                            {/* Middle Box: Punti Chiave / Benefit */}
-                            <div className="bg-[#F0EFEB]/70 rounded-2xl p-4 sm:p-5 border border-[#2C2C2E]/5 space-y-3">
-                              <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/70 uppercase tracking-widest block">
-                                {isEn ? 'Key Points & Benefits' : 'Punti Chiave & Benefit'}
+                              <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#f6c73b] bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15">
+                                {sol.badge}
                               </span>
-                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                {sol.highlights.map((h, i) => (
-                                  <div key={i} className="flex items-center gap-2 text-xs font-mono text-[#2C2C2E] bg-white px-3 py-2 rounded-xl border border-[#2C2C2E]/5 shadow-2xs">
-                                    <CheckCircle className="w-3.5 h-3.5 text-[#F2C400] shrink-0" />
-                                    <span className="truncate">{h}</span>
-                                  </div>
-                                ))}
-                              </div>
                             </div>
 
-                            {/* Features List & CTA Footer */}
-                            <div className="pt-4 border-t border-[#2C2C2E]/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs font-mono text-[#5E5E62]">
-                                {sol.features.map((f, i) => (
-                                  <div key={i} className="flex items-start gap-2">
-                                    <Check className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5 stroke-[3]" />
-                                    <span>{f}</span>
-                                  </div>
-                                ))}
-                              </div>
+                            <h3 className="text-2xl sm:text-3xl font-bold font-sans text-white tracking-tight group-hover:text-[#f6c73b] transition-colors">
+                              {sol.title}
+                            </h3>
+                            <p className="text-xs font-mono font-semibold text-[#f6c73b] uppercase tracking-wider mt-1 mb-4">
+                              {sol.payoff}
+                            </p>
 
-                              <Link
-                                to="/contatti"
-                                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#2C2C2E] text-[#F2C400] hover:bg-[#F2C400] hover:text-[#2C2C2E] text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 shadow-sm shrink-0 group/btn"
-                              >
-                                <span>{isEn ? 'Request Info' : 'Richiedi Info'}</span>
-                                <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                              </Link>
-                            </div>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
-                  </AnimatePresence>
-                </div>
-
-                {/* Dot Pagination */}
-                <div className="flex items-center justify-center gap-2 pt-2">
-                  {dailybydailySolutions.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentIndex(idx)}
-                      className={`h-2.5 rounded-full transition-all duration-300 ${
-                        idx === currentIndex
-                          ? 'w-8 bg-[#F2C400]'
-                          : 'w-2.5 bg-[#2C2C2E]/20 hover:bg-[#2C2C2E]/40'
-                      }`}
-                      aria-label={`Go to slide ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            ) : (
-              /* Render Mode 2: Airy Grid View */
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-                {dailybydailySolutions.map((sol) => {
-                  const IconComponent = sol.icon;
-                  return (
-                    <motion.div
-                      key={sol.id}
-                      variants={itemVariants}
-                      className="bg-white rounded-[28px] border border-[#2C2C2E]/10 p-6 sm:p-8 hover:border-[#F2C400] hover:shadow-[0_20px_40px_rgba(242,196,0,0.12)] transition-all duration-500 relative flex flex-col justify-between group"
-                    >
-                      {/* Top Ambient Glow */}
-                      <div className="absolute inset-0 bg-gradient-to-tr from-[#F2C400]/0 via-[#F2C400]/0 to-[#F2C400]/5 transition-opacity duration-500 pointer-events-none rounded-[28px]" />
-
-                      {/* Accent Dots */}
-                      <div className="absolute top-5 right-5 flex items-center gap-1 opacity-30 group-hover:opacity-100 transition-opacity">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#F2C400]"></span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#2C2C2E]"></span>
-                      </div>
-
-                      <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
-                        <div>
-                          <div className="flex items-center justify-between gap-3 mb-4">
-                            <div className="w-12 h-12 rounded-xl bg-[#F2C400]/15 border border-[#F2C400]/30 text-[#2C2C2E] flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-[#F2C400] transition-all duration-300">
-                              <IconComponent className="w-6 h-6 stroke-[2]" />
-                            </div>
-                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2C2C2E]/80 bg-[#2C2C2E]/5 px-3 py-1 rounded-full border border-[#2C2C2E]/10">
-                              {sol.badge}
-                            </span>
+                            <p className="text-xs sm:text-sm font-mono text-white/85 leading-relaxed">
+                              {sol.description}
+                            </p>
                           </div>
 
-                          <h4 className="text-xl sm:text-2xl font-bold font-sans text-[#2C2C2E] tracking-tight">
-                            {sol.title}
-                          </h4>
-                          <p className="text-[11px] font-mono font-semibold text-[#F2C400] uppercase tracking-wide mt-1 mb-3">
-                            {sol.payoff}
-                          </p>
-
-                          <p className="text-xs sm:text-sm font-mono text-[#5E5E62] leading-relaxed mb-4">
-                            {sol.description}
-                          </p>
-
-                          {/* Punti chiave */}
-                          <div className="bg-[#F0EFEB]/60 rounded-xl p-3.5 border border-[#2C2C2E]/5 space-y-2 mb-4">
-                            <span className="text-[9px] font-mono font-bold text-[#2C2C2E]/60 uppercase tracking-widest block">
-                              {isEn ? 'Key Points' : 'Punti Chiave'}
+                          {/* Middle Box: Punti Chiave / Benefit */}
+                          <div className="bg-white/5 rounded-2xl p-4 sm:p-5 border border-white/10 space-y-3">
+                            <span className="text-[10px] font-mono font-bold text-[#f6c73b] uppercase tracking-widest block">
+                              {isEn ? 'Key Points & Benefits' : 'Punti Chiave & Benefit'}
                             </span>
-                            <div className="space-y-1.5">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                               {sol.highlights.map((h, i) => (
-                                <div key={i} className="flex items-center gap-2 text-xs font-mono text-[#2C2C2E]">
-                                  <CheckCircle className="w-3.5 h-3.5 text-[#F2C400] shrink-0" />
-                                  <span>{h}</span>
+                                <div key={i} className="flex items-center gap-2 text-xs font-mono text-white bg-white/10 px-3 py-2 rounded-xl border border-white/10 shadow-2xs">
+                                  <CheckCircle className="w-3.5 h-3.5 text-[#f6c73b] shrink-0" />
+                                  <span className="truncate">{h}</span>
                                 </div>
                               ))}
                             </div>
                           </div>
-                        </div>
 
-                        <div className="pt-4 border-t border-[#2C2C2E]/10 space-y-4">
-                          <div className="space-y-2 text-xs font-mono text-[#5E5E62]">
-                            {sol.features.map((f, i) => (
-                              <div key={i} className="flex items-start gap-2">
-                                <Check className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5 stroke-[3]" />
-                                <span>{f}</span>
-                              </div>
-                            ))}
+                          {/* Features List & CTA Footer */}
+                          <div className="pt-4 border-t border-white/15 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs font-mono text-white/85">
+                              {sol.features.map((f, i) => (
+                                <div key={i} className="flex items-start gap-2">
+                                  <Check className="w-3.5 h-3.5 text-[#f6c73b] shrink-0 mt-0.5 stroke-[3]" />
+                                  <span>{f}</span>
+                                </div>
+                              ))}
+                            </div>
+
+                            <Link
+                              to="/contatti"
+                              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#f6c73b] text-[#2C2C2E] hover:bg-white hover:text-[#2C2C2E] text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 shadow-sm shrink-0 group/btn"
+                            >
+                              <span>{isEn ? 'Request Info' : 'Richiedi Info'}</span>
+                              <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                            </Link>
                           </div>
-
-                          <Link
-                            to="/contatti"
-                            className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#2C2C2E]/5 border border-[#2C2C2E]/10 text-xs font-mono font-bold text-[#2C2C2E] hover:bg-[#F2C400] hover:border-[#F2C400] hover:text-[#2C2C2E] transition-all duration-300 group/btn"
-                          >
-                            <span className="uppercase tracking-wider">{isEn ? 'Learn More' : 'Scopri di più'}</span>
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                          </Link>
                         </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
               </div>
-            )}
-          </div>
 
-          {/* Daily Safety Lab */}
-          <motion.div 
-            variants={itemVariants}
-            className="p-10 card-premium text-center space-y-6"
-          >
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">{t('progetti.consultancyBadge')}</span>
-            <h3 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] tracking-tight">Daily Safety Lab</h3>
-            <p className="text-xs sm:text-sm text-[#5E5E62] max-w-2xl mx-auto font-mono leading-relaxed">
-              {t('progetti.dslDesc')}
-            </p>
-            <div className="pt-2">
-              <Link
-                to="/daily-safety-lab"
-                className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase"
-              >
-                {t('progetti.discoverDsl')}
-                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-              </Link>
+              {/* Dot Pagination */}
+              <div className="flex items-center justify-center gap-2 pt-2">
+                {dailybydailySolutions.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      idx === currentIndex
+                        ? 'w-8 bg-[#f6c73b]'
+                        : 'w-2.5 bg-[#2C2C2E]/20 hover:bg-[#2C2C2E]/40'
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
             </div>
-          </motion.div>
-
+          </div>
         </motion.div>
       </div>
     </div>

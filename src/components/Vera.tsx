@@ -16,6 +16,7 @@ import {
   Network,
   Users,
   Terminal,
+  FileCode,
   LineChart,
   Zap,
   Globe,
@@ -27,6 +28,8 @@ import {
   Layers,
   AlertTriangle,
 } from 'lucide-react';
+import dashboardVera from '../assets/images/dashboard vera.png';
+import InteractiveImage from './InteractiveImage';
 
 
 
@@ -221,7 +224,7 @@ export default function Vera() {
       
       {/* HERO SECTION */}
       <section className="relative overflow-hidden pt-36 pb-24 text-left">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#F2C400]/5 blur-[160px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#f6c73b]/5 blur-[160px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -236,7 +239,7 @@ export default function Vera() {
                 variants={itemVariants}
                 className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 bg-[#2C2C2E]/5 px-3.5 py-2 rounded-full border border-[#2C2C2E]/10 font-mono"
               >
-                <Activity className="w-3.5 h-3.5 text-[#F2C400]" />
+                <Activity className="w-3.5 h-3.5 text-[#f6c73b]" />
                 <span>{t('vera.heroBadge')}</span>
               </motion.span>
               
@@ -249,7 +252,7 @@ export default function Vera() {
               
               <motion.h2
                 variants={itemVariants}
-                className="text-lg sm:text-2xl font-bold font-sans text-[#2C2C2E] leading-snug uppercase tracking-wide text-[#F2C400]"
+                className="text-lg sm:text-2xl font-bold font-sans text-[#2C2C2E] leading-snug uppercase tracking-wide text-[#f6c73b]"
               >
                 {t('vera.heroSub')}
               </motion.h2>
@@ -267,7 +270,7 @@ export default function Vera() {
               >
                 <a
                   href="#funzionamento"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#F2C400] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-wider hover:bg-[#F2C400]/90 transition-all duration-300 shadow-[0_4px_14px_rgba(242,196,0,0.25)] hover:shadow-[0_6px_20px_rgba(242,196,0,0.35)] active:scale-95 font-semibold"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#f6c73b] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-wider hover:bg-[#f6c73b]/90 transition-all duration-300 shadow-[0_4px_14px_rgba(242,196,0,0.25)] hover:shadow-[0_6px_20px_rgba(242,196,0,0.35)] active:scale-95 font-semibold"
                 >
                   {t('dailyplatform.discoverBtn')}
                   <ArrowRight className="w-4 h-4" />
@@ -288,18 +291,14 @@ export default function Vera() {
                 variants={itemVariants}
                 className="relative w-full max-w-[520px] flex items-center justify-center"
               >
-                {/* Decorative brand yellow tech dots */}
-                <div className="absolute -top-3 left-6 w-3.5 h-3.5 rounded-full bg-[#F2C400] shadow-[0_0_12px_rgba(242,196,0,0.7)] z-10 pointer-events-none" />
-                <div className="absolute top-1/3 -right-3 w-2.5 h-2.5 rounded-full bg-[#F2C400]/80 shadow-[0_0_8px_rgba(242,196,0,0.5)] z-10 pointer-events-none" />
-                <div className="absolute -bottom-3 right-1/3 w-3 h-3 rounded-full bg-[#F2C400]/90 shadow-[0_0_10px_rgba(242,196,0,0.6)] z-10 pointer-events-none" />
-                <div className="absolute bottom-1/4 -left-3 w-2 h-2 rounded-full bg-[#F2C400]/60 z-10 pointer-events-none" />
-                <div className="absolute top-6 right-12 w-2 h-2 rounded-full bg-[#F2C400]/75 z-10 pointer-events-none" />
-
-                <img
-                  src="/assets/images/Dashboard Vera.png"
+                <InteractiveImage
+                  src={dashboardVera}
                   alt="Dashboard Vera per monitoraggio IoT, telemetria e alert in tempo reale"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-auto max-h-[420px] object-contain drop-shadow-[0_12px_32px_rgba(0,0,0,0.08)] transition-transform duration-700 hover:scale-[1.02]"
+                  aspectRatio="auto"
+                  objectFit="contain"
+                  mixBlend="multiply"
+                  maxDots={6}
+                  className="w-full h-auto max-h-[440px]"
                 />
               </motion.div>
             </div>
@@ -307,8 +306,22 @@ export default function Vera() {
         </div>
       </section>
 
+      {/* STANDALONE HEADLINE BANNER 1 — BREAK DE RITMO VISIVO */}
+      <section className="py-16 sm:py-20 bg-[#f6c73b] text-[#2C2C2E] text-center relative overflow-hidden my-0 shadow-inner">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/75 font-mono block mb-3">
+            {isEn ? 'CORE MISSION' : 'MISSIONE PRINCIPALE'}
+          </span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-sans text-[#2C2C2E] tracking-tight leading-tight">
+            {isEn
+              ? 'Acquisition, comprehension, live monitoring & distribution of IoT data in real time.'
+              : 'Acquisizione, comprensione, monitoraggio e distribuzione dei dati IoT in tempo reale.'}
+          </h2>
+        </div>
+      </section>
+
       {/* SEZIONE 1 — Perché Vera */}
-      <section className="py-24 bg-white text-left relative">
+      <section className="py-24 bg-[#F0EFEB] text-left relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">
@@ -386,14 +399,14 @@ export default function Vera() {
             ).map((card, i) => (
               <div 
                 key={i} 
-                className="p-8 rounded-[24px] bg-[#F0EFEB]/40 border border-[#2C2C2E]/5 hover:border-[#F2C400]/40 hover:bg-white hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+                className="p-8 rounded-[24px] bg-[#2C2C2E] text-white border border-white/10 hover:border-[#f6c73b]/60 shadow-lg transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="p-3.5 rounded-xl bg-white w-fit mb-6 border border-[#2C2C2E]/5 group-hover:bg-[#F2C400]/10 transition-colors duration-300">
-                    <CheckCircle className="w-5 h-5 text-[#2C2C2E] group-hover:text-[#F2C400] transition-colors" />
+                  <div className="p-3.5 rounded-xl bg-[#f6c73b]/15 w-fit mb-6 border border-[#f6c73b]/30 group-hover:bg-[#f6c73b] transition-colors duration-300">
+                    <CheckCircle className="w-5 h-5 text-[#f6c73b] group-hover:text-[#2C2C2E] transition-colors" />
                   </div>
-                  <h3 className="text-sm font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">{card.title}</h3>
-                  <p className="text-xs font-mono text-[#5E5E62] leading-relaxed">{card.desc}</p>
+                  <h3 className="text-sm font-bold text-white mb-3 font-sans uppercase tracking-tight">{card.title}</h3>
+                  <p className="text-xs font-mono text-white/80 leading-relaxed">{card.desc}</p>
                 </div>
               </div>
             ))}
@@ -455,7 +468,7 @@ export default function Vera() {
                 desc: isEn ? "Centralized registry for devices, identities, users, companies, and permissions." : "Anagrafe centralizzata dei dispositivi, identità, utenti, aziende e permessi."
               },
               {
-                icon: Terminal,
+                icon: FileCode,
                 title: "Payload Explorer",
                 desc: isEn ? "Dynamic JSON parsing, metric selection, and automatic generation of charts and views." : "Lettura dei JSON dinamici, selezione delle metriche e generazione automatica di grafici e viste."
               },
@@ -467,11 +480,11 @@ export default function Vera() {
             ].map((item, i) => (
               <div 
                 key={i} 
-                className="p-8 rounded-[24px] bg-white border border-[#2C2C2E]/5 hover:border-[#F2C400]/30 transition-all duration-300 flex flex-col justify-between group"
+                className="p-8 rounded-[24px] bg-white border border-[#2C2C2E]/5 hover:border-[#f6c73b]/30 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="p-3.5 rounded-xl bg-[#F0EFEB]/50 w-fit mb-6 border border-[#2C2C2E]/5 group-hover:bg-[#F2C400]/10 transition-colors duration-300">
-                    <item.icon className="w-5 h-5 text-[#2C2C2E] group-hover:text-[#F2C400] transition-colors" />
+                  <div className="p-3.5 rounded-xl bg-[#F0EFEB]/50 w-fit mb-6 border border-[#2C2C2E]/5 group-hover:bg-[#f6c73b]/10 transition-colors duration-300">
+                    <item.icon className="w-5 h-5 text-[#2C2C2E] group-hover:text-[#f6c73b] transition-colors" />
                   </div>
                   <h3 className="text-sm font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">{item.title}</h3>
                   <p className="text-xs font-mono text-[#5E5E62] leading-relaxed">{item.desc}</p>
@@ -483,7 +496,7 @@ export default function Vera() {
       </section>
 
       {/* SEZIONE 3 — Dal device all’informazione */}
-      <section className="py-24 bg-white text-left relative">
+      <section className="py-24 bg-[#F0EFEB] text-left relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">
@@ -520,50 +533,50 @@ export default function Vera() {
               ).map((flow, i) => (
                 <div 
                   key={i}
-                  className="flex items-center gap-6 p-5 rounded-2xl bg-[#F0EFEB]/50 border border-[#2C2C2E]/5 hover:border-[#F2C400]/40 transition-all duration-300 group"
+                  className="flex items-center gap-6 p-5 rounded-2xl bg-[#2C2C2E] text-white border border-white/10 hover:border-[#f6c73b]/60 transition-all duration-300 group shadow-md"
                 >
-                  <span className="w-10 h-10 rounded-xl bg-white flex items-center justify-center font-bold font-mono text-[#F2C400] text-sm group-hover:bg-[#F2C400]/10 shrink-0 border border-[#2C2C2E]/5">
+                  <span className="w-10 h-10 rounded-xl bg-[#f6c73b]/20 flex items-center justify-center font-bold font-mono text-[#f6c73b] text-sm group-hover:bg-[#f6c73b] group-hover:text-[#2C2C2E] shrink-0 border border-[#f6c73b]/30 transition-colors">
                     {flow.step}
                   </span>
                   <div>
-                    <h4 className="text-xs font-bold uppercase font-sans text-[#2C2C2E]">{flow.title}</h4>
-                    <p className="text-xs font-mono text-[#5E5E62] mt-0.5">{flow.desc}</p>
+                    <h4 className="text-xs font-bold uppercase font-sans text-white">{flow.title}</h4>
+                    <p className="text-xs font-mono text-white/80 mt-0.5">{flow.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Sidebar Principles key box */}
-            <div className="lg:col-span-4 p-8 rounded-3xl bg-[#F0EFEB] border border-[#2C2C2E]/10 flex flex-col justify-between">
+            <div className="lg:col-span-4 p-8 rounded-3xl bg-[#2C2C2E] text-white border border-white/10 shadow-lg flex flex-col justify-between">
               <div>
-                <span className="text-[10px] font-bold font-mono text-[#2C2C2E]/50 uppercase tracking-widest">
+                <span className="text-[10px] font-bold font-mono text-[#f6c73b] uppercase tracking-widest">
                   {isEn ? 'Key Principles' : 'Principi chiave'}
                 </span>
-                <h3 className="text-md font-bold font-sans text-[#2C2C2E] uppercase mt-2 mb-6">
+                <h3 className="text-md font-bold font-sans text-white uppercase mt-2 mb-6">
                   {isEn ? 'Flow key principles' : 'Principi chiave del flusso'}
                 </h3>
-                <ul className="space-y-4 font-mono text-xs text-[#5E5E62]">
+                <ul className="space-y-4 font-mono text-xs text-white/80">
                   <li className="flex gap-2 items-start">
-                    <CheckCircle className="w-4 h-4 text-[#F2C400] shrink-0 mt-0.5" />
+                    <CheckCircle className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5" />
                     <span>{isEn ? 'The original JSON is preserved when required by persistence policy.' : 'Il JSON originale viene preservato quando la policy prevede persistenza.'}</span>
                   </li>
                   <li className="flex gap-2 items-start">
-                    <CheckCircle className="w-4 h-4 text-[#F2C400] shrink-0 mt-0.5" />
+                    <CheckCircle className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5" />
                     <span>{isEn ? 'Every processing step is traceable to its source via audit trail.' : 'Ogni elaborazione resta riconducibile alla sorgente tramite audit trail.'}</span>
                   </li>
                   <li className="flex gap-2 items-start">
-                    <CheckCircle className="w-4 h-4 text-[#F2C400] shrink-0 mt-0.5" />
+                    <CheckCircle className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5" />
                     <span>{isEn ? 'Metrics are extracted without losing original payload context.' : 'Le metriche vengono estratte senza perdere il contesto originale.'}</span>
                   </li>
                   <li className="flex gap-2 items-start">
-                    <CheckCircle className="w-4 h-4 text-[#F2C400] shrink-0 mt-0.5" />
+                    <CheckCircle className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5" />
                     <span>{isEn ? 'The same data feeds operators, CRMs, alerts, and AI models simultaneously.' : 'Lo stesso dato può alimentare operatori, CRM, alert e sistemi AI simultaneamente.'}</span>
                   </li>
                 </ul>
               </div>
-              <div className="p-4 rounded-xl bg-white border border-[#2C2C2E]/5 flex gap-3 items-center mt-8">
-                <ShieldCheck className="w-6 h-6 text-[#F2C400] shrink-0" />
-                <span className="text-[10px] font-mono text-[#5E5E62] leading-relaxed">
+              <div className="p-4 rounded-xl bg-white/10 border border-white/10 flex gap-3 items-center mt-8">
+                <ShieldCheck className="w-6 h-6 text-[#f6c73b] shrink-0" />
+                <span className="text-[10px] font-mono text-white/80 leading-relaxed">
                   {isEn ? 'Compliant with end-to-end encryption and TLS/MQTTS protocols.' : 'Conforme a standard di cifratura end-to-end e protocolli TLS/MQTTS.'}
                 </span>
               </div>
@@ -601,7 +614,7 @@ export default function Vera() {
             <div className="lg:col-span-7 flex flex-col justify-between">
               <div>
                 <h3 className="text-xs font-bold uppercase font-sans tracking-wide text-[#2C2C2E] mb-4 flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-[#F2C400]" />
+                  <Terminal className="w-4 h-4 text-[#f6c73b]" />
                   <span>Payload Explorer Sandbox</span>
                 </h3>
                 <p className="text-[11px] font-mono text-[#5E5E62] mb-6 leading-relaxed">
@@ -659,7 +672,7 @@ export default function Vera() {
                 <AnimatePresence mode="wait">
                   {isParsing ? (
                     <div className="py-12 flex flex-col items-center justify-center gap-2 font-mono text-xs text-[#5E5E62]">
-                      <RefreshCw className="w-5 h-5 animate-spin text-[#F2C400]" />
+                      <RefreshCw className="w-5 h-5 animate-spin text-[#f6c73b]" />
                       <span>{isEn ? 'Parsing JSON payload...' : 'Analisi JSON payload...'}</span>
                     </div>
                   ) : (
@@ -686,7 +699,7 @@ export default function Vera() {
                           {schemaFields.map((field) => (
                             <div key={field} className="flex justify-between items-center py-1 border-b border-[#2C2C2E]/5">
                               <span className="text-[#2C2C2E]/80">{field}</span>
-                              <span className="text-[10px] font-bold bg-[#F2C400]/10 text-[#2C2C2E] px-1.5 py-0.5 rounded">
+                              <span className="text-[10px] font-bold bg-[#f6c73b]/10 text-[#2C2C2E] px-1.5 py-0.5 rounded">
                                 {field.includes('temp') || field.includes('rate') || field.includes('level') || field.includes('pct') || field.includes('co_ppm') || field.includes('vibration_g') || field.includes('pressure') ? 'number' : field.includes('detected') || field.includes('fall') ? 'boolean' : 'string'}
                               </span>
                             </div>
@@ -726,7 +739,7 @@ export default function Vera() {
               </div>
 
               <div className="pt-6 border-t border-[#2C2C2E]/10 flex items-center gap-3">
-                <Zap className="w-5 h-5 text-[#F2C400] shrink-0" />
+                <Zap className="w-5 h-5 text-[#f6c73b] shrink-0" />
                 <span className="text-[10px] font-mono text-[#5E5E62] leading-relaxed">
                   {isEn ? 'Supports MQTT, WebSockets, HTTP POST, gRPC, and CoAP.' : 'Supporta MQTT, WebSockets, HTTP POST, gRPC e CoAP.'}
                 </span>
@@ -792,10 +805,10 @@ export default function Vera() {
             ).map((card, i) => (
               <div 
                 key={i} 
-                className="p-8 rounded-[24px] bg-white border border-[#2C2C2E]/5 hover:border-[#F2C400]/30 transition-all duration-300 flex flex-col justify-between group"
+                className="p-8 rounded-[24px] bg-white border border-[#2C2C2E]/5 hover:border-[#f6c73b]/30 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="w-1.5 h-6 bg-[#F2C400] mb-6 rounded-full" />
+                  <div className="w-1.5 h-6 bg-[#f6c73b] mb-6 rounded-full" />
                   <h3 className="text-sm font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">{card.title}</h3>
                   <p className="text-xs font-mono text-[#5E5E62] leading-relaxed">{card.desc}</p>
                 </div>
@@ -805,8 +818,22 @@ export default function Vera() {
         </div>
       </section>
 
+      {/* STANDALONE HEADLINE BANNER 2 — BREAK DE RITMO VISIVO */}
+      <section className="py-16 sm:py-20 bg-[#f6c73b] text-[#2C2C2E] text-center relative overflow-hidden my-0 shadow-inner">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/75 font-mono block mb-3">
+            {isEn ? 'OPERATIONAL INTELLIGENCE' : 'INTELLIGENZA OPERATIVA'}
+          </span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-sans text-[#2C2C2E] tracking-tight leading-tight">
+            {isEn
+              ? 'Complex IoT telemetry transformed into operational decisions and instant safety alerts.'
+              : 'Dati complessi trasformati in decisioni operative ed allarmi immediati per la sicurezza sul lavoro.'}
+          </h2>
+        </div>
+      </section>
+
       {/* SEZIONE 5 — Telemetry, alert e sicurezza operativa */}
-      <section className="py-24 bg-white text-left">
+      <section className="py-24 bg-[#F0EFEB] text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">
@@ -840,8 +867,8 @@ export default function Vera() {
                   {step: "05", name: "Audit", desc: "Stato, consegne, tempi di risposta e diagnostica restano tracciati." }
                 ]
             ).map((step, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-[#F0EFEB]/40 border border-[#2C2C2E]/5 hover:border-[#F2C400]/30 transition-all text-center flex flex-col items-center group">
-                <span className="text-xs font-bold font-mono text-[#F2C400] bg-[#F2C400]/10 px-3 py-1.5 rounded-full mb-4">
+              <div key={idx} className="p-6 rounded-2xl bg-white text-[#2C2C2E] border border-black/5 hover:border-[#f6c73b]/40 shadow-sm transition-all text-center flex flex-col items-center group">
+                <span className="text-xs font-bold font-mono text-[#2C2C2E] bg-[#f6c73b] px-3 py-1.5 rounded-full mb-4">
                   {step.step}
                 </span>
                 <h4 className="text-xs font-bold uppercase font-sans tracking-wide text-[#2C2C2E] mb-2">{step.name}</h4>
@@ -854,13 +881,13 @@ export default function Vera() {
           <div className="p-8 sm:p-10 rounded-[32px] bg-[#F0EFEB]/30 border border-[#2C2C2E]/10">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
               <h3 className="text-md font-bold uppercase font-sans tracking-wide text-[#2C2C2E] flex items-center gap-2.5">
-                <BellRing className="w-5 h-5 text-[#F2C400] animate-bounce" />
+                <BellRing className="w-5 h-5 text-[#f6c73b] animate-bounce" />
                 <span>{isEn ? 'Alert Lifecycle' : 'Ciclo di vita dell\'Alert (Alert Lifecycle)'}</span>
               </h3>
               
               <button
                 onClick={triggerSimulation}
-                className="px-5 py-2.5 rounded-full bg-[#2C2C2E] text-[#F0EFEB] hover:bg-[#F2C400] hover:text-[#2C2C2E] text-xs font-bold font-mono uppercase tracking-widest transition-all shadow-md active:scale-95"
+                className="px-5 py-2.5 rounded-full bg-[#2C2C2E] text-[#F0EFEB] hover:bg-[#f6c73b] hover:text-[#2C2C2E] text-xs font-bold font-mono uppercase tracking-widest transition-all shadow-md active:scale-95"
               >
                 {simActiveStep === -1 
                   ? (isEn ? 'Launch Simulator' : 'Avvia simulatore') 
@@ -894,7 +921,7 @@ export default function Vera() {
                       key={idx} 
                       className={`border-l-4 pl-5 py-2 transition-all duration-500 ${
                         isCurrent 
-                          ? 'border-[#F2C400] bg-white rounded-r-xl p-4 shadow-sm' 
+                          ? 'border-[#f6c73b] bg-white rounded-r-xl p-4 shadow-sm' 
                           : isActive 
                             ? 'border-[#2C2C2E]/80 opacity-90' 
                             : 'border-[#2C2C2E]/10 opacity-40'
@@ -930,7 +957,7 @@ export default function Vera() {
                     ) : (
                       simLog.map((log, idx) => (
                         <div key={idx} className="leading-relaxed select-all">
-                          <span className="text-[#F2C400] mr-2">➜</span>
+                          <span className="text-[#f6c73b] mr-2">➜</span>
                           <span>{log}</span>
                         </div>
                       ))
@@ -990,11 +1017,11 @@ export default function Vera() {
             ].map((rule, idx) => (
               <div 
                 key={idx}
-                className="p-6 rounded-2xl bg-white border border-[#2C2C2E]/5 hover:border-[#F2C400]/30 transition-all flex flex-col justify-between group"
+                className="p-6 rounded-2xl bg-white border border-[#2C2C2E]/5 hover:border-[#f6c73b]/30 transition-all flex flex-col justify-between group"
               >
                 <div>
-                  <div className="p-3 rounded-xl bg-[#F0EFEB] w-fit mb-4 group-hover:bg-[#F2C400]/10 transition-colors">
-                    <rule.icon className="w-4 h-4 text-[#2C2C2E] group-hover:text-[#F2C400] transition-colors" />
+                  <div className="p-3 rounded-xl bg-[#F0EFEB] w-fit mb-4 group-hover:bg-[#f6c73b]/10 transition-colors">
+                    <rule.icon className="w-4 h-4 text-[#2C2C2E] group-hover:text-[#f6c73b] transition-colors" />
                   </div>
                   <h4 className="text-xs font-bold font-sans uppercase tracking-tight text-[#2C2C2E] mb-2">{rule.title}</h4>
                   <p className="text-[11px] font-mono text-[#5E5E62] leading-relaxed">{rule.desc}</p>
@@ -1005,7 +1032,7 @@ export default function Vera() {
         </div>
       </section>
         {/* SEZIONE 7 — API-first e interoperabilità */}
-      <section className="py-24 bg-white text-left relative">
+      <section className="py-24 bg-[#F0EFEB] text-left relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
             <div className="lg:col-span-6">
@@ -1058,14 +1085,14 @@ export default function Vera() {
             ].map((blk, idx) => (
               <div 
                 key={idx}
-                className="p-8 rounded-[24px] bg-[#F0EFEB]/40 border border-[#2C2C2E]/5 hover:border-[#F2C400]/40 transition-all duration-300 flex flex-col justify-between group"
+                className="p-8 rounded-[24px] bg-[#2C2C2E] text-white border border-white/10 hover:border-[#f6c73b]/60 shadow-lg transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="p-3.5 rounded-xl bg-white w-fit mb-6 border border-[#2C2C2E]/5 group-hover:bg-[#F2C400]/10 transition-colors duration-300">
-                    <blk.icon className="w-5 h-5 text-[#2C2C2E] group-hover:text-[#F2C400]" />
+                  <div className="p-3.5 rounded-xl bg-[#f6c73b]/15 w-fit mb-6 border border-[#f6c73b]/30 group-hover:bg-[#f6c73b] transition-colors duration-300">
+                    <blk.icon className="w-5 h-5 text-[#f6c73b] group-hover:text-[#2C2C2E]" />
                   </div>
-                  <h3 className="text-sm font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">{blk.title}</h3>
-                  <p className="text-xs font-mono text-[#5E5E62] leading-relaxed">{blk.desc}</p>
+                  <h3 className="text-sm font-bold text-white mb-3 font-sans uppercase tracking-tight">{blk.title}</h3>
+                  <p className="text-xs font-mono text-white/80 leading-relaxed">{blk.desc}</p>
                 </div>
               </div>
             ))}
@@ -1126,11 +1153,11 @@ export default function Vera() {
             ).map((useCase, idx) => (
               <div 
                 key={idx}
-                className="p-8 rounded-[24px] bg-white border border-[#2C2C2E]/5 hover:border-[#F2C400]/40 transition-all duration-300 flex flex-col justify-between group"
+                className="p-8 rounded-[24px] bg-white border border-[#2C2C2E]/5 hover:border-[#f6c73b]/40 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <h3 className="text-md font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight flex items-center gap-2">
-                    <ChevronRight className="w-4 h-4 text-[#F2C400]" />
+                    <ChevronRight className="w-4 h-4 text-[#f6c73b]" />
                     <span>{useCase.title}</span>
                   </h3>
                   <p className="text-xs font-mono text-[#5E5E62] leading-relaxed pl-6">{useCase.desc}</p>
@@ -1141,8 +1168,22 @@ export default function Vera() {
         </div>
       </section>
 
+      {/* STANDALONE HEADLINE BANNER 3 — BREAK DE RITMO VISIVO */}
+      <section className="py-16 sm:py-20 bg-[#f6c73b] text-[#2C2C2E] text-center relative overflow-hidden my-0 shadow-inner">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/75 font-mono block mb-3">
+            {isEn ? 'SCALABLE PROTECTION' : 'PROTEZIONE SCALABILE'}
+          </span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-sans text-[#2C2C2E] tracking-tight leading-tight">
+            {isEn
+              ? 'From single sensor telemetry to enterprise-wide operational protection.'
+              : 'Dalla telemetria del singolo sensore alla protezione integrata dell’intera organizzazione.'}
+          </h2>
+        </div>
+      </section>
+
       {/* SEZIONE 9 — Esempio: sicurezza in cantiere */}
-      <section className="py-24 bg-white text-left relative">
+      <section className="py-24 bg-[#F0EFEB] text-left relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
             <div className="lg:col-span-6">
@@ -1187,12 +1228,12 @@ export default function Vera() {
             ).map((rule, idx) => (
               <div 
                 key={idx}
-                className="p-6 rounded-2xl bg-[#F0EFEB]/50 border border-[#2C2C2E]/5 hover:border-[#F2C400]/40 transition-all flex flex-col justify-between group"
+                className="p-6 rounded-2xl bg-[#2C2C2E] text-white border border-white/10 hover:border-[#f6c73b]/60 shadow-lg transition-all flex flex-col justify-between group"
               >
                 <div>
-                  <div className="w-1.5 h-6 bg-[#F2C400] mb-4 rounded-full" />
-                  <h4 className="text-xs font-bold font-sans uppercase tracking-tight text-[#2C2C2E] mb-2">{rule.title}</h4>
-                  <p className="text-[11px] font-mono text-[#5E5E62] leading-relaxed">{rule.desc}</p>
+                  <div className="w-1.5 h-6 bg-[#f6c73b] mb-4 rounded-full" />
+                  <h4 className="text-xs font-bold font-sans uppercase tracking-tight text-white mb-2">{rule.title}</h4>
+                  <p className="text-[11px] font-mono text-white/80 leading-relaxed">{rule.desc}</p>
                 </div>
               </div>
             ))}
@@ -1285,10 +1326,10 @@ export default function Vera() {
             ).map((benef, idx) => (
               <div 
                 key={idx}
-                className="p-8 rounded-[24px] bg-white border border-[#2C2C2E]/5 hover:border-[#F2C400]/40 transition-all duration-300 flex flex-col justify-between group"
+                className="p-8 rounded-[24px] bg-white border border-[#2C2C2E]/5 hover:border-[#f6c73b]/40 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="w-2 h-2 bg-[#F2C400] mb-6 rounded-full group-hover:scale-125 transition-transform" />
+                  <div className="w-2 h-2 bg-[#f6c73b] mb-6 rounded-full group-hover:scale-125 transition-transform" />
                   <h3 className="text-sm font-bold text-[#2C2C2E] mb-3 font-sans uppercase tracking-tight">{benef.title}</h3>
                   <p className="text-xs font-mono text-[#5E5E62] leading-relaxed">{benef.desc}</p>
                 </div>
@@ -1299,7 +1340,7 @@ export default function Vera() {
       </section>
 
       {/* SEZIONE 11 — A chi si rivolge Vera */}
-      <section className="py-24 bg-white text-left relative">
+      <section className="py-24 bg-[#F0EFEB] text-left relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">
@@ -1344,10 +1385,10 @@ export default function Vera() {
             ).map((persona, idx) => (
               <div 
                 key={idx}
-                className="p-6 rounded-2xl bg-[#F0EFEB]/40 border border-[#2C2C2E]/5 hover:border-[#F2C400]/40 hover:bg-white text-center transition-all flex flex-col items-center justify-center group"
+                className="p-6 rounded-2xl bg-[#2C2C2E] text-white border border-white/10 hover:border-[#f6c73b]/60 text-center transition-all flex flex-col items-center justify-center group shadow-md"
               >
-                <Users className="w-5 h-5 text-[#2C2C2E] mb-3 group-hover:text-[#F2C400] transition-colors font-semibold" />
-                <h4 className="text-xs font-bold uppercase font-sans tracking-wide text-[#2C2C2E]">{persona}</h4>
+                <Users className="w-5 h-5 text-[#f6c73b] mb-3 group-hover:scale-110 transition-transform font-semibold" />
+                <h4 className="text-xs font-bold uppercase font-sans tracking-wide text-white">{persona}</h4>
               </div>
             ))}
           </div>
@@ -1372,7 +1413,7 @@ export default function Vera() {
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link
               to="/contatti"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#F2C400] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-widest hover:bg-[#F2C400]/90 transition-all duration-300 shadow-[0_4px_14px_rgba(242,196,0,0.25)] hover:shadow-[0_6px_20px_rgba(242,196,0,0.35)] active:scale-95 font-semibold"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#f6c73b] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-widest hover:bg-[#f6c73b]/90 transition-all duration-300 shadow-[0_4px_14px_rgba(242,196,0,0.25)] hover:shadow-[0_6px_20px_rgba(242,196,0,0.35)] active:scale-95 font-semibold"
             >
               {isEn ? 'Request a Vera Demo' : 'Richiedi una demo di Vera'}
               <ArrowRight className="w-4 h-4" />

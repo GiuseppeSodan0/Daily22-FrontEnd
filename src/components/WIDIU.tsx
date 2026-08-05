@@ -8,6 +8,8 @@ import {
   Thermometer,
   Activity,
   Bell,
+  BellRing,
+  CheckCircle,
   BarChart3,
   ArrowUpRight,
   Lock,
@@ -145,8 +147,8 @@ export default function WIDIU() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               
               <motion.div variants={itemVariants} className="lg:col-span-6 space-y-6 text-left">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F2C400]/10 border border-[#F2C400]/25 text-xs font-bold font-mono tracking-widest uppercase text-[#2C2C2E]/80">
-                  <Cpu className="w-3.5 h-3.5 text-[#F2C400]" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6c73b]/10 border border-[#f6c73b]/25 text-xs font-bold font-mono tracking-widest uppercase text-[#2C2C2E]/80">
+                  <Cpu className="w-3.5 h-3.5 text-[#f6c73b]" />
                   {t('widiu.heroBadge')}
                 </span>
                 
@@ -168,7 +170,7 @@ export default function WIDIU() {
                 <div className="flex flex-wrap gap-4 pt-4">
                   <Link
                     to="/contatti"
-                    className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase"
+                    className="inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase bg-[#f6c73b] text-[#2C2C2E] border border-[#f6c73b] rounded-[18px] hover:bg-[#f6c73b]/90 transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(242,196,0,0.4)] cursor-pointer"
                   >
                     {t('widiu.heroCta')}
                     <ArrowRight className="w-4 h-4 stroke-[2.5]" />
@@ -179,11 +181,11 @@ export default function WIDIU() {
               <motion.div variants={itemVariants} className="lg:col-span-6 w-full flex justify-center items-center">
                 <div className="relative w-full max-w-[480px] flex items-center justify-center">
                   {/* Decorative brand yellow tech dots */}
-                  <div className="absolute -top-3 left-6 w-3.5 h-3.5 rounded-full bg-[#F2C400] shadow-[0_0_12px_rgba(242,196,0,0.7)] z-10 pointer-events-none" />
-                  <div className="absolute top-1/4 -right-3 w-2.5 h-2.5 rounded-full bg-[#F2C400]/80 shadow-[0_0_8px_rgba(242,196,0,0.5)] z-10 pointer-events-none" />
-                  <div className="absolute -bottom-3 right-12 w-3 h-3 rounded-full bg-[#F2C400]/90 shadow-[0_0_10px_rgba(242,196,0,0.6)] z-10 pointer-events-none" />
-                  <div className="absolute bottom-1/3 -left-3 w-2 h-2 rounded-full bg-[#F2C400]/60 z-10 pointer-events-none" />
-                  <div className="absolute top-6 right-10 w-2 h-2 rounded-full bg-[#F2C400]/75 z-10 pointer-events-none" />
+                  <div className="absolute -top-3 left-6 w-3.5 h-3.5 rounded-full bg-[#f6c73b] shadow-[0_0_12px_rgba(242,196,0,0.7)] z-10 pointer-events-none" />
+                  <div className="absolute top-1/4 -right-3 w-2.5 h-2.5 rounded-full bg-[#f6c73b]/80 shadow-[0_0_8px_rgba(242,196,0,0.5)] z-10 pointer-events-none" />
+                  <div className="absolute -bottom-3 right-12 w-3 h-3 rounded-full bg-[#f6c73b]/90 shadow-[0_0_10px_rgba(242,196,0,0.6)] z-10 pointer-events-none" />
+                  <div className="absolute bottom-1/3 -left-3 w-2 h-2 rounded-full bg-[#f6c73b]/60 z-10 pointer-events-none" />
+                  <div className="absolute top-6 right-10 w-2 h-2 rounded-full bg-[#f6c73b]/75 z-10 pointer-events-none" />
 
                   <InteractiveImage
                     src={widiuImage}
@@ -213,13 +215,13 @@ export default function WIDIU() {
             {/* Interactive, Connected Journey Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative">
               {/* Decorative connecting lines (hidden on mobile) */}
-              <div className="hidden lg:block absolute top-[15%] left-[28%] right-[28%] h-0.5 border-t border-dashed border-[#F2C400]/30 -z-10" />
+              <div className="hidden lg:block absolute top-[15%] left-[28%] right-[28%] h-0.5 border-t border-dashed border-[#f6c73b]/30 -z-10" />
 
               {/* Step 1 */}
               <div 
                 onMouseEnter={() => setHoveredRiskCard(0)}
                 onMouseLeave={() => setHoveredRiskCard(null)}
-                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#2C2C2E]/10 hover:border-[#F2C400]/40 transition-all duration-300 relative overflow-hidden group bg-white/40 cursor-pointer"
+                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#2C2C2E]/10 hover:border-[#f6c73b]/40 transition-all duration-300 relative overflow-hidden group bg-white/40 cursor-pointer"
                 style={{
                   transform: hoveredRiskCard === 0 ? 'translateY(-6px)' : 'translateY(0px)',
                 }}
@@ -238,7 +240,7 @@ export default function WIDIU() {
                     <span className="text-[10px] font-bold text-[#2C2C2E]/40 font-mono">
                       {isEn ? 'PHASE 01 / STATIC' : 'FASE 01 / STATICA'}
                     </span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#2C2C2E]/20 group-hover:bg-[#F2C400] transition-colors duration-300 shadow-[0_0_8px_rgba(242,196,0,0)] group-hover:shadow-[0_0_12px_#F2C400]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#2C2C2E]/20 group-hover:bg-[#f6c73b] transition-colors duration-300 shadow-[0_0_8px_rgba(242,196,0,0)] group-hover:shadow-[0_0_12px_#f6c73b]" />
                   </div>
                   <h4 className="text-lg font-bold text-[#2C2C2E] font-sans">
                     {isEn ? 'Traditional Safety' : 'Sicurezza Tradizionale'}
@@ -250,7 +252,7 @@ export default function WIDIU() {
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-[#2C2C2E]/5 text-[11px] font-mono text-[#5E5E62]/60 z-10">
-                  {isEn ? 'Spot and bureaucratic measurement' : 'Rilevamento spot e burocratico'}
+                  {isEn ? 'Occasional and administrative tracking' : 'Rilevamento occasionale e burocratico'}
                 </div>
               </div>
 
@@ -258,7 +260,7 @@ export default function WIDIU() {
               <div 
                 onMouseEnter={() => setHoveredRiskCard(1)}
                 onMouseLeave={() => setHoveredRiskCard(null)}
-                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#2C2C2E]/10 hover:border-[#F2C400]/40 transition-all duration-300 relative overflow-hidden group bg-white/40 cursor-pointer"
+                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#2C2C2E]/10 hover:border-[#f6c73b]/40 transition-all duration-300 relative overflow-hidden group bg-white/40 cursor-pointer"
                 style={{
                   transform: hoveredRiskCard === 1 ? 'translateY(-6px)' : 'translateY(0px)',
                 }}
@@ -277,7 +279,7 @@ export default function WIDIU() {
                     <span className="text-[10px] font-bold text-[#2C2C2E]/40 font-mono">
                       {isEn ? 'PHASE 02 / EVOLUTION' : 'FASE 02 / EVOLUZIONE'}
                     </span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#2C2C2E]/20 group-hover:bg-[#F2C400] transition-colors duration-300 shadow-[0_0_8px_rgba(242,196,0,0)] group-hover:shadow-[0_0_12px_#F2C400]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#2C2C2E]/20 group-hover:bg-[#f6c73b] transition-colors duration-300 shadow-[0_0_8px_rgba(242,196,0,0)] group-hover:shadow-[0_0_12px_#f6c73b]" />
                   </div>
                   <h4 className="text-lg font-bold text-[#2C2C2E] font-sans">
                     {isEn ? 'Risk Dynamics' : 'Dinamica del Rischio'}
@@ -297,7 +299,7 @@ export default function WIDIU() {
               <div 
                 onMouseEnter={() => setHoveredRiskCard(2)}
                 onMouseLeave={() => setHoveredRiskCard(null)}
-                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#F2C400]/30 hover:border-[#F2C400]/60 transition-all duration-300 relative overflow-hidden group bg-white/80 cursor-pointer"
+                className="lg:col-span-4 flex flex-col justify-between p-8 card-premium border-[#f6c73b]/30 hover:border-[#f6c73b]/60 transition-all duration-300 relative overflow-hidden group bg-white/80 cursor-pointer"
                 style={{
                   transform: hoveredRiskCard === 2 ? 'translateY(-6px)' : 'translateY(0px)',
                 }}
@@ -316,7 +318,7 @@ export default function WIDIU() {
                     <span className="text-[10px] font-bold text-[#2C2C2E] font-mono">
                       {isEn ? 'PHASE 03 / ACTIVE PREVENTION' : 'FASE 03 / PREVENZIONE ATTIVA'}
                     </span>
-                    <span className="w-3 h-3 rounded-full bg-[#F2C400] transition-colors duration-300 shadow-[0_0_12px_rgba(242,196,0,0.8)] group-hover:scale-125" />
+                    <span className="w-3 h-3 rounded-full bg-[#f6c73b] transition-colors duration-300 shadow-[0_0_12px_rgba(242,196,0,0.8)] group-hover:scale-125" />
                   </div>
                   <h4 className="text-lg font-bold text-[#2C2C2E] font-sans">
                     {isEn ? 'WIDIU\'s Response' : 'La Risposta di WIDIU'}
@@ -335,10 +337,10 @@ export default function WIDIU() {
 
             {/* Connecting visual element - Text + Concept Cards Layout (No Images) */}
             <div className="p-8 sm:p-10 rounded-[32px] bg-white/50 border border-black/5 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-[#F2C400]/5 blur-[80px] pointer-events-none" />
+              <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-[#f6c73b]/5 blur-[80px] pointer-events-none" />
               
               <div className="lg:col-span-6 space-y-4 text-left">
-                <span className="text-[9px] font-mono font-bold text-[#F2C400] uppercase tracking-widest block">
+                <span className="text-[9px] font-mono font-bold text-[#f6c73b] uppercase tracking-widest block">
                   {isEn ? 'System Integration' : 'Integrazione di Sistema'}
                 </span>
                 <h4 className="text-xl sm:text-2xl font-bold text-[#2C2C2E] font-sans tracking-tight">
@@ -350,7 +352,7 @@ export default function WIDIU() {
                     : 'Lo smartwatch WIDIU non è un\'isola tecnologica: dialoga costantemente con dailyplatform per unire la sensoristica fisica alla conoscenza delle mansioni lavorative e dei DVR aziendali. Questo consente di identificare anomalie personalizzate sul profilo effettivo del lavoratore.'}
                 </p>
                 <div className="pt-2 flex items-center gap-2 text-xs font-mono font-bold text-[#2C2C2E]/85">
-                  <span className="w-2 h-2 rounded-full bg-[#F2C400] animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-[#f6c73b] animate-pulse" />
                   {isEn ? 'Real-time synchronization with local servers' : 'Sincronizzazione in tempo reale con i server locali'}
                 </div>
               </div>
@@ -359,7 +361,7 @@ export default function WIDIU() {
               <div className="lg:col-span-6 flex flex-col sm:flex-row gap-4 items-center justify-center relative w-full h-full min-h-[220px]">
                 {/* Micro Concept Cards with dashed connections */}
                 <div className="flex flex-col gap-3 w-full sm:w-1/2">
-                  <div className="p-4 rounded-xl bg-white border border-[#F2C400]/15 shadow-sm space-y-1 transition-all duration-300 hover:border-[#F2C400]/40">
+                  <div className="p-4 rounded-xl bg-white border border-[#f6c73b]/15 shadow-sm space-y-1 transition-all duration-300 hover:border-[#f6c73b]/40">
                     <span className="text-[9px] font-mono font-bold text-[#2C2C2E]/50 block">
                       {isEn ? 'PHYSICAL INPUT' : 'INPUT FISICO'}
                     </span>
@@ -368,7 +370,7 @@ export default function WIDIU() {
                       {isEn ? 'Biometrics, postures, and acceleration in real time.' : 'Dati biometrici, posture e accelerazione in tempo reale.'}
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl bg-white border border-black/5 shadow-sm space-y-1 transition-all duration-300 hover:border-[#F2C400]/40">
+                  <div className="p-4 rounded-xl bg-white border border-black/5 shadow-sm space-y-1 transition-all duration-300 hover:border-[#f6c73b]/40">
                     <span className="text-[9px] font-mono font-bold text-[#2C2C2E]/50 block">
                       {isEn ? 'REGULATORY INPUT' : 'INPUT NORMATIVO'}
                     </span>
@@ -381,17 +383,17 @@ export default function WIDIU() {
 
                 {/* Connection line representation */}
                 <div className="hidden sm:flex flex-col items-center justify-center h-full w-8">
-                  <div className="w-[1px] h-12 border-l border-dashed border-[#F2C400]/40" />
-                  <div className="w-3 h-3 rounded-full bg-[#F2C400] shadow-[0_0_8px_#F2C400] flex items-center justify-center my-1">
+                  <div className="w-[1px] h-12 border-l border-dashed border-[#f6c73b]/40" />
+                  <div className="w-3 h-3 rounded-full bg-[#f6c73b] shadow-[0_0_8px_#f6c73b] flex items-center justify-center my-1">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#2C2C2E]" />
                   </div>
-                  <div className="w-[1px] h-12 border-l border-dashed border-[#F2C400]/40" />
+                  <div className="w-[1px] h-12 border-l border-dashed border-[#f6c73b]/40" />
                 </div>
 
                 <div className="w-full sm:w-1/2">
-                  <div className="p-5 rounded-2xl bg-[#2C2C2E] border border-[#F2C400]/30 shadow-md text-[#F0EFEB] space-y-2 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-[100px] h-[100px] rounded-full bg-[#F2C400]/5 blur-[30px] pointer-events-none" />
-                    <span className="text-[8px] font-mono font-bold text-[#F2C400] uppercase tracking-widest">
+                  <div className="p-5 rounded-2xl bg-[#2C2C2E] border border-[#f6c73b]/30 shadow-md text-[#F0EFEB] space-y-2 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-[100px] h-[100px] rounded-full bg-[#f6c73b]/5 blur-[30px] pointer-events-none" />
+                    <span className="text-[8px] font-mono font-bold text-[#f6c73b] uppercase tracking-widest">
                       {isEn ? 'PREVENTIVE OUTPUT' : 'OUTPUT PREVENTIVO'}
                     </span>
                     <h5 className="text-xs font-bold font-sans tracking-tight text-white">dailyplatform AI</h5>
@@ -427,10 +429,10 @@ export default function WIDIU() {
               
               {/* Left Column: Main WIDIU Image and Active Status */}
               <div className="lg:col-span-5 flex flex-col justify-between bg-white/45 p-6 sm:p-8 rounded-[32px] border border-black/5 relative overflow-hidden h-full">
-                <div className="absolute top-0 left-0 w-full h-full bg-[#F2C400]/3 blur-[120px] pointer-events-none" />
+                <div className="absolute top-0 left-0 w-full h-full bg-[#f6c73b]/3 blur-[120px] pointer-events-none" />
                 
                 <div className="space-y-4 text-left z-10">
-                  <span className="text-[10px] font-mono font-bold text-[#F2C400] uppercase tracking-widest">
+                  <span className="text-[10px] font-mono font-bold text-[#f6c73b] uppercase tracking-widest">
                     {isEn ? 'Active Device ●' : 'Dispositivo Attivo ●'}
                   </span>
                   <h4 className="text-xl font-bold font-sans text-[#2C2C2E] tracking-tight">
@@ -446,10 +448,10 @@ export default function WIDIU() {
                 {/* Main WIDIU Image Frame */}
                 <div className="my-8 flex justify-center items-center z-10 relative">
                   {/* Dynamic Alert Pulse Rings */}
-                  <div className="absolute w-[240px] h-[240px] rounded-full border border-[#F2C400]/30 animate-[ping_3s_infinite] pointer-events-none z-0" />
+                  <div className="absolute w-[240px] h-[240px] rounded-full border border-[#f6c73b]/30 animate-[ping_3s_infinite] pointer-events-none z-0" />
                   <div className="absolute w-[280px] h-[280px] rounded-full border border-red-500/10 animate-[ping_4.5s_infinite] pointer-events-none z-0" />
 
-                  <div className="relative w-full max-w-[320px] aspect-square rounded-[24px] overflow-hidden bg-white/95 border border-[#F2C400]/25 p-6 shadow-[0_12px_40px_rgba(242,196,0,0.06)] hover:border-[#F2C400]/45 transition-all duration-500 group flex items-center justify-center z-10">
+                  <div className="relative w-full max-w-[320px] aspect-square rounded-[24px] overflow-hidden bg-white/95 border border-[#f6c73b]/25 p-6 shadow-[0_12px_40px_rgba(242,196,0,0.06)] hover:border-[#f6c73b]/45 transition-all duration-500 group flex items-center justify-center z-10">
                     <InteractiveImage
                       src={widiuImage}
                       alt="WIDIU Smartwatch"
@@ -457,17 +459,17 @@ export default function WIDIU() {
                       objectFit="contain"
                       className="w-full h-full"
                     />
-                    <div className="absolute inset-0 bg-[#F2C400]/2 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-[#f6c73b]/2 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500" />
                     
                     {/* Active Alert Overlay Indicator (Intelligent Preventative Alert) */}
-                    <div className="absolute bottom-4 left-4 right-4 bg-[#2C2C2E]/95 border border-[#F2C400]/40 backdrop-blur-md rounded-xl p-2.5 flex items-center justify-between shadow-lg animate-pulse">
+                    <div className="absolute bottom-4 left-4 right-4 bg-[#2C2C2E]/95 border border-[#f6c73b]/40 backdrop-blur-md rounded-xl p-2.5 flex items-center justify-between shadow-lg animate-pulse">
                       <div className="flex items-center gap-2">
                         <span className="relative flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                         </span>
                         <div className="text-left">
-                          <span className="text-[8px] font-mono text-[#F2C400] font-bold uppercase tracking-wider block leading-none">
+                          <span className="text-[8px] font-mono text-[#f6c73b] font-bold uppercase tracking-wider block leading-none">
                             {isEn ? 'Detection' : 'Rilevamento'}
                           </span>
                           <span className="text-[10px] font-sans font-bold text-white tracking-tight leading-none block mt-0.5">
@@ -475,13 +477,13 @@ export default function WIDIU() {
                           </span>
                         </div>
                       </div>
-                      <span className="text-[8px] font-mono px-2 py-0.5 rounded-md bg-[#F2C400]/20 text-[#F2C400] font-bold border border-[#F2C400]/30">
+                      <span className="text-[8px] font-mono px-2 py-0.5 rounded-md bg-[#f6c73b]/20 text-[#f6c73b] font-bold border border-[#f6c73b]/30">
                         {isEn ? 'ALERT SENT' : 'ALERT INVIATO'}
                       </span>
                     </div>
 
                     {/* Beacon light indicator at top of watch */}
-                    <div className="absolute top-4 right-4 flex items-center gap-1 bg-[#F2C400] text-[#2C2C2E] font-mono text-[9px] font-bold px-2.5 py-0.5 rounded-full border border-white/20 shadow-sm">
+                    <div className="absolute top-4 right-4 flex items-center gap-1 bg-[#f6c73b] text-[#2C2C2E] font-mono text-[9px] font-bold px-2.5 py-0.5 rounded-full border border-white/20 shadow-sm">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#2C2C2E] animate-ping" />
                       {isEn ? 'PREVENTION' : 'PREVENZIONE'}
                     </div>
@@ -507,14 +509,14 @@ export default function WIDIU() {
                       onMouseEnter={() => setActiveCat(cat.id)}
                       className={`widiu-sensor-card p-6 sm:p-7 rounded-[28px] border transition-all duration-300 flex flex-col justify-between min-h-[190px] h-full relative overflow-hidden group bg-white/50 ${
                         isActive 
-                          ? 'border-[#F2C400] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.02)]' 
-                          : 'border-black/5 hover:border-[#F2C400]/30 hover:bg-white/70'
+                          ? 'border-[#f6c73b] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.02)]' 
+                          : 'border-black/5 hover:border-[#f6c73b]/30 hover:bg-white/70'
                       }`}
                     >
                       <div className="space-y-4 text-left">
                         <div className="flex items-center justify-between">
                           <div className={`p-2.5 rounded-xl transition-all duration-300 ${
-                            isActive ? 'bg-[#F2C400] text-[#2C2C2E]' : 'bg-[#2C2C2E]/5 text-[#2C2C2E] group-hover:bg-[#F2C400]/10'
+                            isActive ? 'bg-[#f6c73b] text-[#2C2C2E]' : 'bg-[#2C2C2E]/5 text-[#2C2C2E] group-hover:bg-[#f6c73b]/10'
                           }`}>
                             <Icon className="w-5 h-5 stroke-[1.75]" />
                           </div>
@@ -524,7 +526,7 @@ export default function WIDIU() {
                         </div>
 
                         <div className="space-y-2">
-                          <h4 className="text-base font-bold font-sans text-[#2C2C2E] tracking-tight group-hover:text-[#F2C400] transition-colors duration-200">
+                          <h4 className="text-base font-bold font-sans text-[#2C2C2E] tracking-tight group-hover:text-[#f6c73b] transition-colors duration-200">
                             {cat.title}
                           </h4>
                           <p className="text-[11px] leading-relaxed font-mono text-[#5E5E62]">
@@ -572,7 +574,7 @@ export default function WIDIU() {
               {/* Dynamic Connecting Line - Desktop Only */}
               <div className="hidden lg:block absolute top-[4.5rem] left-[10%] right-[10%] h-[3px] bg-gray-200 z-0 overflow-hidden">
                 <motion.div 
-                  className="h-full bg-[#F2C400]" 
+                  className="h-full bg-[#f6c73b]" 
                   initial={{ width: '0%' }}
                   animate={{ 
                     width: hoveredFlowStep !== null ? `${(hoveredFlowStep / 4) * 100}%` : '20%' 
@@ -595,12 +597,12 @@ export default function WIDIU() {
                     >
                       {/* Numeric Badge & Connecting Dot */}
                       <div className="flex flex-col items-center lg:items-start w-full relative">
-                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 border ${isHovered ? 'bg-[#F2C400] text-[#2C2C2E] border-[#F2C400] scale-110 shadow-[0_8px_20px_rgba(242,196,0,0.25)]' : 'bg-white text-[#2C2C2E]/60 border-black/5 group-hover:border-[#F2C400]/40'}`}>
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 border ${isHovered ? 'bg-[#f6c73b] text-[#2C2C2E] border-[#f6c73b] scale-110 shadow-[0_8px_20px_rgba(242,196,0,0.25)]' : 'bg-white text-[#2C2C2E]/60 border-black/5 group-hover:border-[#f6c73b]/40'}`}>
                           <IconComponent className="w-6 h-6 stroke-[1.75]" />
                         </div>
                         
                         <div className="absolute top-1 left-2 sm:left-4 lg:-top-5 lg:left-0">
-                          <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/30 group-hover:text-[#F2C400] transition-colors duration-300">
+                          <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/30 group-hover:text-[#f6c73b] transition-colors duration-300">
                             STEP {stepItem.step}
                           </span>
                         </div>
@@ -608,7 +610,7 @@ export default function WIDIU() {
 
                       {/* Content details */}
                       <div className="mt-5 space-y-2">
-                        <h3 className={`text-base font-bold font-sans tracking-tight uppercase transition-colors duration-300 ${isHovered ? 'text-[#F2C400]' : 'text-[#2C2C2E]'}`}>
+                        <h3 className={`text-base font-bold font-sans tracking-tight uppercase transition-colors duration-300 ${isHovered ? 'text-[#f6c73b]' : 'text-[#2C2C2E]'}`}>
                           {stepItem.title}
                         </h3>
                         <p className="text-xs text-[#5E5E62] leading-relaxed font-mono font-light">
@@ -618,7 +620,7 @@ export default function WIDIU() {
 
                       {/* Visual separator for mobile vertical layout */}
                       {idx < 4 && (
-                        <div className="lg:hidden w-[2px] h-10 bg-gradient-to-b from-[#F2C400] to-transparent mt-6 self-center" />
+                        <div className="lg:hidden w-[2px] h-10 bg-gradient-to-b from-[#f6c73b] to-transparent mt-6 self-center" />
                       )}
                     </div>
                   );
@@ -627,132 +629,116 @@ export default function WIDIU() {
             </div>
           </div>
 
-          {/* Alert dinamici e Dati in prevenzione (Symmetric layout) */}
-          <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch text-left">
+          {/* Alert dinamici e Dati in prevenzione (Macroservizi Card Layout) */}
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 relative z-10 text-left w-full">
             
-            {/* Card 1: Alert Dinamici */}
-            <div className="p-8 md:p-10 card-premium flex flex-col justify-between h-full bg-white/50 border border-black/5 rounded-[28px] hover:border-[#F2C400]/30 transition-all duration-300">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <span className="p-3 rounded-xl bg-[#F2C400]/15 text-[#2C2C2E]">
-                    <Bell className="w-6 h-6" />
-                  </span>
-                  <h4 className="text-xl font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
-                    {isEn ? 'Dynamic Alerts' : 'Alert dinamici'}
-                  </h4>
-                </div>
-                
-                <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62]">
-                  {isEn
-                    ? 'WIDIU is designed to support a progressive and contextualized alert system, not dependent on a single parameter but generated by combining fatigue, physiology, and environment.'
-                    : 'WIDIU è progettato per supportare un sistema di alert progressivi e contestualizzati, non dipendenti da un singolo parametro ma generati combinando fatica, fisiologia e ambiente.'}
-                </p>
-                
-                <div className="space-y-3 pt-2">
-                  <p className="text-xs font-bold font-mono text-[#2C2C2E]">
-                    {isEn
-                      ? 'Based on company configuration, alerts suggest immediate actions such as:'
-                      : 'In base alla configurazione aziendale, gli alert suggeriscono azioni immediate come:'}
-                  </p>
-                  <ul className="space-y-2">
-                    {(isEn
-                      ? [
-                          'Verify the real conditions of the worker',
-                          'Take a scheduled recovery break',
-                          'Hydrate and regenerate physical energy',
-                          'Check exposure to the working environment',
-                          'Correct improper working posture',
-                          'Temporarily halt risk-prone activity',
-                          'Request prompt supervisor intervention',
-                        ]
-                      : [
-                          'Verificare le condizioni reali del lavoratore',
-                          'Effettuare una pausa di recupero programmata',
-                          'Idratarsi e rigenerare le energie fisiche',
-                          'Controllare l\'esposizione all\'ambiente di lavoro',
-                          'Correggere la postura lavorativa scorretta',
-                          'Interrompere temporaneamente l\'attività a rischio',
-                          'Richiedere l\'intervento tempestivo del preposto',
-                        ]
-                    ).map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-xs font-mono text-[#5E5E62]">
-                        <ArrowRight className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+            {/* Card 1: Alert dinamici e raccomandazioni */}
+            <div className="bg-[#2C2C2E] text-white rounded-[28px] border border-white/10 p-6 sm:p-8 hover:border-[#f6c73b] shadow-xl transition-all duration-500 relative flex flex-col justify-between group overflow-hidden">
+              {/* Top Ambient Glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#f6c73b]/0 via-[#f6c73b]/0 to-[#f6c73b]/10 transition-opacity duration-500 pointer-events-none rounded-[28px]" />
 
-              <div className="mt-8 pt-4 border-t border-black/[0.04]">
-                <p className="text-xs sm:text-sm font-mono text-[#2C2C2E] font-medium leading-relaxed">
-                  {isEn
-                    ? 'Alerts help manage emerging criticalities on the spot to prevent accidents.'
-                    : 'Gli avvisi aiutano a gestire sul momento le criticità emergenti per prevenire gli incidenti.'}
-                </p>
+              <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
+                <div>
+                  {/* Icon & Upper Label / Badge */}
+                  <div className="flex items-center justify-between gap-3 mb-5">
+                    <div className="w-12 h-12 rounded-xl bg-[#f6c73b]/20 border border-[#f6c73b]/40 text-[#f6c73b] flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-[#f6c73b] group-hover:text-[#2C2C2E] transition-all duration-300">
+                      <BellRing className="w-6 h-6 stroke-[2]" />
+                    </div>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#f6c73b] bg-[#f6c73b]/10 px-3.5 py-1.5 rounded-full border border-[#f6c73b]/30">
+                      {isEn ? 'ACTIVE PREVENTION' : 'PREVENZIONE ATTIVA'}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h4 className="text-xl sm:text-2xl font-bold font-sans text-white tracking-tight mb-3">
+                    {isEn ? 'Dynamic alerts and recommendations' : 'Alert dinamici e raccomandazioni'}
+                  </h4>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm font-mono text-white/80 leading-relaxed mb-5">
+                    {isEn
+                      ? 'WIDIU supports progressive and contextual alerts generated by the combined reading of biometric parameters, environmental conditions and operational dynamics. Alerts help identify situations that require attention, such as taking a break, hydrating, checking work conditions, reviewing posture or involving a supervisor.'
+                      : 'WIDIU supporta alert progressivi e contestualizzati, generati dalla lettura combinata di parametri biometrici, condizioni ambientali e dinamiche operative. Gli avvisi aiutano a riconoscere situazioni che richiedono attenzione, come pausa, idratazione, verifica delle condizioni di lavoro, controllo della postura o intervento del preposto.'}
+                  </p>
+
+                  {/* 3 Key Points */}
+                  <div className="bg-white/5 rounded-2xl p-4 sm:p-5 border border-white/10 space-y-3">
+                    <span className="text-[9px] font-mono font-bold text-[#f6c73b] uppercase tracking-widest block">
+                      {isEn ? 'Key Points' : 'Punti Chiave'}
+                    </span>
+                    <div className="space-y-2.5">
+                      {(isEn ? [
+                        'Progressive and contextual alerts',
+                        'Combined reading of biometric and environmental parameters',
+                        'Support for breaks, hydration, posture and supervisor involvement'
+                      ] : [
+                        'Alert progressivi e contestualizzati',
+                        'Lettura combinata di parametri biometrici e ambientali',
+                        'Supporto a pause, idratazione, postura e intervento del preposto'
+                      ]).map((point, i) => (
+                        <div key={i} className="flex items-start gap-2.5 text-xs font-mono text-white/90">
+                          <CheckCircle className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5" />
+                          <span className="leading-snug">{point}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Card 2: Dati in Prevenzione */}
-            <div className="p-8 md:p-10 card-premium flex flex-col justify-between h-full bg-white/50 border border-black/5 rounded-[28px] hover:border-[#F2C400]/30 transition-all duration-300">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <span className="p-3 rounded-xl bg-[#F2C400]/15 text-[#2C2C2E]">
-                    <BarChart3 className="w-6 h-6" />
-                  </span>
-                  <h4 className="text-xl font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
-                    {isEn ? 'Data in Prevention' : 'Dati in prevenzione'}
-                  </h4>
-                </div>
-                
-                <p className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62]">
-                  {isEn
-                    ? 'Information collected by WIDIU is reorganized by dailyplatform to feed HSE compliance and protect worker integrity.'
-                    : 'Le informazioni raccolte da WIDIU vengono riorganizzate da dailyplatform per alimentare la compliance HSE e proteggere l\'integrità del lavoratore.'}
-                </p>
-                
-                <div className="space-y-3 pt-2">
-                  <p className="text-xs font-bold font-mono text-[#2C2C2E]">
-                    {isEn
-                      ? 'Collected data provides companies with integrated operational tools including:'
-                      : 'I dati raccolti offrono alle aziende strumenti operativi integrati tra cui:'}
-                  </p>
-                  <ul className="space-y-2">
-                    {(isEn
-                      ? [
-                          'Biometric, environmental, and operational indicators',
-                          'Dedicated dashboards for risks and historical trends',
-                          'Configurable real-time predictive alerts',
-                          'Dynamic area risk exposure maps',
-                          'Detailed and executive HSE periodic reports',
-                          'Statistical analysis of recurring issues',
-                          'Integrated mitigation protocols and DVR support',
-                        ]
-                      : [
-                          'Indicatori biometrici, ambientali e operativi',
-                          'Dashboard dedicate per rischi e trend storici',
-                          'Alert predittivi configurabili in tempo reale',
-                          'Mappe dinamiche di esposizione ai rischi d\'area',
-                          'Report periodici dettagliati e sintetici HSE',
-                          'Analisi statistica delle criticità ricorrenti',
-                          'Protocolli integrati di mitigazione e supporto DVR',
-                        ]
-                    ).map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-xs font-mono text-[#5E5E62]">
-                        <ArrowRight className="w-3.5 h-3.5 text-[#F2C400] shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+            {/* Card 2: Dati in prevenzione */}
+            <div className="bg-[#2C2C2E] text-white rounded-[28px] border border-white/10 p-6 sm:p-8 hover:border-[#f6c73b] shadow-xl transition-all duration-500 relative flex flex-col justify-between group overflow-hidden">
+              {/* Top Ambient Glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#f6c73b]/0 via-[#f6c73b]/0 to-[#f6c73b]/10 transition-opacity duration-500 pointer-events-none rounded-[28px]" />
 
-              <div className="mt-8 pt-4 border-t border-black/[0.04]">
-                <p className="text-xs sm:text-sm font-mono text-[#2C2C2E] font-medium leading-relaxed">
-                  {isEn
-                    ? 'The goal is not accumulating data, but making it immediately understandable and actionable.'
-                    : 'L\'obiettivo non è accumulare dati, ma renderli immediatamente comprensibili e utilizzabili.'}
-                </p>
+              <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
+                <div>
+                  {/* Icon & Upper Label / Badge */}
+                  <div className="flex items-center justify-between gap-3 mb-5">
+                    <div className="w-12 h-12 rounded-xl bg-[#f6c73b]/20 border border-[#f6c73b]/40 text-[#f6c73b] flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-[#f6c73b] group-hover:text-[#2C2C2E] transition-all duration-300">
+                      <BarChart3 className="w-6 h-6 stroke-[2]" />
+                    </div>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#f6c73b] bg-[#f6c73b]/10 px-3.5 py-1.5 rounded-full border border-[#f6c73b]/30">
+                      {isEn ? 'OPERATIONAL DATA' : 'DATI OPERATIVI'}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h4 className="text-xl sm:text-2xl font-bold font-sans text-white tracking-tight mb-3">
+                    {isEn ? 'Data for prevention' : 'Dati in prevenzione'}
+                  </h4>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm font-mono text-white/80 leading-relaxed mb-5">
+                    {isEn
+                      ? 'The data collected by WIDIU is transformed into indicators, dashboards, dynamic maps, reports and analyses useful for understanding critical issues, trends and recurring conditions. The goal is not to accumulate data, but to make it understandable and usable to improve risk assessment, protocols and operational decisions.'
+                      : 'I dati raccolti da WIDIU vengono trasformati in indicatori, dashboard, mappe dinamiche, report e analisi utili a comprendere criticità, trend e condizioni broad. L’obiettivo non è accumulare dati, ma renderli comprensibili e utilizzabili per migliorare valutazione dei rischi, protocolli e decisioni operative.'}
+                  </p>
+
+                  {/* 3 Key Points */}
+                  <div className="bg-white/5 rounded-2xl p-4 sm:p-5 border border-white/10 space-y-3">
+                    <span className="text-[9px] font-mono font-bold text-[#f6c73b] uppercase tracking-widest block">
+                      {isEn ? 'Key Points' : 'Punti Chiave'}
+                    </span>
+                    <div className="space-y-2.5">
+                      {(isEn ? [
+                        'Indicators, dashboards and dynamic maps',
+                        'Reports and analyses on critical issues and recurring trends',
+                        'Support for risk assessment, protocols and operational decisions'
+                      ] : [
+                        'Indicatori, dashboard e mappe dinamiche',
+                        'Report e analisi su criticità e trend ricorrenti',
+                        'Supporto a valutazione dei rischi, protocolli e decisioni operative'
+                      ]).map((point, i) => (
+                        <div key={i} className="flex items-start gap-2.5 text-xs font-mono text-white/90">
+                          <CheckCircle className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5" />
+                          <span className="leading-snug">{point}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -782,13 +768,13 @@ export default function WIDIU() {
             {/* 4 Card Normative */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
               {/* Card 1: GDPR */}
-              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#F2C400]/30 transition-all duration-300">
+              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#f6c73b]/30 transition-all duration-300">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2C400]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f6c73b]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
                       GDPR
                     </span>
-                    <ShieldCheck className="w-5 h-5 text-[#F2C400]" />
+                    <ShieldCheck className="w-5 h-5 text-[#f6c73b]" />
                   </div>
                   <h4 className="text-base font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
                     {isEn ? 'Personal and Health Data Protection' : 'Protezione dei dati personali e sanitari'}
@@ -802,13 +788,13 @@ export default function WIDIU() {
               </div>
 
               {/* Card 2: D.Lgs. 81/2008 */}
-              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#F2C400]/30 transition-all duration-300">
+              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#f6c73b]/30 transition-all duration-300">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2C400]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f6c73b]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
                       D.Lgs. 81/2008
                     </span>
-                    <FileText className="w-5 h-5 text-[#F2C400]" />
+                    <FileText className="w-5 h-5 text-[#f6c73b]" />
                   </div>
                   <h4 className="text-base font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
                     {isEn ? 'Workplace Health and Safety' : 'Salute e sicurezza nei luoghi di lavoro'}
@@ -822,13 +808,13 @@ export default function WIDIU() {
               </div>
 
               {/* Card 3: AI Act */}
-              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#F2C400]/30 transition-all duration-300">
+              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#f6c73b]/30 transition-all duration-300">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2C400]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f6c73b]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
                       AI Act
                     </span>
-                    <Brain className="w-5 h-5 text-[#F2C400]" />
+                    <Brain className="w-5 h-5 text-[#f6c73b]" />
                   </div>
                   <h4 className="text-base font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
                     {isEn ? 'Trustworthy and Supervised Artificial Intelligence' : 'Intelligenza Artificiale affidabile e supervisionata'}
@@ -842,13 +828,13 @@ export default function WIDIU() {
               </div>
 
               {/* Card 4: MDR */}
-              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#F2C400]/30 transition-all duration-300">
+              <div className="p-6 md:p-8 card-premium flex flex-col justify-between bg-white/60 border border-black/5 rounded-[24px] hover:border-[#f6c73b]/30 transition-all duration-300">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2C400]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f6c73b]/15 text-[#2C2C2E] font-bold font-mono text-xs uppercase tracking-wider">
                       MDR
                     </span>
-                    <Stethoscope className="w-5 h-5 text-[#F2C400]" />
+                    <Stethoscope className="w-5 h-5 text-[#f6c73b]" />
                   </div>
                   <h4 className="text-base font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
                     {isEn ? 'Medical Devices, where applicable' : 'Dispositivi medici, ove applicabile'}
@@ -863,9 +849,9 @@ export default function WIDIU() {
             </div>
 
             {/* Box di chiusura WIDIU */}
-            <div className="p-8 md:p-10 rounded-[28px] bg-gradient-to-br from-white to-[#F0EFEB] border border-[#F2C400]/25 shadow-sm space-y-4">
+            <div className="p-8 md:p-10 rounded-[28px] bg-gradient-to-br from-white to-[#F0EFEB] border border-[#f6c73b]/25 shadow-sm space-y-4">
               <div className="flex items-center gap-3">
-                <span className="p-2.5 rounded-xl bg-[#F2C400]/20 text-[#2C2C2E]">
+                <span className="p-2.5 rounded-xl bg-[#f6c73b]/20 text-[#2C2C2E]">
                   <EyeOff className="w-5 h-5" />
                 </span>
                 <h4 className="text-xl font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">
@@ -893,7 +879,7 @@ export default function WIDIU() {
             <div className="pt-2">
               <Link
                 to="/contatti"
-                className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase"
+                className="inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase bg-[#f6c73b] text-[#2C2C2E] border border-[#f6c73b] rounded-[18px] hover:bg-[#f6c73b]/90 transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(242,196,0,0.4)] cursor-pointer"
               >
                 {isEn ? 'Explore WIDIU' : 'Scopri WIDIU'}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 stroke-[2.5]" />

@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {motion, useMotionValue, useSpring, useTransform} from 'motion/react';
-import lavoratriceWidiu from '../assets/images/Lavoratrice con WIDIU.png';
+import lavoratriceWidiu from '../assets/images/Lavoratrice-con-trave-di-cemento-WIDIU.png';
 
 interface WidiuWorkerInteractiveProps {
   alt?: string;
@@ -65,7 +65,7 @@ export default function WidiuWorkerInteractive({
       {/* Dynamic soft background halo - becomes brighter on hover */}
       <motion.div
         id="widiu-worker-halo"
-        className="absolute w-72 h-72 sm:w-80 sm:h-80 rounded-full bg-[#F2C400]/8 blur-[70px] pointer-events-none z-0"
+        className="absolute w-72 h-72 sm:w-80 sm:h-80 rounded-full bg-[#f6c73b]/8 blur-[70px] pointer-events-none z-0"
         animate={{
           scale: isHovered ? 1.25 : 1.0,
           opacity: isHovered ? 1.0 : 0.7,
@@ -94,7 +94,7 @@ export default function WidiuWorkerInteractive({
             cy="200"
             r="120"
             fill="none"
-            stroke="#F2C400"
+            stroke="#f6c73b"
             strokeWidth="0.75"
             strokeDasharray="6 12 4 8"
             className="origin-center"
@@ -114,7 +114,7 @@ export default function WidiuWorkerInteractive({
             cy="200"
             r="160"
             fill="none"
-            stroke="#F2C400"
+            stroke="#f6c73b"
             strokeWidth="0.5"
             strokeDasharray="16 20"
             className="origin-center"
@@ -165,32 +165,32 @@ export default function WidiuWorkerInteractive({
         />
 
         {/* 1. SMARTWATCH PULSE & BEACON (Symbolizing the active WIDIU signal) */}
-        {/* Placed precisely over her smartwatch wrist device in the lower portion of the image */}
+        {/* Placed precisely over her smartwatch wrist device elevated on the concrete beam */}
         <div 
           className="absolute z-30 pointer-events-none"
           style={{
-            top: '80%',
-            left: '52%',
+            top: '48%',
+            left: '50%',
             transform: 'translateZ(45px) translate(-50%, -50%)',
           }}
         >
           {/* Pulsing signal halo */}
-          <span className="absolute inline-flex h-12 w-12 rounded-full bg-[#F2C400]/40 opacity-75 animate-ping -translate-x-1/2 -translate-y-1/2" />
+          <span className="absolute inline-flex h-12 w-12 rounded-full bg-[#f6c73b]/40 opacity-75 animate-ping -translate-x-1/2 -translate-y-1/2" />
           
           {/* Core signal dot */}
-          <span className="relative flex h-3 w-3 rounded-full bg-[#F2C400] shadow-[0_0_12px_#F2C400]" />
+          <span className="relative flex h-3.5 w-3.5 rounded-full bg-[#f6c73b] shadow-[0_0_14px_#f6c73b] border-2 border-[#2C2C2E]" />
 
-          {/* Smartwatch active tiny tag label */}
+          {/* Smartwatch active tag label */}
           <motion.div
-            className="absolute left-6 top-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-[#2C2C2E]/90 border border-[#F2C400]/40 backdrop-blur-md shadow-lg"
+            className="absolute left-6 top-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#2C2C2E]/95 border border-[#f6c73b]/50 backdrop-blur-md shadow-xl"
             animate={{
-              opacity: isHovered ? 1.0 : 0.85,
+              opacity: isHovered ? 1.0 : 0.9,
               x: isHovered ? 4 : 0,
             }}
             transition={{duration: 0.3}}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F2C400] animate-pulse" />
-            <span className="text-[8px] font-mono font-bold tracking-wider text-white whitespace-nowrap uppercase">WIDIU ATTIVO</span>
+            <span className="w-2 h-2 rounded-full bg-[#f6c73b] animate-pulse" />
+            <span className="text-[9px] font-mono font-bold tracking-wider text-white whitespace-nowrap uppercase">MONITORAGGIO ATTIVO</span>
           </motion.div>
         </div>
 
@@ -212,7 +212,7 @@ export default function WidiuWorkerInteractive({
 
         {/* Floating telemetry lines around mouse hover */}
         <div 
-          className="absolute inset-0 rounded-3xl border border-[#F2C400]/0 group-hover:border-[#F2C400]/20 pointer-events-none transition-all duration-700 z-10"
+          className="absolute inset-0 rounded-3xl border border-[#f6c73b]/0 group-hover:border-[#f6c73b]/20 pointer-events-none transition-all duration-700 z-10"
           style={{
             transform: 'translateZ(10px) scale(1.05)',
           }}
@@ -220,7 +220,7 @@ export default function WidiuWorkerInteractive({
       </motion.div>
 
       {/* Scontornata premium tag indicator */}
-      <div className="absolute bottom-1 right-1 sm:right-6 z-20 px-2.5 py-1 rounded-md bg-[#2C2C2E]/90 backdrop-blur-md border border-[#F2C400]/30 text-[8px] font-mono font-bold tracking-widest text-[#F2C400] uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 shadow-md">
+      <div className="absolute bottom-1 right-1 sm:right-6 z-20 px-2.5 py-1 rounded-md bg-[#2C2C2E]/90 backdrop-blur-md border border-[#f6c73b]/30 text-[8px] font-mono font-bold tracking-widest text-[#f6c73b] uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 shadow-md">
         AI PREDICTOR
       </div>
     </div>
@@ -325,7 +325,7 @@ function InteractiveDot({
 
   return (
     <motion.div
-      className="absolute rounded-full bg-[#F2C400]"
+      className="absolute rounded-full bg-[#f6c73b]"
       style={{
         left: `${baseX}%`,
         top: `${baseY}%`,

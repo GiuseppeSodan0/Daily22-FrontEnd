@@ -12,7 +12,7 @@ import {
   Users,
   Radio,
   TrendingUp,
-  Signature,
+  Workflow,
   Cpu,
   Laptop,
   MessageSquare,
@@ -34,11 +34,25 @@ import {
   ShieldCheck,
   ChevronLeft,
   ChevronRight,
+  PenTool,
+  Bus,
+  Anchor,
+  Zap,
+  Wrench,
+  ShoppingBag,
+  Coffee,
+  Sprout,
+  Recycle,
+  FlaskConical,
+  GraduationCap,
+  Landmark,
+  ShieldAlert,
+  Ticket,
 } from 'lucide-react';
 import InteractiveImage from './InteractiveImage';
 
 // Import images representing the dailyplatform dashboard and ecosystem
-import dailyPlatformUi from '../assets/images/Dashboard dailyplatform.png';
+import dailyPlatformUi from '../assets/images/dashboard dailyplatform.png';
 import supervisorIot from '../assets/images/supervisor_iot_1780517606283.png';
 import archivioDailyplatform from '../assets/images/Archivio dailyplatform.png';
 
@@ -226,7 +240,7 @@ export default function DailyPlatform() {
     {
       title: t('dailyplatform.tool7Title'),
       desc: t('dailyplatform.tool7Desc'),
-      icon: Signature,
+      icon: PenTool,
     },
     {
       title: t('dailyplatform.tool8Title'),
@@ -264,31 +278,31 @@ export default function DailyPlatform() {
       desc: t('dailyplatform.nodeCenterDesc'),
       x: '50%',
       y: '50%',
-      color: 'bg-[#2C2C2E] border-[#F2C400] text-white',
+      color: 'bg-[#2C2C2E] border-[#f6c73b] text-white',
     },
     {
-      id: 'salvatore',
-      title: 'Salvatore',
-      role: t('dailyplatform.nodeSalRole'),
-      desc: t('dailyplatform.nodeSalDesc'),
+      id: 'daily-ia',
+      title: 'daily IA',
+      role: 'Intelligenza Artificiale HSE',
+      desc: 'Sintesi di documenti, analisi normative e supporto alle decisioni sulla sicurezza.',
       x: '50%',
       y: '20%',
       color: 'bg-white border-black/10 text-[#2C2C2E]',
     },
     {
-      id: 'widiu',
-      title: 'WIDIU',
-      role: t('dailyplatform.nodeWidRole'),
-      desc: t('dailyplatform.nodeWidDesc'),
+      id: 'crm-hse',
+      title: 'CRM HSE',
+      role: 'Gestione Dati & Scadenze',
+      desc: 'Registro lavoratori, DPI, visite mediche, corsi di formazione e attrezzature.',
       x: '18%',
       y: '50%',
-      color: 'bg-[#white] border-black/10 text-[#2C2C2E]',
+      color: 'bg-white border-black/10 text-[#2C2C2E]',
     },
     {
-      id: 'vera',
-      title: 'Vera',
-      role: t('dailyplatform.nodeVeraRole'),
-      desc: t('dailyplatform.nodeVeraDesc'),
+      id: 'daily-safety-lab',
+      title: 'Daily Safety Lab',
+      role: 'Consulenza & Formazione',
+      desc: 'Servizi operativi sul campo, audit, modelli di organizzazione e formazione professionale.',
       x: '82%',
       y: '50%',
       color: 'bg-white border-black/10 text-[#2C2C2E]',
@@ -304,15 +318,48 @@ export default function DailyPlatform() {
     }
   ];
 
-  // 5. Sector Tabs State
+  // 5. Sector Tabs & Carousel State
   const [activeSector, setActiveSector] = useState<number>(0);
+  const [sectorsScrollProgress, setSectorsScrollProgress] = useState<number>(0);
   const sectorTabsRef = useRef<HTMLDivElement>(null);
+  const sectorsCarouselRef = useRef<HTMLDivElement>(null);
+
+  const handleSectorsScroll = () => {
+    if (sectorsCarouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = sectorsCarouselRef.current;
+      const progress = scrollWidth > clientWidth ? (scrollLeft / (scrollWidth - clientWidth)) * 100 : 0;
+      setSectorsScrollProgress(progress);
+    }
+  };
+
+  const scrollSectors = (direction: 'left' | 'right') => {
+    if (sectorsCarouselRef.current) {
+      const { clientWidth } = sectorsCarouselRef.current;
+      const scrollAmount = clientWidth * 0.75;
+      sectorsCarouselRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   const scrollSectorTabs = (direction: 'left' | 'right') => {
     if (sectorTabsRef.current) {
       const scrollAmount = 240;
       sectorTabsRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const selectSectorCard = (idx: number) => {
+    setActiveSector(idx);
+    if (sectorsCarouselRef.current) {
+      const totalCards = sectorsCarouselRef.current.children.length || 1;
+      const cardWidth = sectorsCarouselRef.current.scrollWidth / totalCards;
+      sectorsCarouselRef.current.scrollTo({
+        left: cardWidth * idx,
         behavior: 'smooth',
       });
     }
@@ -347,8 +394,99 @@ export default function DailyPlatform() {
       highlight: t('dailyplatform.sec4High')
     },
     {
+      title: t('dailyplatform.sec7Title'),
+      icon: Bus,
+      badge: t('dailyplatform.sec7Badge'),
+      desc: t('dailyplatform.sec7Desc'),
+      highlight: t('dailyplatform.sec7High')
+    },
+    {
+      title: t('dailyplatform.sec8Title'),
+      icon: Anchor,
+      badge: t('dailyplatform.sec8Badge'),
+      desc: t('dailyplatform.sec8Desc'),
+      highlight: t('dailyplatform.sec8High')
+    },
+    {
+      title: t('dailyplatform.sec9Title'),
+      icon: Zap,
+      badge: t('dailyplatform.sec9Badge'),
+      desc: t('dailyplatform.sec9Desc'),
+      highlight: t('dailyplatform.sec9High')
+    },
+    {
+      title: t('dailyplatform.sec10Title'),
+      icon: Wrench,
+      badge: t('dailyplatform.sec10Badge'),
+      desc: t('dailyplatform.sec10Desc'),
+      highlight: t('dailyplatform.sec10High')
+    },
+    {
+      title: t('dailyplatform.sec11Title'),
+      icon: ShoppingBag,
+      badge: t('dailyplatform.sec11Badge'),
+      desc: t('dailyplatform.sec11Desc'),
+      highlight: t('dailyplatform.sec11High')
+    },
+    {
+      title: t('dailyplatform.sec12Title'),
+      icon: Coffee,
+      badge: t('dailyplatform.sec12Badge'),
+      desc: t('dailyplatform.sec12Desc'),
+      highlight: t('dailyplatform.sec12High')
+    },
+    {
+      title: t('dailyplatform.sec13Title'),
+      icon: Sprout,
+      badge: t('dailyplatform.sec13Badge'),
+      desc: t('dailyplatform.sec13Desc'),
+      highlight: t('dailyplatform.sec13High')
+    },
+    {
+      title: t('dailyplatform.sec14Title'),
+      icon: Recycle,
+      badge: t('dailyplatform.sec14Badge'),
+      desc: t('dailyplatform.sec14Desc'),
+      highlight: t('dailyplatform.sec14High')
+    },
+    {
+      title: t('dailyplatform.sec15Title'),
+      icon: FlaskConical,
+      badge: t('dailyplatform.sec15Badge'),
+      desc: t('dailyplatform.sec15Desc'),
+      highlight: t('dailyplatform.sec15High')
+    },
+    {
+      title: t('dailyplatform.sec16Title'),
+      icon: GraduationCap,
+      badge: t('dailyplatform.sec16Badge'),
+      desc: t('dailyplatform.sec16Desc'),
+      highlight: t('dailyplatform.sec16High')
+    },
+    {
+      title: t('dailyplatform.sec17Title'),
+      icon: Landmark,
+      badge: t('dailyplatform.sec17Badge'),
+      desc: t('dailyplatform.sec17Desc'),
+      highlight: t('dailyplatform.sec17High')
+    },
+    {
+      title: t('dailyplatform.sec18Title'),
+      icon: ShieldAlert,
+      badge: t('dailyplatform.sec18Badge'),
+      desc: t('dailyplatform.sec18Desc'),
+      highlight: t('dailyplatform.sec18High')
+    },
+    {
+      title: t('dailyplatform.sec19Title'),
+      icon: Ticket,
+      badge: t('dailyplatform.sec19Badge'),
+      desc: t('dailyplatform.sec19Desc'),
+      highlight: t('dailyplatform.sec19High')
+    },
+    {
       title: t('dailyplatform.sec5Title'),
-      icon: Activity,
+      icon: Award,
       badge: t('dailyplatform.sec5Badge'),
       desc: t('dailyplatform.sec5Desc'),
       highlight: t('dailyplatform.sec5High')
@@ -377,8 +515,8 @@ export default function DailyPlatform() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               
               <motion.div variants={itemVariants} className="lg:col-span-6 space-y-6 text-left">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F2C400]/10 border border-[#F2C400]/25 text-xs font-bold font-mono tracking-widest uppercase text-[#2C2C2E]/80">
-                  <Cpu className="w-3.5 h-3.5 text-[#F2C400]" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6c73b]/10 border border-[#f6c73b]/25 text-xs font-bold font-mono tracking-widest uppercase text-[#2C2C2E]/80">
+                  <Cpu className="w-3.5 h-3.5 text-[#f6c73b]" />
                   {t('dailyplatform.heroBadge')}
                 </span>
                 
@@ -400,13 +538,13 @@ export default function DailyPlatform() {
                     href="https://crm.dailyplatform.it/register"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-4 rounded-[18px] text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 bg-[#F2C400] text-[#2C2C2E] border border-[#F2C400] hover:bg-[#F2C400]/90 shadow-md hover:shadow-lg cursor-pointer text-center"
+                    className="px-6 py-4 rounded-[18px] text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 bg-[#f6c73b] text-[#2C2C2E] border border-[#f6c73b] hover:bg-[#f6c73b]/90 shadow-md hover:shadow-lg cursor-pointer text-center"
                   >
                     {t('dailyplatform.buyBtn')}
                   </a>
                   <button
                     onClick={() => scrollToSection('che-cose-dailyplatform')}
-                    className="px-6 py-4 rounded-[18px] text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 bg-white text-[#2C2C2E] border border-black/10 hover:border-[#F2C400]/40 shadow-sm hover:shadow-md cursor-pointer"
+                    className="px-6 py-4 rounded-[18px] text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 bg-white text-[#2C2C2E] border border-black/10 hover:border-[#f6c73b]/40 shadow-sm hover:shadow-md cursor-pointer"
                   >
                     {t('dailyplatform.discoverBtn')}
                   </button>
@@ -416,11 +554,11 @@ export default function DailyPlatform() {
               <motion.div variants={itemVariants} className="lg:col-span-6 w-full flex justify-center items-center">
                 <div className="relative w-full max-w-[820px] flex items-center justify-center">
                   {/* Decorative brand yellow tech dots */}
-                  <div className="absolute -top-3 left-10 w-3.5 h-3.5 rounded-full bg-[#F2C400] shadow-[0_0_12px_rgba(242,196,0,0.7)] z-10 pointer-events-none" />
-                  <div className="absolute top-1/3 -right-3 w-2.5 h-2.5 rounded-full bg-[#F2C400]/80 shadow-[0_0_8px_rgba(242,196,0,0.5)] z-10 pointer-events-none" />
-                  <div className="absolute -bottom-3 right-1/4 w-3 h-3 rounded-full bg-[#F2C400]/90 shadow-[0_0_10px_rgba(242,196,0,0.6)] z-10 pointer-events-none" />
-                  <div className="absolute bottom-1/4 -left-3 w-2 h-2 rounded-full bg-[#F2C400]/60 z-10 pointer-events-none" />
-                  <div className="absolute top-8 right-16 w-2 h-2 rounded-full bg-[#F2C400]/75 z-10 pointer-events-none" />
+                  <div className="absolute -top-3 left-10 w-3.5 h-3.5 rounded-full bg-[#f6c73b] shadow-[0_0_12px_rgba(242,196,0,0.7)] z-10 pointer-events-none" />
+                  <div className="absolute top-1/3 -right-3 w-2.5 h-2.5 rounded-full bg-[#f6c73b]/80 shadow-[0_0_8px_rgba(242,196,0,0.5)] z-10 pointer-events-none" />
+                  <div className="absolute -bottom-3 right-1/4 w-3 h-3 rounded-full bg-[#f6c73b]/90 shadow-[0_0_10px_rgba(242,196,0,0.6)] z-10 pointer-events-none" />
+                  <div className="absolute bottom-1/4 -left-3 w-2 h-2 rounded-full bg-[#f6c73b]/60 z-10 pointer-events-none" />
+                  <div className="absolute top-8 right-16 w-2 h-2 rounded-full bg-[#f6c73b]/75 z-10 pointer-events-none" />
 
                   <InteractiveImage
                     src={dailyPlatformUi}
@@ -464,13 +602,14 @@ export default function DailyPlatform() {
               </div>
 
               <div className="lg:col-span-6 w-full flex items-center justify-center">
-                <div className="w-full max-w-[760px] aspect-video rounded-[28px] overflow-hidden bg-white/50 border border-[#F2C400]/15 p-4 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:border-[#F2C400]/30 transition-all duration-500 group flex items-center justify-center">
+                <div className="w-full max-w-[760px] aspect-video rounded-[28px] overflow-hidden bg-white/50 border border-[#f6c73b]/15 p-4 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:border-[#f6c73b]/30 transition-all duration-500 group flex items-center justify-center">
                   <InteractiveImage
                     src={archivioDailyplatform}
                     alt="Piattaforma dailyplatform - Archivio digitale"
                     aspectRatio="video"
                     objectFit="contain"
                     mixBlend="multiply"
+                    showDots={false}
                     className="w-full h-full rounded-[18px]"
                   />
                 </div>
@@ -500,9 +639,9 @@ export default function DailyPlatform() {
                     className="integration-card p-8 rounded-[24px] bg-white/70 shadow-sm flex flex-col justify-between h-full text-[#2C2C2E] relative overflow-hidden group"
                   >
                     {/* Subtle top border accent */}
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-[#F2C400]/40 group-hover:bg-[#F2C400] transition-colors duration-300" />
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-[#f6c73b]/40 group-hover:bg-[#f6c73b] transition-colors duration-300" />
                     <div className="space-y-4">
-                      <div className="p-3 w-fit rounded-xl bg-gray-50 border border-black/5 text-[#2C2C2E] group-hover:bg-[#F2C400]/20 group-hover:border-[#F2C400]/40 transition-colors duration-300">
+                      <div className="p-3 w-fit rounded-xl bg-gray-50 border border-black/5 text-[#2C2C2E] group-hover:bg-[#f6c73b]/20 group-hover:border-[#f6c73b]/40 transition-colors duration-300">
                         <Icon className="w-5 h-5 stroke-[1.75]" />
                       </div>
                       <h3 className="text-base sm:text-lg font-bold font-sans tracking-tight uppercase">
@@ -547,14 +686,14 @@ export default function DailyPlatform() {
               <div className="lg:col-span-5 flex flex-col items-center lg:items-start justify-center relative py-8 px-4 text-center lg:text-left">
                 <div className="relative space-y-4 max-w-md mx-auto">
                   {/* Decorative quotation mark in background */}
-                  <span className="absolute -top-12 -left-6 text-8xl text-[#F2C400]/25 font-serif select-none pointer-events-none">“</span>
+                  <span className="absolute -top-12 -left-6 text-8xl text-[#f6c73b]/25 font-serif select-none pointer-events-none">“</span>
                   
                   <p className="text-2xl sm:text-3xl lg:text-4xl font-bold font-sans tracking-tight text-[#2C2C2E] leading-tight relative z-10">
                     {t('dailyplatform.quote')}
                   </p>
                   
                   {/* Elegant yellow line under */}
-                  <div className="h-1 w-24 bg-[#F2C400] rounded-full shadow-sm" />
+                  <div className="h-1 w-24 bg-[#f6c73b] rounded-full shadow-sm" />
                 </div>
               </div>
 
@@ -578,7 +717,7 @@ export default function DailyPlatform() {
               {/* Dynamic Connecting Line - Desktop Only */}
               <div className="hidden lg:block absolute top-[4.5rem] left-[10%] right-[10%] h-[3px] bg-gray-200 z-0 overflow-hidden">
                 <motion.div 
-                  className="h-full bg-[#F2C400]" 
+                  className="h-full bg-[#f6c73b]" 
                   initial={{ width: '0%' }}
                   animate={{ 
                     width: hoveredFlowStep !== null ? `${(hoveredFlowStep / 4) * 100}%` : '20%' 
@@ -601,12 +740,12 @@ export default function DailyPlatform() {
                     >
                       {/* Numeric Badge & Connecting Dot */}
                       <div className="flex flex-col items-center lg:items-start w-full relative">
-                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 border ${isHovered ? 'bg-[#F2C400] text-[#2C2C2E] border-[#F2C400] scale-110 shadow-[0_8px_20px_rgba(242,196,0,0.25)]' : 'bg-white text-[#2C2C2E]/60 border-black/5 group-hover:border-[#F2C400]/40'}`}>
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 border ${isHovered ? 'bg-[#f6c73b] text-[#2C2C2E] border-[#f6c73b] scale-110 shadow-[0_8px_20px_rgba(242,196,0,0.25)]' : 'bg-white text-[#2C2C2E]/60 border-black/5 group-hover:border-[#f6c73b]/40'}`}>
                           <IconComponent className="w-6 h-6 stroke-[1.75]" />
                         </div>
                         
                         <div className="absolute top-1 left-2 sm:left-4 lg:-top-5 lg:left-0">
-                          <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/30 group-hover:text-[#F2C400] transition-colors duration-300">
+                          <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/30 group-hover:text-[#f6c73b] transition-colors duration-300">
                             STEP {stepItem.step}
                           </span>
                         </div>
@@ -614,7 +753,7 @@ export default function DailyPlatform() {
 
                       {/* Content details */}
                       <div className="mt-5 space-y-2">
-                        <h3 className={`text-base font-bold font-sans tracking-tight uppercase transition-colors duration-300 ${isHovered ? 'text-[#F2C400]' : 'text-[#2C2C2E]'}`}>
+                        <h3 className={`text-base font-bold font-sans tracking-tight uppercase transition-colors duration-300 ${isHovered ? 'text-[#f6c73b]' : 'text-[#2C2C2E]'}`}>
                           {stepItem.title}
                         </h3>
                         <p className="text-xs text-[#5E5E62] leading-relaxed font-mono font-light">
@@ -678,18 +817,18 @@ export default function DailyPlatform() {
                     key={idx}
                     className="flex-shrink-0 w-[85vw] sm:w-[50vw] lg:w-[30vw] snap-start snap-always"
                   >
-                    <div className="daily-card p-8 rounded-[28px] flex flex-col justify-between h-[300px] group relative overflow-hidden">
+                    <div className="p-8 rounded-[28px] bg-[#2C2C2E] text-white border border-white/10 hover:border-[#f6c73b]/60 flex flex-col justify-between h-[300px] group relative overflow-hidden shadow-lg transition-all duration-300">
                       {/* Subtle yellow top accent line */}
-                      <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#F2C400] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                      <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#f6c73b] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                       
                       <div className="space-y-4">
-                        <div className="p-3 w-fit rounded-xl bg-gray-50 text-[#2C2C2E] border border-black/5 group-hover:bg-[#F2C400]/10 group-hover:border-[#F2C400]/35 transition-colors duration-300">
+                        <div className="p-3 w-fit rounded-xl bg-[#f6c73b]/15 text-[#f6c73b] border border-[#f6c73b]/30 group-hover:bg-[#f6c73b] group-hover:text-[#2C2C2E] transition-colors duration-300">
                           <tool.icon className="w-5 h-5" />
                         </div>
-                        <h3 className="text-base sm:text-lg font-bold text-[#2C2C2E] tracking-tight uppercase">
+                        <h3 className="text-base sm:text-lg font-bold text-white tracking-tight uppercase">
                           {tool.title}
                         </h3>
-                        <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-light">
+                        <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-mono font-light">
                           {tool.desc}
                         </p>
                       </div>
@@ -701,7 +840,7 @@ export default function DailyPlatform() {
               {/* Progress Bar Indicator */}
               <div className="w-full h-[2px] bg-gray-200 rounded-full overflow-hidden mt-4">
                 <motion.div
-                  className="h-full bg-[#F2C400]"
+                  className="h-full bg-[#f6c73b]"
                   style={{ width: `${Math.max(scrollProgress, 5)}%` }}
                   layoutId="carouselProgressBar"
                 />
@@ -747,7 +886,7 @@ export default function DailyPlatform() {
                   <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
                     <defs>
                       <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#F2C400" stopOpacity="0.8" />
+                        <stop offset="0%" stopColor="#f6c73b" stopOpacity="0.8" />
                         <stop offset="100%" stopColor="#2C2C2E" stopOpacity="0.2" />
                       </linearGradient>
                     </defs>
@@ -770,7 +909,7 @@ export default function DailyPlatform() {
                       <button
                         key={node.id}
                         onClick={() => setActiveNode(node.id)}
-                        className={`ecosistema-node ${positionClass} absolute pointer-events-auto rounded-2xl p-3 sm:p-4 text-xs font-bold font-mono tracking-wider uppercase border shadow-md cursor-pointer transition-all duration-300 flex flex-col items-center justify-center z-10 ${node.color} ${isActive ? 'scale-110 ring-4 ring-[#F2C400]/25 border-[#F2C400] z-20 shadow-[0_10px_25px_rgba(242,196,0,0.15)]' : 'hover:scale-105 hover:border-gray-400'}`}
+                        className={`ecosistema-node ${positionClass} absolute pointer-events-auto rounded-2xl p-3 sm:p-4 text-xs font-bold font-mono tracking-wider uppercase border shadow-md cursor-pointer transition-all duration-300 flex flex-col items-center justify-center z-10 ${node.color} ${isActive ? 'scale-110 ring-4 ring-[#f6c73b]/25 border-[#f6c73b] z-20 shadow-[0_10px_25px_rgba(242,196,0,0.15)]' : 'hover:scale-105 hover:border-gray-400'}`}
                         style={{ left: node.x, top: node.y, transform: `translate(-50%, -50%)` }}
                       >
                         <span className="font-sans font-bold tracking-tight text-xs sm:text-sm">{node.title}</span>
@@ -796,7 +935,7 @@ export default function DailyPlatform() {
                         className="space-y-6"
                       >
                         <div className="space-y-2">
-                          <span className="text-[11px] font-bold uppercase tracking-widest text-[#F2C400] font-mono block">
+                          <span className="text-[11px] font-bold uppercase tracking-widest text-[#f6c73b] font-mono block">
                             {node.role}
                           </span>
                           <h3 className={`text-2xl font-bold font-sans tracking-tight text-[#2C2C2E] ${node.id === 'dailyplatform' ? 'lowercase' : 'uppercase'}`}>
@@ -807,14 +946,14 @@ export default function DailyPlatform() {
                           {node.desc}
                         </p>
                         
-                        {node.id !== 'dailyplatform' && (
+                        {node.id === 'dailybydaily' && (
                           <div className="pt-4 border-t border-black/5">
                             <Link
-                              to={node.id === 'widiu' ? '/widiu' : node.id === 'vera' ? '/vera' : '/servizi'}
+                              to="/servizi"
                               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#2C2C2E] text-white text-[11px] font-bold font-mono uppercase tracking-wider transition-colors hover:bg-black"
                             >
-                              {t('dailyplatform.exploreBtn')} {node.title}
-                              <ArrowRight className="w-3.5 h-3.5 text-[#F2C400]" />
+                              {t('dailyplatform.exploreBtn')} {t('header.services')}
+                              <ArrowRight className="w-3.5 h-3.5 text-[#f6c73b]" />
                             </Link>
                           </div>
                         )}
@@ -851,7 +990,7 @@ export default function DailyPlatform() {
               ].map((role, idx) => (
                 <span
                   key={idx}
-                  className="px-4 py-2.5 rounded-full bg-white text-[#2C2C2E] border border-black/5 font-mono text-xs font-semibold tracking-wide shadow-[0_2px_8px_rgba(0,0,0,0.01)] hover:border-[#F2C400] hover:bg-[#F2C400]/5 transition-all duration-300"
+                  className="px-4 py-2.5 rounded-full bg-white text-[#2C2C2E] border border-black/5 font-mono text-xs font-semibold tracking-wide shadow-[0_2px_8px_rgba(0,0,0,0.01)] hover:border-[#f6c73b] hover:bg-[#f6c73b]/5 transition-all duration-300"
                 >
                   {role}
                 </span>
@@ -893,7 +1032,7 @@ export default function DailyPlatform() {
                 {
                   title: t('dailyplatform.ben5Title'),
                   desc: t('dailyplatform.ben5Desc'),
-                  icon: Signature,
+                  icon: Workflow,
                 },
                 {
                   title: t('dailyplatform.ben6Title'),
@@ -903,15 +1042,15 @@ export default function DailyPlatform() {
               ].map((benefit, idx) => {
                 const Icon = benefit.icon;
                 return (
-                  <div key={idx} className="daily-card p-8 rounded-[24px] flex flex-col justify-between h-full group">
+                  <div key={idx} className="p-8 rounded-[24px] bg-[#2C2C2E] text-white border border-white/10 hover:border-[#f6c73b]/60 flex flex-col justify-between h-full group shadow-lg transition-all duration-300">
                     <div className="space-y-4">
-                      <div className="p-3 w-fit rounded-xl bg-gray-50 border border-black/5 text-[#2C2C2E] group-hover:bg-[#F2C400]/10 group-hover:border-[#F2C400]/25 transition-colors">
+                      <div className="p-3 w-fit rounded-xl bg-[#f6c73b]/15 text-[#f6c73b] border border-[#f6c73b]/30 group-hover:bg-[#f6c73b] group-hover:text-[#2C2C2E] transition-colors">
                         <Icon className="w-5 h-5" />
                       </div>
-                      <h3 className="text-base sm:text-lg font-bold text-[#2C2C2E] tracking-tight uppercase">
+                      <h3 className="text-base sm:text-lg font-bold text-white tracking-tight uppercase">
                         {benefit.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-light">
+                      <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-mono font-light">
                         {benefit.desc}
                       </p>
                     </div>
@@ -921,110 +1060,100 @@ export default function DailyPlatform() {
             </div>
           </motion.section>
 
-          {/* Sezione 9 — Applicazioni nei settori */}
-          <motion.section variants={itemVariants} className="space-y-12">
-            <div className="text-left max-w-3xl">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block mb-2">{t('dailyplatform.sectorsBadge')}</span>
+          {/* Sezione 9 — Applicazioni nei settori (Flessibilità Operativa Carousel) */}
+          <motion.section variants={itemVariants} className="space-y-6 dailyplatform-flexibility-section">
+            <div className="space-y-3">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
+                {t('dailyplatform.sectorsBadge')}
+              </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#2C2C2E] tracking-tight">
                 {t('dailyplatform.sectorsTitle')}
               </h2>
-              <p className="text-xs sm:text-sm text-[#5E5E62] font-mono mt-3 leading-relaxed">
-                {t('dailyplatform.sectorsSub')}
-              </p>
+
+              {/* Intro row: text on left, controls on right */}
+              <div className="flexibility-intro-row flex flex-col md:flex-row md:items-center justify-between gap-6 pt-1">
+                <p className="text-xs sm:text-sm md:text-base text-[#5E5E62] font-mono leading-relaxed max-w-3xl m-0">
+                  {t('dailyplatform.sectorsSub')}
+                </p>
+
+                <div className="flexibility-carousel-controls flex items-center gap-3 shrink-0">
+                  <button
+                    onClick={() => scrollSectors('left')}
+                    className="w-11 h-11 rounded-full border border-[#2C2C2E]/18 bg-[#f6c73b] text-[#2C2C2E] hover:bg-[#2C2C2E] hover:text-white transition-all duration-300 shadow-sm flex items-center justify-center cursor-pointer group shrink-0"
+                    aria-label="Settore precedente"
+                  >
+                    <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-0.5" />
+                  </button>
+                  <button
+                    onClick={() => scrollSectors('right')}
+                    className="w-11 h-11 rounded-full border border-[#2C2C2E]/18 bg-[#f6c73b] text-[#2C2C2E] hover:bg-[#2C2C2E] hover:text-white transition-all duration-300 shadow-sm flex items-center justify-center cursor-pointer group shrink-0"
+                    aria-label="Settore successivo"
+                  >
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Horizontal Tabs Selection with Scroll Controls */}
-            <div className="relative w-full flex items-center border-b border-black/5 pb-2">
-              <button
-                onClick={() => scrollSectorTabs('left')}
-                className="p-2.5 rounded-full border border-black/10 bg-white hover:bg-[#F2C400] text-[#2C2C2E] transition-all shadow-sm shrink-0 mr-2 z-10 cursor-pointer lg:hidden"
-                aria-label="Scorri a sinistra"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-
+            {/* Carousel Container */}
+            <div className="relative space-y-4">
               <div
-                ref={sectorTabsRef}
-                className="flex overflow-x-auto gap-2.5 py-1 scroll-smooth no-scrollbar flex-1"
+                ref={sectorsCarouselRef}
+                onScroll={handleSectorsScroll}
+                className="sector-carousel flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 pt-2 scrollbar-none scroll-smooth touch-pan-x"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 {sectors.map((sec, idx) => {
-                  const isActive = activeSector === idx;
-                  const Icon = sec.icon;
+                  const SectorIcon = sec.icon;
                   return (
-                    <button
+                    <div
                       key={idx}
-                      onClick={() => setActiveSector(idx)}
-                      className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold font-mono tracking-wider uppercase border transition-all duration-300 shrink-0 cursor-pointer ${
-                        isActive
-                          ? 'bg-[#2C2C2E] text-white border-[#2C2C2E] shadow-sm scale-[1.02]'
-                          : 'bg-white text-[#2C2C2E]/70 border-black/5 hover:border-[#F2C400]/60 hover:text-[#2C2C2E]'
-                      }`}
+                      className="flex-shrink-0 w-[88vw] sm:w-[48vw] lg:w-[32%] xl:w-[25%] snap-start snap-always flex"
                     >
-                      <Icon className="w-4 h-4 text-[#F2C400]" />
-                      {sec.title}
-                    </button>
+                      <div 
+                        className="dailyplatform-context-card context-card sector-card daily-card p-6 sm:p-8 rounded-[28px] bg-white border border-black/5 hover:border-[#f6c73b]/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between w-full min-h-[520px] group relative overflow-visible"
+                      >
+                        {/* Top yellow accent line */}
+                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#f6c73b] transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100 rounded-t-[28px]" />
+
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="p-3 w-fit rounded-xl bg-gray-50 text-[#2C2C2E] border border-black/5 group-hover:bg-[#f6c73b]/20 group-hover:border-[#f6c73b]/50 transition-colors duration-300">
+                              <SectorIcon className="w-5 h-5" />
+                            </div>
+                            <span className="px-2.5 py-1 bg-[#f6c73b]/10 border border-[#f6c73b]/30 text-[#2C2C2E] font-mono font-bold text-[9px] uppercase rounded-full tracking-wider">
+                              {sec.badge}
+                            </span>
+                          </div>
+
+                          <h3 className="text-base sm:text-lg font-bold text-[#2C2C2E] uppercase tracking-tight">
+                            {sec.title}
+                          </h3>
+
+                          <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono font-light whitespace-normal block">
+                            {sec.desc}
+                          </p>
+                        </div>
+
+                        <div className="pt-4 mt-6 border-t border-black/5 flex items-start gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5" />
+                          <span className="text-[11px] font-bold font-mono text-[#2C2C2E] uppercase whitespace-normal leading-tight">
+                            {sec.highlight}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
 
-              <button
-                onClick={() => scrollSectorTabs('right')}
-                className="p-2.5 rounded-full border border-black/10 bg-[#F2C400] text-[#2C2C2E] hover:bg-[#F2C400]/80 transition-all shadow-sm shrink-0 ml-2 z-10 cursor-pointer lg:hidden"
-                aria-label="Scorri a destra"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Active Tab Showcase Area */}
-            <div className="bg-white border border-black/5 rounded-[32px] p-8 sm:p-12">
-              <AnimatePresence mode="wait">
-                {sectors.map((sec, idx) => {
-                  if (idx !== activeSector) return null;
-                  const SectorIcon = sec.icon;
-                  return (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -15 }}
-                      transition={{ duration: 0.3 }}
-                      className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
-                    >
-                      <div className="lg:col-span-8 space-y-5 text-left">
-                        <div className="flex items-center gap-3">
-                          <span className="px-3 py-1 bg-[#F2C400]/10 border border-[#F2C400]/30 text-[#2C2C2E] font-mono font-bold text-[10px] uppercase rounded-full">
-                            {sec.badge}
-                          </span>
-                        </div>
-                        <h3 className="text-2xl sm:text-3xl font-bold text-[#2C2C2E] uppercase">
-                          {t('dailyplatform.safetyIn')} {sec.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-[#5E5E62] leading-relaxed font-mono max-w-3xl">
-                          {sec.desc}
-                        </p>
-                        
-                        <div className="pt-4 flex items-center gap-2">
-                          <CheckCircle2 className="w-5 h-5 text-[#F2C400]" />
-                          <span className="text-xs font-bold font-mono text-[#2C2C2E] uppercase">
-                            {t('dailyplatform.impactLabel')}: {sec.highlight}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="lg:col-span-4 flex justify-center lg:justify-end">
-                        <div className="w-32 h-32 rounded-3xl bg-[#F0EFEB] flex items-center justify-center text-[#2C2C2E] border border-black/5 relative shadow-inner">
-                          <SectorIcon className="w-14 h-14" />
-                          <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#F2C400] flex items-center justify-center text-[10px] font-bold">
-                            ✓
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
+              {/* Progress Bar Indicator */}
+              <div className="w-full h-[2px] bg-gray-200 rounded-full overflow-hidden mt-2">
+                <motion.div
+                  className="h-full bg-[#f6c73b]"
+                  style={{ width: `${Math.max(sectorsScrollProgress, 5)}%` }}
+                />
+              </div>
             </div>
           </motion.section>
 
@@ -1064,7 +1193,7 @@ export default function DailyPlatform() {
                   num: '3',
                   title: t('dailyplatform.gov3Title'),
                   desc: t('dailyplatform.gov3Desc'),
-                  icon: Signature,
+                  icon: PenTool,
                 },
                 {
                   num: '4',
@@ -1075,10 +1204,10 @@ export default function DailyPlatform() {
               ].map((mod, idx) => {
                 const Icon = mod.icon;
                 return (
-                  <div key={idx} className="daily-card p-6 rounded-[24px] flex flex-col justify-between h-full space-y-4 group bg-white/60 border border-black/5 hover:border-[#F2C400]/30 transition-all duration-300">
+                  <div key={idx} className="daily-card p-6 rounded-[24px] flex flex-col justify-between h-full space-y-4 group bg-white/60 border border-black/5 hover:border-[#f6c73b]/30 transition-all duration-300">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="p-2.5 rounded-xl bg-[#F2C400]/15 text-[#2C2C2E] group-hover:bg-[#F2C400] transition-colors">
+                        <span className="p-2.5 rounded-xl bg-[#f6c73b]/15 text-[#2C2C2E] group-hover:bg-[#f6c73b] transition-colors">
                           <Icon className="w-5 h-5" />
                         </span>
                         <span className="text-xs font-mono font-bold text-[#2C2C2E]/40">
@@ -1100,8 +1229,8 @@ export default function DailyPlatform() {
 
           {/* Sezione 11 — CTA finale */}
           <motion.section variants={itemVariants} className="pt-8">
-            <div className="rounded-[24px] bg-[#FFFFFF] border border-[#F2C400]/15 p-8 sm:p-12 md:p-16 text-center max-w-4xl mx-auto space-y-8 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F2C400]/5 via-transparent to-[#F2C400]/2 pointer-events-none" />
+            <div className="rounded-[24px] bg-[#FFFFFF] border border-[#f6c73b]/15 p-8 sm:p-12 md:p-16 text-center max-w-4xl mx-auto space-y-8 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#f6c73b]/5 via-transparent to-[#f6c73b]/2 pointer-events-none" />
               
               <div className="space-y-4 max-w-2xl mx-auto relative z-10">
                 <h2 className="text-3xl sm:text-4xl font-bold text-[#2C2C2E] tracking-tight">
@@ -1117,13 +1246,13 @@ export default function DailyPlatform() {
                   href="https://crm.dailyplatform.it/register"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto text-center px-8 py-4 rounded-[18px] text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 bg-[#F2C400] text-[#2C2C2E] border border-[#F2C400] hover:bg-[#F2C400]/90 shadow-md hover:shadow-lg cursor-pointer"
+                  className="w-full sm:w-auto text-center px-8 py-4 rounded-[18px] text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 bg-[#f6c73b] text-[#2C2C2E] border border-[#f6c73b] hover:bg-[#f6c73b]/90 shadow-md hover:shadow-lg cursor-pointer"
                 >
                   {t('dailyplatform.buyBtn')}
                 </a>
                 <Link
-                  to="/servizi"
-                  className="w-full sm:w-auto text-center px-8 py-4 rounded-[18px] text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 bg-white text-[#2C2C2E] border border-black/10 hover:border-[#F2C400]/40 shadow-sm hover:shadow-md cursor-pointer"
+                  to="/contatti"
+                  className="w-full sm:w-auto text-center px-8 py-4 rounded-[18px] text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 bg-white text-[#2C2C2E] border border-black/10 hover:border-[#f6c73b]/40 shadow-sm hover:shadow-md cursor-pointer"
                 >
                   {t('dailyplatform.discoverEcoBtn')}
                 </Link>

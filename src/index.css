@@ -24,7 +24,7 @@ body {
 }
 
 ::selection {
-  background-color: rgba(242, 196, 0, 0.25);
+  background-color: rgba(246, 199, 59, 0.25);
   color: #2C2C2E;
 }
 
@@ -39,15 +39,15 @@ body {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #F2C400;
+  background: #f6c73b;
 }
 
 /* Yellow brand-compliant glow effects */
 .gold-glow {
-  box-shadow: 0 0 35px -8px rgba(242, 196, 0, 0.45);
+  box-shadow: 0 0 35px -8px rgba(246, 199, 59, 0.45);
 }
 .gold-border-glow {
-  box-shadow: inset 0 0 18px rgba(242, 196, 0, 0.08), 0 4px 20px rgba(0,0,0,0.03);
+  box-shadow: inset 0 0 18px rgba(246, 199, 59, 0.08), 0 4px 20px rgba(0,0,0,0.03);
 }
 
 /* Card custom styles according to criteria 3 */
@@ -72,10 +72,10 @@ body {
 .service-card:hover,
 .feature-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(242, 196, 0, 0.65);
-  box-shadow: 0 18px 42px rgba(242, 196, 0, 0.18);
+  border-color: rgba(246, 199, 59, 0.65);
+  box-shadow: 0 18px 42px rgba(246, 199, 59, 0.18);
   background:
-    radial-gradient(circle at top right, rgba(242, 196, 0, 0.18), transparent 42%),
+    radial-gradient(circle at top right, rgba(246, 199, 59, 0.18), transparent 42%),
     rgba(255, 255, 255, 0.72);
 }
 
@@ -101,13 +101,13 @@ body {
 .cta-button {
   background: #2C2C2E;
   color: #F0EFEB;
-  border: 1px solid rgba(242, 196, 0, 0.4);
+  border: 1px solid rgba(246, 199, 59, 0.4);
   border-radius: 18px;
   transition: all 0.35s ease;
 }
 .cta-button:hover {
-  border-color: #F2C400;
-  box-shadow: 0 0 18px rgba(242, 196, 0, 0.35);
+  border-color: #f6c73b;
+  box-shadow: 0 0 18px rgba(246, 199, 59, 0.35);
   background: linear-gradient(135deg, #2C2C2E 0%, #3A3A3C 100%);
 }
 
@@ -191,7 +191,7 @@ body {
   opacity: 1;
   visibility: visible;
   height: auto;
-  max-height: 48px !important;
+  max-height: 40px !important;
   width: auto;
   object-fit: contain;
   position: relative;
@@ -215,7 +215,15 @@ body {
 
   .site-logo,
   .site-logo img {
-    max-height: 42px !important;
+    max-height: 36px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .site-logo,
+  .site-logo img {
+    max-height: 34px !important;
+    width: auto;
   }
 }
 
@@ -237,10 +245,7 @@ body {
 }
 
 .hero-dots {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  display: none !important;
 }
 
 .hero-content,
@@ -271,6 +276,15 @@ body {
   object-position: center center;
   pointer-events: none;
   user-select: none;
+}
+
+/* Hero claim text responsive control */
+.hero-claim-mobile {
+  display: none !important;
+}
+
+.hero-claim-desktop {
+  display: inline !important;
 }
 
 /* Mobile Layout (< 768px): Uses BIMBA_DESKTOP full-width cover with continuous top background */
@@ -394,6 +408,24 @@ body {
     font-weight: 850 !important;
     text-transform: uppercase !important;
     text-align: center !important;
+  }
+
+  .hero-claim {
+    white-space: normal !important;
+    line-height: 1.12 !important;
+  }
+
+  .hero-claim-desktop {
+    display: none !important;
+  }
+
+  .hero-claim-mobile {
+    display: block !important;
+  }
+
+  .hero-claim-mobile span {
+    display: block !important;
+    white-space: nowrap !important;
   }
 }
 
@@ -698,11 +730,11 @@ body {
 
 .integration-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(242, 196, 0, 0.65);
-  box-shadow: 0 18px 40px rgba(242, 196, 0, 0.18);
+  border-color: rgba(246, 199, 59, 0.65);
+  box-shadow: 0 18px 40px rgba(246, 199, 59, 0.18);
   background: linear-gradient(
     145deg,
-    rgba(242, 196, 0, 0.12),
+    rgba(246, 199, 59, 0.12),
     rgba(240, 239, 235, 0.95)
   );
 }
@@ -725,7 +757,7 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 999px;
-  background: #F2C400;
+  background: #f6c73b;
   opacity: 0.48;
   animation: ecosystemDotDrift 18s ease-in-out infinite;
 }
@@ -785,10 +817,10 @@ body {
 
 .daily-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(242, 196, 0, 0.65);
-  box-shadow: 0 18px 42px rgba(242, 196, 0, 0.18);
+  border-color: rgba(246, 199, 59, 0.65);
+  box-shadow: 0 18px 42px rgba(246, 199, 59, 0.18);
   background:
-    radial-gradient(circle at top right, rgba(242, 196, 0, 0.18), transparent 42%),
+    radial-gradient(circle at top right, rgba(246, 199, 59, 0.18), transparent 42%),
     rgba(255, 255, 255, 0.72);
 }
 
@@ -943,6 +975,179 @@ body {
 .dsl-service-card.active {
   transform: scale(1.03);
   opacity: 1;
-  border-color: rgba(242, 196, 0, 0.65);
-  box-shadow: 0 24px 60px rgba(44, 44, 46, 0.14);
+  border-color: rgba(231, 55, 73, 0.65);
+  box-shadow: 0 24px 60px rgba(231, 55, 73, 0.15);
 }
+
+/* Daily Safety Lab Dedicated Page Accent Rules */
+.daily-safety-lab-page .dsl-primary-cta {
+  background-color: #e73749 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #e73749 !important;
+}
+
+.daily-safety-lab-page .dsl-primary-cta * {
+  color: #FFFFFF !important;
+}
+
+.daily-safety-lab-page .dsl-primary-cta:hover {
+  background-color: #e73749 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 18px rgba(231, 55, 73, 0.38) !important;
+  transform: translateY(-1px);
+}
+
+.daily-safety-lab-page .dsl-primary-cta:hover * {
+  color: #FFFFFF !important;
+}
+
+/* Services Page - Daily Safety Lab Card (#e73749) */
+.services-page .daily-safety-lab-card,
+.services-page .dsl-card,
+.services-page [data-card="daily-safety-lab"],
+.daily-safety-lab-card {
+  background-color: #e73749 !important;
+  color: #FFFFFF !important;
+}
+
+.services-page .daily-safety-lab-card h3,
+.services-page .daily-safety-lab-card p,
+.services-page .daily-safety-lab-card li,
+.services-page .daily-safety-lab-card span,
+.services-page .dsl-card h3,
+.services-page .dsl-card p,
+.services-page .dsl-card li,
+.services-page .dsl-card span,
+.services-page [data-card="daily-safety-lab"] h3,
+.services-page [data-card="daily-safety-lab"] p,
+.services-page [data-card="daily-safety-lab"] li,
+.services-page [data-card="daily-safety-lab"] span,
+.daily-safety-lab-card h3,
+.daily-safety-lab-card p,
+.daily-safety-lab-card li,
+.daily-safety-lab-card span:not(.text-\[\#2C2C2E\]) {
+  color: #FFFFFF !important;
+}
+
+/* Daily Safety Lab CTA Button Styling */
+.daily-safety-lab-card a,
+.dsl-card a,
+[data-card="daily-safety-lab"] a {
+  background-color: #FFFFFF !important;
+  color: #2C2C2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
+
+.daily-safety-lab-card a *,
+.dsl-card a *,
+[data-card="daily-safety-lab"] a * {
+  color: #2C2C2E !important;
+}
+
+.daily-safety-lab-card a:hover,
+.dsl-card a:hover,
+[data-card="daily-safety-lab"] a:hover {
+  background-color: #FFFFFF !important;
+  color: #2C2C2E !important;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.55) !important;
+  transform: translateY(-1px);
+}
+
+.daily-safety-lab-card a:hover *,
+.dsl-card a:hover *,
+[data-card="daily-safety-lab"] a:hover * {
+  color: #2C2C2E !important;
+}
+
+/* Daily Safety Lab - Red Interactive Dots and Transitions Override */
+.daily-safety-lab-page {
+  --accent-color: #e73749;
+  --dot-color: #e73749;
+  --dot-glow: rgba(231, 55, 73, 0.35);
+  --particle-color: #e73749;
+}
+
+.daily-safety-lab-page .interactive-dots .dot,
+.daily-safety-lab-page .image-dots .dot,
+.daily-safety-lab-page .reactive-dots .dot,
+.daily-safety-lab-page .hero-dots .dot,
+.daily-safety-lab-page .decorative-dots .dot,
+.daily-safety-lab-page .floating-dot,
+.daily-safety-lab-page .particle-dot {
+  background-color: #e73749 !important;
+  border-color: #e73749 !important;
+  color: #e73749 !important;
+  fill: #e73749 !important;
+  stroke: #e73749 !important;
+  box-shadow: 0 0 12px rgba(231, 55, 73, 0.35) !important;
+}
+
+.page-transition {
+  background-color: var(--transition-color, #f6c73b);
+  pointer-events: none;
+}
+
+.grants-logos-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 56px 24px 72px;
+}
+
+.grants-logos-section img {
+  max-width: 980px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .grants-logos-section {
+    padding: 40px 20px 56px;
+  }
+
+  .grants-logos-section img {
+    max-width: 100%;
+  }
+}
+
+/* Homepage - AI Prevention Section Solid Yellow Background */
+.homepage .ai-prevention-section,
+.home .ai-prevention-section,
+.ai-prevention-section,
+.soluzioni-home-section {
+  background: #f6c73b !important;
+  background-color: #f6c73b !important;
+  background-image: none !important;
+}
+
+.ai-prevention-section::before,
+.ai-prevention-section::after {
+  background: none !important;
+}
+
+@keyframes servicesMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-services-marquee {
+  animation: servicesMarquee 35s linear infinite;
+}
+
+/* Homepage final CTA button */
+.home-final-cta .button,
+.home-final-cta a {
+  background-color: #f6c73b;
+  color: #2C2C2E;
+}
+
+.home-final-cta .button:hover,
+.home-final-cta a:hover {
+  background-color: #f6c73b;
+  color: #2C2C2E;
+  box-shadow: 0 0 18px rgba(246, 199, 59, 0.42);
+  transform: translateY(-1px);
+}
+

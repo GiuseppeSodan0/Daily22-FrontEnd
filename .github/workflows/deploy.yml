@@ -103,7 +103,14 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
           ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
-          rsync -avz --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" dist/ root@daily22.it:/var/www/vhosts/daily22.it/httpdocs/
+
+          rsync -avz --delete -e "$SSH" --exclude="server.cjs" --exclude="server.cjs.map" dist/ root@daily22.it:/var/www/vhosts/daily22.it/httpdocs/
+
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no dist/server.cjs root@daily22.it:/var/www/vhosts/daily22.it/node-app/server.cjs
+
+          $SSH root@daily22.it "cd /var/www/vhosts/daily22.it/node-app && pm2 restart daily22-frontend --update-env"
+
           rm -f ~/.ssh/deploy_key
           echo "Deploy complete! https://daily22.it is live."

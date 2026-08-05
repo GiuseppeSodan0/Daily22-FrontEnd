@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {motion, AnimatePresence} from 'motion/react';
-import {Mail, Phone, Clock, MapPin, Check, Send, Landmark, AlertTriangle, ArrowRight} from 'lucide-react';
+import {Mail, Phone, Clock, MapPin, Check, Landmark, AlertTriangle, ArrowRight} from 'lucide-react';
 import {useLanguage} from '../context/LanguageContext';
 
 const containerVariants = {
@@ -24,9 +24,10 @@ const itemVariants = {
 };
 
 export default function ContactForm() {
-  const {t} = useLanguage();
+  const {t, lang} = useLanguage();
   const [formData, setFormData] = useState({
     nome: '',
+    azienda: '',
     email: '',
     telefono: '',
     oggetto: '',
@@ -37,6 +38,7 @@ export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPrivacyError, setShowPrivacyError] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value, type} = e.target;
@@ -53,6 +55,9 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
+
+    // Strict client-side privacy check
     if (!formData.consentePrivacy) {
       setShowPrivacyError(true);
       return;
@@ -61,38 +66,48 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      const form = new FormData();
-      form.append('nome', formData.nome);
-      form.append('email', formData.email);
-      form.append('telefono', formData.telefono);
-      form.append('oggetto', formData.oggetto);
-      form.append('messaggio', formData.messaggio);
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nome: formData.nome,
+          azienda: formData.azienda,
+          email: formData.email,
+          telefono: formData.telefono,
+          oggetto: formData.oggetto,
+          messaggio: formData.messaggio,
+          consentePrivacy: formData.consentePrivacy,
+          language: lang,
+          timestamp: new Date().toISOString(),
+        }),
+      });
 
-      const res = await fetch('/sendmail.php', {method: 'POST', body: form});
       const data = await res.json();
 
-      if (!data.success) throw new Error(data.message);
+      if (!res.ok || !data.success) {
+        const defaultErr = lang === 'en'
+          ? 'An error occurred while sending your request. Please try again or contact us directly at segreteria@dy22.it.'
+          : 'Si è verificato un errore durante l’invio. Riprova o scrivici direttamente a segreteria@dy22.it.';
+        throw new Error(data.error || data.message || defaultErr);
+      }
 
       setSubmitted(true);
       setFormData({
         nome: '',
+        azienda: '',
         email: '',
         telefono: '',
         oggetto: '',
         messaggio: '',
         consentePrivacy: false,
       });
-    } catch {
-      // Graceful fallback for non-PHP or local environments
-      setSubmitted(true);
-      setFormData({
-        nome: '',
-        email: '',
-        telefono: '',
-        oggetto: '',
-        messaggio: '',
-        consentePrivacy: false,
-      });
+    } catch (err: any) {
+      const fallbackErr = lang === 'en'
+        ? 'An error occurred while sending your request. Please try again or contact us directly at segreteria@dy22.it.'
+        : 'Si è verificato un errore durante l’invio. Riprova o scrivici direttamente a segreteria@dy22.it.';
+      setSubmitError(err.message || fallbackErr);
     } finally {
       setIsSubmitting(false);
     }
@@ -111,7 +126,7 @@ export default function ContactForm() {
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#2C2C2E]/10 bg-white/60 text-[11px] font-bold tracking-wider uppercase text-[#2C2C2E]/70 font-mono mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F2C400]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f6c73b]" />
               {t('contact.badge')}
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">{t('contact.title')}</h2>
@@ -123,67 +138,60 @@ export default function ContactForm() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
             
             {/* Contact Details Column */}
-            <motion.div variants={itemVariants} className="lg:col-span-5 flex flex-col justify-between space-y-8">
-              <div className="p-8 card-premium space-y-8">
-                <h3 className="text-xl font-bold font-sans text-[#2C2C2E] tracking-tight">Daily 22</h3>
+            <motion.div variants={itemVariants} className="lg:col-span-5 flex flex-col h-full">
+              <div className="p-8 card-premium space-y-6 h-full flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold font-sans text-[#2C2C2E] tracking-tight">daily</h3>
+                  <p className="text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed mt-3">
+                    {t('contact.introText')}
+                  </p>
 
-                <div className="space-y-6 pt-4">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl bg-[#F2C400]/10 border border-[#F2C400]/20 text-[#2C2C2E] shrink-0">
-                      <Mail className="w-5 h-5 text-[#2C2C2E]" />
+                  <div className="space-y-6 pt-6">
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 rounded-2xl bg-[#f6c73b]/10 border border-[#f6c73b]/20 text-[#2C2C2E] shrink-0">
+                        <Mail className="w-5 h-5 text-[#2C2C2E]" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.emailLabelHeader') || t('contact.emailLabel')}</p>
+                        <a href="mailto:segreteria@dy22.it" className="text-xs sm:text-sm text-[#2C2C2E] hover:text-[#f6c73b] font-bold font-mono transition-colors">
+                          segreteria@dy22.it
+                        </a>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.emailLabel')}</p>
-                      <a href="mailto:info@daily22.it" className="text-xs sm:text-sm text-[#2C2C2E] hover:text-[#F2C400] font-bold font-mono transition-colors">
-                        info@daily22.it
-                      </a>
+
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 rounded-2xl bg-[#f6c73b]/10 border border-[#f6c73b]/20 text-[#2C2C2E] shrink-0">
+                        <Phone className="w-5 h-5 text-[#2C2C2E]" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.phoneLabelHeader') || t('contact.phoneLabel')}</p>
+                        <a href="tel:+393404290395" className="text-xs sm:text-sm text-[#2C2C2E] hover:text-[#f6c73b] font-bold font-mono transition-colors">
+                          +39 340 429 0395
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 rounded-2xl bg-[#f6c73b]/10 border border-[#f6c73b]/20 text-[#2C2C2E] shrink-0">
+                        <Clock className="w-5 h-5 text-[#2C2C2E]" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.hoursLabel')}</p>
+                        <p className="text-xs sm:text-sm text-[#2C2C2E] font-bold font-mono">{t('contact.hoursValue')}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 rounded-2xl bg-[#f6c73b]/10 border border-[#f6c73b]/20 text-[#2C2C2E] shrink-0">
+                        <MapPin className="w-5 h-5 text-[#2C2C2E]" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.officeLabel')}</p>
+                        <p className="text-xs sm:text-sm text-[#2C2C2E] font-bold font-mono">{t('contact.address')}</p>
+                        <p className="text-[11px] text-[#5E5E62] mt-1 font-mono">{t('contact.addressExtra')}</p>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl bg-[#F2C400]/10 border border-[#F2C400]/20 text-[#2C2C2E] shrink-0">
-                      <Phone className="w-5 h-5 text-[#2C2C2E]" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.phoneLabel')}</p>
-                      <a href="tel:+393206033483" className="text-xs sm:text-sm text-[#2C2C2E] hover:text-[#F2C400] font-bold font-mono transition-colors">
-                        +39 320 603 3483
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl bg-[#F2C400]/10 border border-[#F2C400]/20 text-[#2C2C2E] shrink-0">
-                      <Clock className="w-5 h-5 text-[#2C2C2E]" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.hoursLabel')}</p>
-                      <p className="text-xs sm:text-sm text-[#2C2C2E] font-bold font-mono">{t('contact.hoursValue')}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl bg-[#F2C400]/10 border border-[#F2C400]/20 text-[#2C2C2E] shrink-0">
-                      <MapPin className="w-5 h-5 text-[#2C2C2E]" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.officeLabel')}</p>
-                      <p className="text-xs sm:text-sm text-[#2C2C2E] font-bold font-mono">Via Coroglio, 57</p>
-                      <p className="text-[11px] text-[#5E5E62] mt-1 font-mono">c/o Campania Newsteel Srl – Napoli, Italia</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Corporate details info */}
-              <div className="p-6 card-premium space-y-2">
-                <h4 className="text-[10px] font-bold text-[#2C2C2E]/55 uppercase tracking-widest flex items-center gap-2 font-mono">
-                  <Landmark className="w-4 h-4 text-[#2C2C2E]" />
-                  {t('contact.corporateTitle')}
-                </h4>
-                <div className="text-[11px] text-[#5E5E62] space-y-1 font-mono">
-                  <p>Daily Practice 22 S.r.l. - Startup Innovativa</p>
-                  <p>{t('footer.vat')} 09637811218</p>
                 </div>
               </div>
             </motion.div>
@@ -205,7 +213,7 @@ export default function ContactForm() {
                       exit={{opacity: 0, scale: 0.95}}
                       className="py-12 text-center space-y-6"
                     >
-                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20">
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#f6c73b]/10 text-[#2C2C2E] border border-[#f6c73b]/20">
                         <Check className="w-8 h-8 stroke-[2.5]" />
                       </div>
                       <h4 className="text-lg font-bold font-sans text-[#2C2C2E]">{t('contact.successTitle')}</h4>
@@ -214,7 +222,10 @@ export default function ContactForm() {
                       </p>
                       <div className="pt-4">
                         <button
-                          onClick={() => setSubmitted(false)}
+                          onClick={() => {
+                            setSubmitted(false);
+                            setSubmitError(null);
+                          }}
                           className="cta-button px-6 py-3 text-xs font-bold font-mono tracking-wider uppercase cursor-pointer"
                         >
                           {t('contact.sendAnother')}
@@ -230,14 +241,25 @@ export default function ContactForm() {
                           className="p-4 rounded-xl bg-red-50 border border-red-200 flex items-center gap-2.5 text-xs text-red-700 font-mono"
                         >
                           <AlertTriangle className="w-4 h-4 shrink-0 text-red-600" />
-                          <span>{t('contact.privacyError')}</span>
+                          <span>{t('contact.privacyConsentError')}</span>
+                        </motion.div>
+                      )}
+
+                      {submitError && (
+                        <motion.div
+                          initial={{opacity: 0, y: -5}}
+                          animate={{opacity: 1, y: 0}}
+                          className="p-4 rounded-xl bg-red-50 border border-red-200 flex items-center gap-2.5 text-xs text-red-700 font-mono"
+                        >
+                          <AlertTriangle className="w-4 h-4 shrink-0 text-red-600" />
+                          <span>{submitError}</span>
                         </motion.div>
                       )}
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
                           <label htmlFor="nome" className="block text-[10px] font-bold text-[#2C2C2E]/60 mb-2 uppercase tracking-widest font-mono">
-                            {t('contact.nameLabel')} *
+                            {t('contact.nameLabel')}
                           </label>
                           <input
                             type="text"
@@ -247,22 +269,21 @@ export default function ContactForm() {
                             value={formData.nome}
                             onChange={handleChange}
                             placeholder={t('contact.namePlaceholder')}
-                            className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#F2C400] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
+                            className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#f6c73b] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
                           />
                         </div>
                         <div>
-                          <label htmlFor="telefono" className="block text-[10px] font-bold text-[#2C2C2E]/60 mb-2 uppercase tracking-widest font-mono">
-                            {t('contact.phoneLabel')} *
+                          <label htmlFor="azienda" className="block text-[10px] font-bold text-[#2C2C2E]/60 mb-2 uppercase tracking-widest font-mono">
+                            {t('contact.companyLabel')}
                           </label>
                           <input
-                            type="tel"
-                            id="telefono"
-                            name="telefono"
-                            required
-                            value={formData.telefono}
+                            type="text"
+                            id="azienda"
+                            name="azienda"
+                            value={formData.azienda}
                             onChange={handleChange}
-                            placeholder="+39 320 603 3483"
-                            className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#F2C400] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
+                            placeholder={t('contact.companyPlaceholder')}
+                            className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#f6c73b] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
                           />
                         </div>
                       </div>
@@ -270,7 +291,7 @@ export default function ContactForm() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
                           <label htmlFor="email" className="block text-[10px] font-bold text-[#2C2C2E]/60 mb-2 uppercase tracking-widest font-mono">
-                            {t('contact.emailLabel')} *
+                            {t('contact.emailLabel')}
                           </label>
                           <input
                             type="email"
@@ -279,29 +300,44 @@ export default function ContactForm() {
                             required
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="name@company.com"
-                            className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#F2C400] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
+                            placeholder={t('contact.emailPlaceholder')}
+                            className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#f6c73b] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
                           />
                         </div>
                         <div>
-                          <label htmlFor="oggetto" className="block text-[10px] font-bold text-[#2C2C2E]/60 mb-2 uppercase tracking-widest font-mono">
-                            {t('contact.subjectLabel')}
+                          <label htmlFor="telefono" className="block text-[10px] font-bold text-[#2C2C2E]/60 mb-2 uppercase tracking-widest font-mono">
+                            {t('contact.phoneLabel')}
                           </label>
                           <input
-                            type="text"
-                            id="oggetto"
-                            name="oggetto"
-                            value={formData.oggetto}
+                            type="tel"
+                            id="telefono"
+                            name="telefono"
+                            value={formData.telefono}
                             onChange={handleChange}
-                            placeholder={t('contact.subjectPlaceholder')}
-                            className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#F2C400] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
+                            placeholder={t('contact.phonePlaceholder')}
+                            className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#f6c73b] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
                           />
                         </div>
                       </div>
 
                       <div>
+                        <label htmlFor="oggetto" className="block text-[10px] font-bold text-[#2C2C2E]/60 mb-2 uppercase tracking-widest font-mono">
+                          {t('contact.subjectLabel')}
+                        </label>
+                        <input
+                          type="text"
+                          id="oggetto"
+                          name="oggetto"
+                          value={formData.oggetto}
+                          onChange={handleChange}
+                          placeholder={t('contact.subjectPlaceholder')}
+                          className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#f6c73b] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors font-mono"
+                        />
+                      </div>
+
+                      <div>
                         <label htmlFor="messaggio" className="block text-[10px] font-bold text-[#2C2C2E]/60 mb-2 uppercase tracking-widest font-mono">
-                          {t('contact.messageLabel')} *
+                          {t('contact.messageLabel')}
                         </label>
                         <textarea
                           id="messaggio"
@@ -311,7 +347,7 @@ export default function ContactForm() {
                           onChange={handleChange}
                           rows={4}
                           placeholder={t('contact.messagePlaceholder')}
-                          className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#F2C400] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors resize-none font-mono"
+                          className="w-full bg-white border border-[#2C2C2E]/10 focus:border-[#f6c73b] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2C2C2E] placeholder-[#2C2C2E]/30 focus:outline-none transition-colors resize-none font-mono"
                         />
                       </div>
 
@@ -320,19 +356,20 @@ export default function ContactForm() {
                           type="checkbox"
                           id="consentePrivacy"
                           name="consentePrivacy"
+                          required
                           checked={formData.consentePrivacy}
                           onChange={handleChange}
-                          className="mt-0.5 accent-[#F2C400] w-4 h-4 cursor-pointer"
+                          className="mt-0.5 accent-[#f6c73b] w-4 h-4 cursor-pointer"
                         />
                         <label htmlFor="consentePrivacy" className="text-[11px] text-[#5E5E62] leading-relaxed cursor-pointer font-mono">
-                          {t('contact.privacyConsent')} *
+                          {t('contact.privacyConsent')}
                         </label>
                       </div>
 
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="cta-button w-full py-4 text-xs font-bold font-mono tracking-wider uppercase flex items-center justify-center gap-2 disabled:opacity-75"
+                        className="w-full py-4 px-6 text-base font-semibold font-mono tracking-wider uppercase flex items-center justify-center gap-2 bg-[#f6c73b] text-[#2C2C2E] border-none rounded-[18px] hover:bg-[#d9b000] hover:-translate-y-0.5 transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(242,196,0,0.4)] disabled:opacity-75 cursor-pointer"
                       >
                         {isSubmitting ? (
                           <>

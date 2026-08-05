@@ -18,7 +18,8 @@ export default function Header() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const {t} = useLanguage();
+  const {t, lang} = useLanguage();
+  const isEn = lang === 'en';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,18 +64,23 @@ export default function Header() {
     };
   }, []);
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    if (path === '/chi-siamo') return location.pathname === '/chi-siamo' || location.pathname === '/about';
+    if (path === '/servizi') return location.pathname === '/servizi' || location.pathname === '/services' || servicesSubItems.some((sub) => sub.path === location.pathname);
+    if (path === '/bandi') return location.pathname === '/bandi' || location.pathname === '/grants';
+    if (path === '/contatti') return location.pathname === '/contatti' || location.pathname === '/contact';
+    return location.pathname === path;
+  };
 
   const servicesSubItems = [
-    {path: '/servizi', label: t('header.allServices'), isAll: true},
+    {path: isEn ? '/services' : '/servizi', label: t('header.allServices'), isAll: true},
     {path: '/dailyplatform', label: 'dailyplatform'},
-    {path: '/vera', label: 'Vera'},
-    {path: '/salvatore', label: 'Salvatore'},
-    {path: '/widiu', label: 'WIDIU'},
   ];
 
   const isServicesActive =
     location.pathname === '/servizi' ||
+    location.pathname === '/services' ||
     servicesSubItems.some((sub) => sub.path === location.pathname);
 
   const handleMouseEnterServices = () => {
@@ -85,13 +91,14 @@ export default function Header() {
   const handleMouseLeaveServices = () => {
     hoverTimeoutRef.current = setTimeout(() => {
       setIsServicesDropdownOpen(false);
-    }, 180);
+    }, 250);
   };
 
   const handleNavClick = (path: string) => {
     navigate(path);
     setIsMobileMenuOpen(false);
     setIsServicesDropdownOpen(false);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   return (
@@ -120,14 +127,14 @@ export default function Header() {
             <Link
               to="/"
               className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/') ? 'text-[#F2C400]' : 'text-[#2C2C2E] hover:text-[#F2C400]'
+                isActive('/') ? 'text-[#f6c73b]' : 'text-[#2C2C2E] hover:text-[#f6c73b]'
               }`}
             >
               {t('header.home')}
               {isActive('/') && (
                 <motion.div
                   layoutId="activeTabIndicator"
-                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#F2C400] rounded-full"
+                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
                   transition={{type: 'spring', stiffness: 350, damping: 28}}
                 />
               )}
@@ -137,61 +144,49 @@ export default function Header() {
             <Link
               to="/chi-siamo"
               className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/chi-siamo') ? 'text-[#F2C400]' : 'text-[#2C2C2E] hover:text-[#F2C400]'
+                isActive('/chi-siamo') ? 'text-[#f6c73b]' : 'text-[#2C2C2E] hover:text-[#f6c73b]'
               }`}
             >
               {t('header.about')}
               {isActive('/chi-siamo') && (
                 <motion.div
                   layoutId="activeTabIndicator"
-                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#F2C400] rounded-full"
+                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
                   transition={{type: 'spring', stiffness: 350, damping: 28}}
                 />
               )}
             </Link>
 
-            {/* Servizi / Services (Clickable Link + Dropdown trigger) */}
+            {/* Servizi / Services (Dropdown trigger) */}
             <div
               ref={servicesDropdownRef}
               className="relative flex items-center"
               onMouseEnter={handleMouseEnterServices}
               onMouseLeave={handleMouseLeaveServices}
             >
-              <div
-                className={`inline-flex items-center rounded-lg font-mono text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 ${
-                  isServicesActive ? 'text-[#F2C400]' : 'text-[#2C2C2E] hover:text-[#F2C400]'
+              <button
+                type="button"
+                onClick={() => setIsServicesDropdownOpen((prev) => !prev)}
+                className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono flex items-center gap-1.5 cursor-pointer ${
+                  isServicesActive ? 'text-[#f6c73b]' : 'text-[#2C2C2E] hover:text-[#f6c73b]'
                 }`}
+                aria-expanded={isServicesDropdownOpen}
+                aria-label={t('header.services')}
               >
-                <Link
-                  to="/servizi"
-                  onClick={() => setIsServicesDropdownOpen(false)}
-                  className="py-2 pl-3 pr-1 hover:text-[#F2C400] transition-colors"
-                >
-                  {t('header.services')}
-                </Link>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsServicesDropdownOpen(!isServicesDropdownOpen);
-                  }}
-                  className="py-2 pr-3 pl-1 cursor-pointer flex items-center justify-center hover:text-[#F2C400] transition-colors"
-                  aria-label="Apri menu Servizi"
-                >
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      isServicesDropdownOpen ? 'rotate-180 text-[#F2C400]' : 'text-[#2C2C2E]/60'
-                    }`}
-                  />
-                </button>
+                <span>{t('header.services')}</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    isServicesDropdownOpen ? 'rotate-180 text-[#f6c73b]' : 'text-[#2C2C2E]/60'
+                  }`}
+                />
                 {isServicesActive && (
                   <motion.div
                     layoutId="activeTabIndicator"
-                    className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#F2C400] rounded-full"
+                    className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
                     transition={{type: 'spring', stiffness: 350, damping: 28}}
                   />
                 )}
-              </div>
+              </button>
 
               <AnimatePresence>
                 {isServicesDropdownOpen && (
@@ -200,85 +195,110 @@ export default function Header() {
                     animate={{opacity: 1, y: 0, scale: 1}}
                     exit={{opacity: 0, y: 6, scale: 0.96}}
                     transition={{duration: 0.18, ease: 'easeOut'}}
-                    className="absolute top-full left-0 mt-1.5 w-60 p-2 rounded-2xl bg-[#F0EFEB] border border-[#2C2C2E]/12 shadow-xl z-50 font-mono text-[#2C2C2E]"
+                    className="absolute top-full left-0 pt-2 w-60 z-50 font-mono text-[#2C2C2E]"
                   >
-                    <div className="space-y-1">
-                      {servicesSubItems.map((sub) => {
-                        const isSubActive = location.pathname === sub.path;
-                        if (sub.isAll) {
+                    <div className="p-2.5 rounded-2xl bg-[#F0EFEB] border border-[#2C2C2E]/12 shadow-2xl">
+                      <div className="space-y-1">
+                        {servicesSubItems.map((sub) => {
+                          const isSubActive = location.pathname === sub.path;
+                          if (sub.isAll) {
+                            return (
+                              <React.Fragment key={sub.path}>
+                                <Link
+                                  to={sub.path}
+                                  onClick={() => {
+                                    setIsServicesDropdownOpen(false);
+                                    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                                  }}
+                                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-200 ${
+                                    isSubActive
+                                      ? 'bg-[#f6c73b]/30 text-[#2C2C2E]'
+                                      : 'text-[#2C2C2E] hover:bg-[#f6c73b]/20'
+                                  }`}
+                                >
+                                  <span className="flex items-center gap-1.5">
+                                    <span>{sub.label}</span>
+                                  </span>
+                                  <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
+                                </Link>
+                                <div className="my-1.5 border-b border-[#2C2C2E]/10" />
+                              </React.Fragment>
+                            );
+                          }
                           return (
-                            <React.Fragment key={sub.path}>
-                              <Link
-                                to={sub.path}
-                                onClick={() => setIsServicesDropdownOpen(false)}
-                                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-200 ${
-                                  isSubActive
-                                    ? 'bg-[#F2C400]/30 text-[#2C2C2E]'
-                                    : 'text-[#2C2C2E] hover:bg-[#F2C400]/20'
-                                }`}
-                              >
-                                <span className="flex items-center gap-1.5">
-                                  <span>{sub.label}</span>
-                                </span>
-                                <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
-                              </Link>
-                              <div className="my-1.5 border-b border-[#2C2C2E]/10" />
-                            </React.Fragment>
+                            <Link
+                              key={sub.path}
+                              to={sub.path}
+                              onClick={() => {
+                                setIsServicesDropdownOpen(false);
+                                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                              }}
+                              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+                                isSubActive
+                                  ? 'bg-[#f6c73b]/25 text-[#2C2C2E] font-extrabold border-l-2 border-[#f6c73b]'
+                                  : 'text-[#2C2C2E] hover:bg-[#f6c73b]/20'
+                              }`}
+                            >
+                              <span>{sub.label}</span>
+                              {isSubActive && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#f6c73b]" />
+                              )}
+                            </Link>
                           );
-                        }
-                        return (
-                          <Link
-                            key={sub.path}
-                            to={sub.path}
-                            onClick={() => setIsServicesDropdownOpen(false)}
-                            className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
-                              isSubActive
-                                ? 'bg-[#F2C400]/25 text-[#2C2C2E] font-extrabold border-l-2 border-[#F2C400]'
-                                : 'text-[#2C2C2E] hover:bg-[#F2C400]/20'
-                            }`}
-                          >
-                            <span>{sub.label}</span>
-                            {isSubActive && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#F2C400]" />
-                            )}
-                          </Link>
-                        );
-                      })}
+                        })}
+                      </div>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* Bandi / Grants */}
-            <Link
-              to="/bandi"
-              className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/bandi') ? 'text-[#F2C400]' : 'text-[#2C2C2E]/75 hover:text-[#F2C400]'
-              }`}
-            >
-              {t('header.bandi')}
-              {isActive('/bandi') && (
-                <motion.div
-                  layoutId="activeTabIndicator"
-                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#F2C400] rounded-full"
-                  transition={{type: 'spring', stiffness: 350, damping: 28}}
-                />
-              )}
-            </Link>
-
             {/* Daily Safety Lab */}
             <Link
               to="/daily-safety-lab"
               className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/daily-safety-lab') ? 'text-[#F2C400]' : 'text-[#2C2C2E]/75 hover:text-[#F2C400]'
+                isActive('/daily-safety-lab') ? 'text-[#f6c73b]' : 'text-[#2C2C2E]/75 hover:text-[#f6c73b]'
               }`}
             >
               {t('header.dailySafetyLab')}
               {isActive('/daily-safety-lab') && (
                 <motion.div
                   layoutId="activeTabIndicator"
-                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#F2C400] rounded-full"
+                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
+                  transition={{type: 'spring', stiffness: 350, damping: 28}}
+                />
+              )}
+            </Link>
+
+            {/* Bandi / Grants */}
+            <Link
+              to="/bandi"
+              className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
+                isActive('/bandi') ? 'text-[#f6c73b]' : 'text-[#2C2C2E]/75 hover:text-[#f6c73b]'
+              }`}
+            >
+              {t('header.bandi')}
+              {isActive('/bandi') && (
+                <motion.div
+                  layoutId="activeTabIndicator"
+                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
+                  transition={{type: 'spring', stiffness: 350, damping: 28}}
+                />
+              )}
+            </Link>
+
+            {/* Contatti / Contact */}
+            <Link
+              to="/contatti"
+              className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
+                isActive('/contatti') ? 'text-[#f6c73b]' : 'text-[#2C2C2E]/75 hover:text-[#f6c73b]'
+              }`}
+            >
+              {t('header.contact')}
+              {isActive('/contatti') && (
+                <motion.div
+                  layoutId="activeTabIndicator"
+                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
                   transition={{type: 'spring', stiffness: 350, damping: 28}}
                 />
               )}
@@ -288,13 +308,15 @@ export default function Header() {
           {/* Desktop Right Actions: Language Switcher & CTA */}
           <div className="hidden xl:flex items-center gap-3 shrink-0">
             <LanguageSwitcher />
-            <Link
-              to="/contatti"
+            <a
+              href="https://crm.dailyplatform.it/register"
+              target="_blank"
+              rel="noopener noreferrer"
               className="cta-button group relative inline-flex items-center gap-2 px-4 py-2 text-[13px] font-bold uppercase font-mono whitespace-nowrap"
             >
-              {t('header.contact')}
+              {t('header.accessPlatform')}
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-[2.5]" />
-            </Link>
+            </a>
           </div>
 
           {/* Mobile/Tablet Controls */}
@@ -302,7 +324,7 @@ export default function Header() {
             <LanguageSwitcher />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-xl border border-[#2C2C2E]/10 text-[#2C2C2E] hover:text-[#F2C400] hover:bg-[#2C2C2E]/5 transition-colors"
+              className="p-2 rounded-xl border border-[#2C2C2E]/10 text-[#2C2C2E] hover:text-[#f6c73b] hover:bg-[#2C2C2E]/5 transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -328,8 +350,8 @@ export default function Header() {
                 onClick={() => handleNavClick('/')}
                 className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
                   isActive('/')
-                    ? 'bg-[#F2C400]/20 text-[#2C2C2E] border-l-4 border-[#F2C400] pl-4 font-extrabold'
-                    : 'text-[#2C2C2E] hover:bg-[#F2C400]/18'
+                    ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
+                    : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
                 }`}
               >
                 {t('header.home')}
@@ -340,8 +362,8 @@ export default function Header() {
                 onClick={() => handleNavClick('/chi-siamo')}
                 className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
                   isActive('/chi-siamo')
-                    ? 'bg-[#F2C400]/20 text-[#2C2C2E] border-l-4 border-[#F2C400] pl-4 font-extrabold'
-                    : 'text-[#2C2C2E] hover:bg-[#F2C400]/18'
+                    ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
+                    : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
                 }`}
               >
                 {t('header.about')}
@@ -353,14 +375,14 @@ export default function Header() {
                   onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
                   className={`flex items-center justify-between w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
                     isServicesActive
-                      ? 'bg-[#F2C400]/20 text-[#2C2C2E] border-l-4 border-[#F2C400] pl-4 font-extrabold'
-                      : 'text-[#2C2C2E] hover:bg-[#F2C400]/18'
+                      ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
+                      : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
                   }`}
                 >
                   <span>{t('header.services')}</span>
                   <ChevronDown
                     className={`w-4 h-4 transition-transform duration-200 ${
-                      isMobileServicesOpen ? 'rotate-180 text-[#F2C400]' : 'text-[#2C2C2E]/60'
+                      isMobileServicesOpen ? 'rotate-180 text-[#f6c73b]' : 'text-[#2C2C2E]/60'
                     }`}
                   />
                 </button>
@@ -372,7 +394,7 @@ export default function Header() {
                       animate={{opacity: 1, height: 'auto'}}
                       exit={{opacity: 0, height: 0}}
                       transition={{duration: 0.2, ease: 'easeInOut'}}
-                      className="pl-4 border-l-2 border-[#F2C400]/30 ml-3 my-1 space-y-1 overflow-hidden"
+                      className="pl-4 border-l-2 border-[#f6c73b]/30 ml-3 my-1 space-y-1 overflow-hidden"
                     >
                       {servicesSubItems.map((sub) => {
                         const isSubActive = location.pathname === sub.path;
@@ -384,8 +406,8 @@ export default function Header() {
                               sub.isAll
                                 ? 'text-[#2C2C2E] font-extrabold border-b border-[#2C2C2E]/10 mb-1 pb-2'
                                 : isSubActive
-                                ? 'bg-[#F2C400]/25 text-[#2C2C2E] font-extrabold'
-                                : 'text-[#2C2C2E]/80 hover:text-[#2C2C2E] hover:bg-[#F2C400]/15'
+                                ? 'bg-[#f6c73b]/25 text-[#2C2C2E] font-extrabold'
+                                : 'text-[#2C2C2E]/80 hover:text-[#2C2C2E] hover:bg-[#f6c73b]/15'
                             }`}
                           >
                             <span>{sub.label}</span>
@@ -398,39 +420,53 @@ export default function Header() {
                 </AnimatePresence>
               </div>
 
-              {/* Bandi / Grants */}
-              <button
-                onClick={() => handleNavClick('/bandi')}
-                className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
-                  isActive('/bandi')
-                    ? 'bg-[#F2C400]/20 text-[#2C2C2E] border-l-4 border-[#F2C400] pl-4 font-extrabold'
-                    : 'text-[#2C2C2E] hover:bg-[#F2C400]/18'
-                }`}
-              >
-                {t('header.bandi')}
-              </button>
-
               {/* Daily Safety Lab */}
               <button
                 onClick={() => handleNavClick('/daily-safety-lab')}
                 className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
                   isActive('/daily-safety-lab')
-                    ? 'bg-[#F2C400]/20 text-[#2C2C2E] border-l-4 border-[#F2C400] pl-4 font-extrabold'
-                    : 'text-[#2C2C2E] hover:bg-[#F2C400]/18'
+                    ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
+                    : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
                 }`}
               >
                 {t('header.dailySafetyLab')}
               </button>
 
-              {/* Contattaci / Contact Us */}
+              {/* Bandi / Grants */}
+              <button
+                onClick={() => handleNavClick('/bandi')}
+                className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
+                  isActive('/bandi')
+                    ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
+                    : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
+                }`}
+              >
+                {t('header.bandi')}
+              </button>
+
+              {/* Contatti / Contact */}
+              <button
+                onClick={() => handleNavClick('/contatti')}
+                className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
+                  isActive('/contatti')
+                    ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
+                    : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
+                }`}
+              >
+                {t('header.contact')}
+              </button>
+
+              {/* Accedi a dailyplatform CTA */}
               <div className="pt-4 border-t border-[#2C2C2E]/10 mt-3 space-y-3">
-                <button
-                  onClick={() => handleNavClick('/contatti')}
+                <a
+                  href="https://crm.dailyplatform.it/register"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="cta-button flex items-center justify-center w-full gap-2 px-5 py-3 font-mono text-xs font-bold tracking-wider uppercase shadow-sm"
                 >
-                  {t('header.contact')}
+                  {t('header.accessPlatform')}
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>

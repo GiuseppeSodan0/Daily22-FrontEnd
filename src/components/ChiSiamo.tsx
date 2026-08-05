@@ -75,7 +75,7 @@ export default function ChiSiamo() {
 
   return (
     <section className="relative overflow-hidden pt-36 pb-32 text-left bg-[#F0EFEB]">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#F2C400]/5 blur-[160px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#f6c73b]/5 blur-[160px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
@@ -91,13 +91,6 @@ export default function ChiSiamo() {
             <h2 className="text-3xl sm:text-4xl font-bold mt-4 font-sans text-[#2C2C2E] tracking-tight">{t('about.title')}</h2>
           </motion.div>
 
-          {/* Statement */}
-          <motion.div variants={itemVariants} className="text-center sm:text-left py-4 max-w-5xl mx-auto">
-            <h3 className="about-statement font-sans font-bold text-[#2C2C2E] tracking-tight text-balance">
-              {t('about.subtitle')}
-            </h3>
-          </motion.div>
-
           {/* Intro description and image */}
           <motion.div 
             variants={itemVariants}
@@ -111,7 +104,7 @@ export default function ChiSiamo() {
                 <p>{t('about.p4')}</p>
               </div>
               <div className="pt-6 border-t border-[#2C2C2E]/10">
-                <p className="text-xs sm:text-sm font-bold text-[#F2C400] font-mono uppercase tracking-wide leading-relaxed">
+                <p className="text-xs sm:text-sm font-bold text-[#f6c73b] font-mono uppercase tracking-wide leading-relaxed">
                   {t('about.visionStatement')}
                 </p>
               </div>
@@ -126,7 +119,7 @@ export default function ChiSiamo() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div variants={itemVariants} className="p-8 card-premium space-y-4">
               <div className="flex items-center gap-3 mb-4">
-                <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20">
+                <span className="p-3 rounded-xl bg-[#f6c73b]/10 text-[#2C2C2E] border border-[#f6c73b]/20">
                   <Target className="w-5 h-5 text-[#2C2C2E]" />
                 </span>
                 <h3 className="text-lg font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">{t('about.missionTitle')}</h3>
@@ -144,7 +137,7 @@ export default function ChiSiamo() {
 
             <motion.div variants={itemVariants} className="p-8 card-premium space-y-4">
               <div className="flex items-center gap-3 mb-4">
-                <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20">
+                <span className="p-3 rounded-xl bg-[#f6c73b]/10 text-[#2C2C2E] border border-[#f6c73b]/20">
                   <Eye className="w-5 h-5 text-[#2C2C2E]" />
                 </span>
                 <h3 className="text-lg font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">{t('about.visionTitle')}</h3>
@@ -159,7 +152,7 @@ export default function ChiSiamo() {
                 {t('about.visionP2')}
               </p>
               <div className="pt-2">
-                <p className="text-xs sm:text-sm font-bold text-[#F2C400] font-mono uppercase tracking-wide">
+                <p className="text-xs sm:text-sm font-bold text-[#f6c73b] font-mono uppercase tracking-wide">
                   {t('about.visionQuote')}
                 </p>
               </div>
@@ -170,7 +163,7 @@ export default function ChiSiamo() {
           <div className="space-y-12">
             <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto">
               <div className="inline-flex items-center justify-center gap-3 mb-4">
-                <span className="p-3 rounded-xl bg-[#F2C400]/10 text-[#2C2C2E] border border-[#F2C400]/20">
+                <span className="p-3 rounded-xl bg-[#f6c73b]/10 text-[#2C2C2E] border border-[#f6c73b]/20">
                   <Users className="w-6 h-6 text-[#2C2C2E]" />
                 </span>
               </div>
@@ -188,11 +181,11 @@ export default function ChiSiamo() {
                   className="p-8 card-premium text-center group flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-16 h-16 rounded-full bg-[#F2C400]/10 mx-auto mb-6 flex items-center justify-center border border-[#F2C400]/25 group-hover:scale-105 transition-transform duration-350">
+                    <div className="w-16 h-16 rounded-full bg-[#f6c73b]/10 mx-auto mb-6 flex items-center justify-center border border-[#f6c73b]/25 group-hover:scale-105 transition-transform duration-350">
                       <span className="text-2xl font-bold text-[#2C2C2E]">{member.name.charAt(0)}</span>
                     </div>
                     <h4 className="text-base font-bold mb-1 font-sans text-[#2C2C2E]">{member.name}</h4>
-                    <p className="text-[10px] font-bold text-[#F2C400] uppercase tracking-widest mb-4 font-mono">{member.role}</p>
+                    <p className="text-[10px] font-bold text-[#f6c73b] uppercase tracking-widest mb-4 font-mono">{member.role}</p>
                     <p className="text-xs leading-relaxed text-[#5E5E62] font-mono">{member.bio}</p>
                   </div>
                 </motion.div>

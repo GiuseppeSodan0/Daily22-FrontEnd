@@ -200,8 +200,8 @@ export default function DailySafetyLab() {
   const currentActiveDot = activeIndex % 8;
 
   return (
-    <section className="relative overflow-hidden pt-36 pb-32 bg-[#F0EFEB] text-left">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#F2C400]/5 blur-[160px] pointer-events-none" />
+    <section className="daily-safety-lab-page relative overflow-hidden pt-36 pb-32 bg-[#F0EFEB] text-left">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#e73749]/10 blur-[160px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -216,7 +216,7 @@ export default function DailySafetyLab() {
             className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center"
           >
             <div className="lg:col-span-7 space-y-6 text-left">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#e73749] font-mono block">
                 {t('dsl.heroBadge')}
               </span>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-sans text-[#2C2C2E] tracking-tight leading-tight">
@@ -229,28 +229,29 @@ export default function DailySafetyLab() {
               <div className="pt-2">
                 <Link
                   to="/contatti"
-                  className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase"
+                  className="dsl-primary-cta inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase rounded-full bg-[#e73749] text-white hover:bg-[#e73749] hover:shadow-[0_0_18px_rgba(231,55,73,0.38)] hover:-translate-y-0.5 transition-all duration-300 shadow-md active:scale-95 group/btn"
                 >
-                  {t('header.contact')}
-                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                  <span>{t('header.contact')}</span>
+                  <ArrowRight className="w-4 h-4 stroke-[2.5] text-white group-hover/btn:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
             </div>
 
             <div className="lg:col-span-5 w-full flex items-center justify-center">
               <div className="relative w-full max-w-[360px] flex items-center justify-center">
-                {/* Decorative brand yellow tech dots */}
-                <div className="absolute -top-3 left-4 w-3.5 h-3.5 rounded-full bg-[#F2C400] shadow-[0_0_12px_rgba(242,196,0,0.7)] z-10 pointer-events-none" />
-                <div className="absolute top-1/4 -right-3 w-2.5 h-2.5 rounded-full bg-[#F2C400]/80 shadow-[0_0_8px_rgba(242,196,0,0.5)] z-10 pointer-events-none" />
-                <div className="absolute -bottom-3 right-8 w-3 h-3 rounded-full bg-[#F2C400]/90 shadow-[0_0_10px_rgba(242,196,0,0.6)] z-10 pointer-events-none" />
-                <div className="absolute bottom-1/3 -left-3 w-2 h-2 rounded-full bg-[#F2C400]/60 z-10 pointer-events-none" />
-                <div className="absolute top-6 right-12 w-2 h-2 rounded-full bg-[#F2C400]/75 z-10 pointer-events-none" />
+                {/* Decorative brand red tech dots */}
+                <div className="absolute -top-3 left-4 w-3.5 h-3.5 rounded-full bg-[#e73749] shadow-[0_0_12px_rgba(231,55,73,0.7)] z-10 pointer-events-none" />
+                <div className="absolute top-1/4 -right-3 w-2.5 h-2.5 rounded-full bg-[#e73749]/80 shadow-[0_0_8px_rgba(231,55,73,0.5)] z-10 pointer-events-none" />
+                <div className="absolute -bottom-3 right-8 w-3 h-3 rounded-full bg-[#e73749]/90 shadow-[0_0_10px_rgba(231,55,73,0.6)] z-10 pointer-events-none" />
+                <div className="absolute bottom-1/3 -left-3 w-2 h-2 rounded-full bg-[#e73749]/60 z-10 pointer-events-none" />
+                <div className="absolute top-6 right-12 w-2 h-2 rounded-full bg-[#e73749]/75 z-10 pointer-events-none" />
 
                 <InteractiveImage 
                   src={logoDailySafetyLab} 
                   alt="Logo Daily Safety Lab" 
                   aspectRatio="square"
                   objectFit="contain"
+                  dotColor="#e73749"
                   className="w-full h-auto max-h-[300px] object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.08)]"
                 />
               </div>
@@ -261,9 +262,9 @@ export default function DailySafetyLab() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div 
               variants={itemVariants} 
-              className="p-8 sm:p-10 card-premium flex flex-col md:flex-row gap-6 items-start bg-white/50 border border-black/5 hover:border-[#F2C400]/40 transition-all duration-300"
+              className="p-8 sm:p-10 card-premium flex flex-col md:flex-row gap-6 items-start bg-white/50 border border-black/5 hover:border-[#e73749]/40 transition-all duration-300"
             >
-              <div className="p-4 rounded-2xl bg-[#F2C400]/10 text-[#2C2C2E] shrink-0 border border-[#F2C400]/20">
+              <div className="p-4 rounded-2xl bg-[#e73749]/10 text-[#e73749] shrink-0 border border-[#e73749]/20">
                 <Target className="w-6 h-6 stroke-[1.75]" />
               </div>
               <div className="space-y-3 text-left">
@@ -276,9 +277,9 @@ export default function DailySafetyLab() {
 
             <motion.div 
               variants={itemVariants} 
-              className="p-8 sm:p-10 card-premium flex flex-col md:flex-row gap-6 items-start bg-white/50 border border-black/5 hover:border-[#F2C400]/40 transition-all duration-300"
+              className="p-8 sm:p-10 card-premium flex flex-col md:flex-row gap-6 items-start bg-white/50 border border-black/5 hover:border-[#e73749]/40 transition-all duration-300"
             >
-              <div className="p-4 rounded-2xl bg-[#F2C400]/10 text-[#2C2C2E] shrink-0 border border-[#F2C400]/20">
+              <div className="p-4 rounded-2xl bg-[#e73749]/10 text-[#e73749] shrink-0 border border-[#e73749]/20">
                 <Eye className="w-6 h-6 stroke-[1.75]" />
               </div>
               <div className="space-y-3 text-left">
@@ -294,7 +295,7 @@ export default function DailySafetyLab() {
           <motion.div variants={itemVariants} className="space-y-4 text-left pt-6">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
               <div className="space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#e73749] font-mono block">
                   {t('dsl.servSectionBadge')}
                 </span>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">
@@ -308,14 +309,14 @@ export default function DailySafetyLab() {
               <div className="flex items-center gap-2">
                 <button 
                   onClick={handlePrev}
-                  className="p-3 rounded-full bg-white border border-black/5 hover:border-[#F2C400] text-[#2C2C2E] transition-all duration-200 hover:shadow-sm"
+                  className="p-3 rounded-full bg-white border border-black/5 hover:border-[#e73749] hover:text-[#e73749] hover:bg-[#e73749]/5 text-[#2C2C2E] transition-all duration-200 hover:shadow-sm cursor-pointer"
                   aria-label="Precedente"
                 >
                   <ChevronLeft className="w-5 h-5 stroke-[2]" />
                 </button>
                 <button 
                   onClick={handleNext}
-                  className="p-3 rounded-full bg-white border border-black/5 hover:border-[#F2C400] text-[#2C2C2E] transition-all duration-200 hover:shadow-sm"
+                  className="p-3 rounded-full bg-white border border-black/5 hover:border-[#e73749] hover:text-[#e73749] hover:bg-[#e73749]/5 text-[#2C2C2E] transition-all duration-200 hover:shadow-sm cursor-pointer"
                   aria-label="Successivo"
                 >
                   <ChevronRight className="w-5 h-5 stroke-[2]" />
@@ -361,8 +362,8 @@ export default function DailySafetyLab() {
                         <div className="flex items-center justify-between">
                           <div className={`p-3 rounded-xl border transition-all duration-300 ${
                             isActive 
-                              ? 'bg-[#F2C400]/20 text-[#2C2C2E] border-[#F2C400]/40' 
-                              : 'bg-[#F2C400]/10 text-[#2C2C2E] border-[#F2C400]/20 group-hover:bg-[#F2C400]/20'
+                              ? 'bg-[#e73749]/20 text-[#e73749] border-[#e73749]/40' 
+                              : 'bg-[#e73749]/10 text-[#e73749] border-[#e73749]/20 group-hover:bg-[#e73749]/20'
                           }`}>
                             <IconComp className="w-5 h-5 stroke-[1.75]" />
                           </div>
@@ -373,7 +374,7 @@ export default function DailySafetyLab() {
 
                         <div className="space-y-2">
                           <h3 className={`text-base sm:text-lg font-bold font-sans text-[#2C2C2E] tracking-tight transition-colors duration-200 ${
-                            isActive ? 'text-[#2C2C2E]' : 'group-hover:text-[#F2C400]'
+                            isActive ? 'text-[#2C2C2E]' : 'group-hover:text-[#e73749]'
                           }`}>
                             {srv.title}
                           </h3>
@@ -387,7 +388,7 @@ export default function DailySafetyLab() {
                         <span className="text-[10px] font-mono font-bold text-[#2C2C2E]/30">
                           DSL // 0{srv.id}
                         </span>
-                        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold text-[#F2C400]">
+                        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold text-[#e73749]">
                           INFO <ArrowRight className="w-3.5 h-3.5" />
                         </div>
                       </div>
@@ -402,9 +403,9 @@ export default function DailySafetyLab() {
                 <button
                   key={idx}
                   onClick={() => handleDotClick(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     currentActiveDot === idx 
-                      ? 'w-6 bg-[#F2C400]' 
+                      ? 'w-6 bg-[#e73749]' 
                       : 'w-2 bg-[#2C2C2E]/10 hover:bg-[#2C2C2E]/25'
                   }`}
                   aria-label={`Vai al servizio ${idx + 1}`}
@@ -425,10 +426,10 @@ export default function DailySafetyLab() {
             <div className="pt-4">
               <Link
                 to="/contatti"
-                className="cta-button inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase"
+                className="dsl-primary-cta inline-flex items-center gap-2 px-8 py-4 text-xs font-bold font-mono tracking-wider uppercase rounded-full bg-[#e73749] text-white hover:bg-[#e73749] hover:shadow-[0_0_18px_rgba(231,55,73,0.38)] hover:-translate-y-0.5 transition-all duration-300 shadow-md active:scale-95 group/btn"
               >
-                {t('header.contact')}
-                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                <span>{t('header.contact')}</span>
+                <ArrowRight className="w-4 h-4 stroke-[2.5] text-white group-hover/btn:translate-x-0.5 transition-transform" />
               </Link>
             </div>
           </motion.div>

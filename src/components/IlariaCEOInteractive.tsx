@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {motion, useMotionValue, useSpring, useTransform} from 'motion/react';
-import ilariaImg from '../assets/images/Ilaria Leonardis CEO daily.png';
+import ilariaImg from '../assets/images/Ilaria Leonardis CEO & Founder daily.png';
 
 interface IlariaCEOInteractiveProps {
   alt?: string;
@@ -58,7 +58,7 @@ export default function IlariaCEOInteractive({
       {/* Background Soft Glow - Golden, extremely elegant */}
       <motion.div
         id="ilaria-glow-halo"
-        className="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-[#F2C400]/5 blur-[60px] pointer-events-none z-0"
+        className="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-[#f6c73b]/5 blur-[60px] pointer-events-none z-0"
         animate={{
           scale: isHovered ? 1.15 : 1.0,
           opacity: isHovered ? 0.9 : 0.6,
@@ -117,13 +117,13 @@ export default function IlariaCEOInteractive({
 
         {/* Small branding tags in mono */}
         <div 
-          className="absolute bottom-2 left-4 z-30 flex items-center gap-2 px-3 py-1 rounded-md bg-[#2C2C2E]/95 border border-[#F2C400]/30 backdrop-blur-md shadow-lg"
+          className="absolute bottom-2 left-4 z-30 flex items-center gap-2 px-3 py-1 rounded-md bg-[#2C2C2E]/95 border border-[#f6c73b]/30 backdrop-blur-md shadow-lg"
           style={{
             transform: 'translateZ(30px)',
           }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#F2C400] animate-pulse" />
-          <span className="text-[9px] font-mono font-bold tracking-widest text-[#F2C400] uppercase">CEO & FOUNDER</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#f6c73b] animate-pulse" />
+          <span className="text-[9px] font-mono font-bold tracking-widest text-[#f6c73b] uppercase">CEO & FOUNDER</span>
         </div>
       </motion.div>
     </div>
@@ -215,7 +215,7 @@ function IlariaInteractiveDot({
 
   return (
     <motion.div
-      className="absolute rounded-full bg-[#F2C400]"
+      className="absolute rounded-full bg-[#f6c73b]"
       style={{
         left: `${baseX}%`,
         top: `${baseY}%`,
