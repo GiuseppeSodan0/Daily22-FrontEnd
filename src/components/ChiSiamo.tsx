@@ -30,7 +30,7 @@ const itemVariants = {
 export default function ChiSiamo() {
   const {t} = useLanguage();
 
-  const teamMembers = [
+  const teamRow1 = [
     {
       name: 'ILARIA LEONARDIS',
       role: 'CEO & Founder',
@@ -51,6 +51,9 @@ export default function ChiSiamo() {
       role: 'Software Developer',
       bio: t('about.teamGiuseppe'),
     },
+  ];
+
+  const teamRow2 = [
     {
       name: 'SARA SAGNELLI',
       role: t('about.roleSara'),
@@ -60,11 +63,6 @@ export default function ChiSiamo() {
       name: 'PAOLO MIRABELLA',
       role: 'Marketing & Go-to-Market',
       bio: t('about.teamPaolo'),
-    },
-    {
-      name: 'ROBERTA SIANO',
-      role: 'Data Analyst',
-      bio: t('about.teamRoberta'),
     },
     {
       name: 'SIMONE LA MARCA',
@@ -173,23 +171,46 @@ export default function ChiSiamo() {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {teamMembers.map((member) => (
-                <motion.div
-                  variants={itemVariants}
-                  key={member.name}
-                  className="p-8 card-premium text-center group flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="w-16 h-16 rounded-full bg-[#f6c73b]/10 mx-auto mb-6 flex items-center justify-center border border-[#f6c73b]/25 group-hover:scale-105 transition-transform duration-350">
-                      <span className="text-2xl font-bold text-[#2C2C2E]">{member.name.charAt(0)}</span>
+            <div className="space-y-6">
+              {/* Prima riga - 4 profili */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {teamRow1.map((member) => (
+                  <motion.div
+                    variants={itemVariants}
+                    key={member.name}
+                    className="p-8 card-premium text-center group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="w-16 h-16 rounded-full bg-[#f6c73b]/10 mx-auto mb-6 flex items-center justify-center border border-[#f6c73b]/25 group-hover:scale-105 transition-transform duration-350">
+                        <span className="text-2xl font-bold text-[#2C2C2E]">{member.name.charAt(0)}</span>
+                      </div>
+                      <h4 className="text-base font-bold mb-1 font-sans text-[#2C2C2E]">{member.name}</h4>
+                      <p className="text-[10px] font-bold text-[#f6c73b] uppercase tracking-widest mb-4 font-mono">{member.role}</p>
+                      <p className="text-xs leading-relaxed text-[#5E5E62] font-mono">{member.bio}</p>
                     </div>
-                    <h4 className="text-base font-bold mb-1 font-sans text-[#2C2C2E]">{member.name}</h4>
-                    <p className="text-[10px] font-bold text-[#f6c73b] uppercase tracking-widest mb-4 font-mono">{member.role}</p>
-                    <p className="text-xs leading-relaxed text-[#5E5E62] font-mono">{member.bio}</p>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Seconda riga - 3 profili centrati, stessa dimensione delle card */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-[repeat(3,calc((100%-4.5rem)/4))] lg:justify-center">
+                {teamRow2.map((member) => (
+                  <motion.div
+                    variants={itemVariants}
+                    key={member.name}
+                    className="p-8 card-premium text-center group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="w-16 h-16 rounded-full bg-[#f6c73b]/10 mx-auto mb-6 flex items-center justify-center border border-[#f6c73b]/25 group-hover:scale-105 transition-transform duration-350">
+                        <span className="text-2xl font-bold text-[#2C2C2E]">{member.name.charAt(0)}</span>
+                      </div>
+                      <h4 className="text-base font-bold mb-1 font-sans text-[#2C2C2E]">{member.name}</h4>
+                      <p className="text-[10px] font-bold text-[#f6c73b] uppercase tracking-widest mb-4 font-mono">{member.role}</p>
+                      <p className="text-xs leading-relaxed text-[#5E5E62] font-mono">{member.bio}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
 
