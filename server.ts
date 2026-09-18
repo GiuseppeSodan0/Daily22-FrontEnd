@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import nodemailer from 'nodemailer';
 import { createServer as createViteServer } from 'vite';
 
@@ -12,6 +13,58 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#039;');
 }
 
+function loadEnvFile(filePath?: string): void {
+  const envPath = filePath || path.join(process.cwd(), '.env');
+  if (!fs.existsSync(envPath)) return;
+  const content = fs.readFileSync(envPath, 'utf-8');
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#') || !line.includes('=')) continue;
+    const eq = line.indexOf('=');
+    const key = line.slice(0, eq).trim();
+    const rawVal = line.slice(eq + 1).trim();
+    if (!key || key in process.env) continue;
+    const val = rawVal.replace(/^"(.*)"$|^'(.*)'$/, (_m, a?: string, b?: string) => (a ?? b ?? rawVal));
+    process.env[key] = val;
+  }
+}
+
+loadEnvFile();
+
+const RECAPTCHA_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
+const RECAPTCHA_MIN_SCORE = 0.5;
+const RECAPTCHA_ALLOWED_HOSTNAMES = ['daily22.it', 'localhost'];
+
+async function verifyRecaptcha(token: string, expectedAction: string): Promise<boolean> {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) return true;
+
+  if (!token) return false;
+
+  try {
+    const params = new URLSearchParams();
+    params.append('secret', secret);
+    params.append('response', token);
+
+    const res = await fetch(RECAPTCHA_VERIFY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params,
+    });
+    const data: any = await res.json();
+
+    if (data.success !== true) return false;
+    if (typeof data.score === 'number' && data.score < RECAPTCHA_MIN_SCORE) return false;
+    if (data.action && data.action !== expectedAction) return false;
+    if (data.hostname && !RECAPTCHA_ALLOWED_HOSTNAMES.includes(data.hostname)) return false;
+
+    return true;
+  } catch (err) {
+    console.error('[RECAPTCHA VERIFY ERROR]:', err);
+    return false;
+  }
+}
+
 async function startServer() {
   const app = express();
   const PORT = 3000;
@@ -22,7 +75,16 @@ async function startServer() {
   // Contact Form API route sending to segreteria@dy22.it
   app.post(['/api/contact', '/sendmail.php'], async (req, res) => {
     try {
-      const { nome, azienda, email, telefono, oggetto, messaggio, consentePrivacy, language, timestamp } = req.body;
+      const { nome, azienda, email, telefono, oggetto, messaggio, consentePrivacy, language, timestamp, recaptchaToken } = req.body;
+
+      // 0. reCAPTCHA v3 validation (only enforced when RECAPTCHA_SECRET_KEY is configured)
+      const isHuman = await verifyRecaptcha(String(recaptchaToken || ''), 'contact');
+      if (!isHuman) {
+        const errMsg = (language === 'en')
+          ? 'Automated verification failed. Please try again.'
+          : 'Verifica automatica non superata. Riprova.';
+        return res.status(400).json({ success: false, error: errMsg, message: errMsg, recaptchaFailed: true });
+      }
 
       // 1. Mandatory Privacy Validation
       if (!consentePrivacy || consentePrivacy === 'false') {
@@ -152,6 +214,11 @@ Data e ora: ${dateFormatted}
   // Health check route
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok' });
+  });
+
+  // Runtime config exposed to the frontend (reCAPTCHA site key)
+  app.get('/api/config', (req, res) => {
+    res.json({ recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY || '' });
   });
 
   // Vite middleware in dev mode
