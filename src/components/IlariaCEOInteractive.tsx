@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {motion, useMotionValue, useSpring, useTransform} from 'motion/react';
-import ilariaImg from '../assets/images/Ilaria Leonardis CEO & Founder daily.png';
+import ilariaImg from '../assets/images/Ilaria Leonardis Esperta di sicurezza sul lavoro.png';
 
 interface IlariaCEOInteractiveProps {
   alt?: string;
