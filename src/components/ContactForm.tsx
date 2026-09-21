@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {motion, AnimatePresence} from 'motion/react';
 import {Mail, Phone, Clock, MapPin, Check, Landmark, AlertTriangle, ArrowRight} from 'lucide-react';
 import {useLanguage} from '../context/LanguageContext';
@@ -39,6 +39,66 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPrivacyError, setShowPrivacyError] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [recaptchaSiteKey, setRecaptchaSiteKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/api/config');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled && typeof data?.recaptchaSiteKey === 'string' && data.recaptchaSiteKey) {
+          setRecaptchaSiteKey(data.recaptchaSiteKey);
+        }
+      } catch {
+        // captcha config unavailable; the form keeps working without it
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!recaptchaSiteKey) return;
+    const selector = `script[data-recaptcha-sitekey="${recaptchaSiteKey}"]`;
+    if (document.querySelector(selector)) return;
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`;
+    script.async = true;
+    script.defer = true;
+    script.dataset.recaptchaSitekey = recaptchaSiteKey;
+    document.body.appendChild(script);
+  }, [recaptchaSiteKey]);
+
+  const getRecaptchaToken = (): Promise<string | null> => {
+    return new Promise((resolve) => {
+      const win = window as any;
+      const attempt = () => {
+        win.grecaptcha.ready(() => {
+          win.grecaptcha
+            .execute(recaptchaSiteKey, {action: 'contact'})
+            .then((token: string) => resolve(token))
+            .catch(() => resolve(null));
+        });
+      };
+      if (win.grecaptcha && typeof win.grecaptcha.execute === 'function') {
+        attempt();
+        return;
+      }
+      const start = Date.now();
+      const poll = setInterval(() => {
+        if (win.grecaptcha && typeof win.grecaptcha.execute === 'function') {
+          clearInterval(poll);
+          attempt();
+        } else if (Date.now() - start > 12000) {
+          clearInterval(poll);
+          resolve(null);
+        }
+      }, 150);
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value, type} = e.target;
@@ -63,6 +123,16 @@ export default function ContactForm() {
       return;
     }
     setShowPrivacyError(false);
+
+    let recaptchaToken: string | null = null;
+    if (recaptchaSiteKey) {
+      recaptchaToken = await getRecaptchaToken();
+      if (!recaptchaToken) {
+        setSubmitError(t('contact.captchaError'));
+        return;
+      }
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -79,6 +149,7 @@ export default function ContactForm() {
           oggetto: formData.oggetto,
           messaggio: formData.messaggio,
           consentePrivacy: formData.consentePrivacy,
+          recaptchaToken: recaptchaToken ?? undefined,
           language: lang,
           timestamp: new Date().toISOString(),
         }),
