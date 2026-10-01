@@ -111,6 +111,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-wrap items-center gap-6">
             <Link to="/privacy-policy" className="hover:text-[#f6c73b] transition-colors font-medium">{t('footer.privacy')}</Link>
+            <Link to="/termini-condizioni" className="hover:text-[#f6c73b] transition-colors font-medium">Termini e Condizioni</Link>
             <LanguageSwitcher variant="footer" />
           </div>
         </div>

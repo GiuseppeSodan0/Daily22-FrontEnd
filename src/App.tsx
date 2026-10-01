@@ -12,6 +12,7 @@ import Bandi from './components/Bandi';
 import DailySafetyLab from './components/DailySafetyLab';
 import ChiSiamo from './components/ChiSiamo';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import TerminiCondizioni from './components/TerminiCondizioni';
 import Vera from './components/Vera';
 import DailyPlatform from './components/DailyPlatform';
 import Salvatore from './components/Salvatore';
@@ -75,6 +76,7 @@ export default function App() {
             <Route path="/grants" element={<Bandi />} />
             <Route path="/daily-safety-lab" element={<DailySafetyLab />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/termini-condizioni" element={<TerminiCondizioni />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         </motion.div>
