@@ -456,7 +456,7 @@ export default function Header() {
                 {t('header.contact')}
               </button>
 
-              {/* Accedi a dailyplatform CTA */}
+              {/* Registrati a dailyplatform CTA */}
               <div className="pt-4 border-t border-[#2C2C2E]/10 mt-3 space-y-3">
                 <a
                   href="https://crm.dailyplatform.it/register"

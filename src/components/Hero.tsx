@@ -79,7 +79,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               className="group inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-wider uppercase font-sans text-[#2C2C2E] bg-white border border-[#2C2C2E]/15 rounded-[18px] transition-all duration-300 hover:border-[#f6c73b] hover:shadow-[0_0_15px_rgba(246,199,59,0.2)] hover:scale-[1.02] active:scale-[0.98] shadow-sm whitespace-nowrap"
             >
-              {isEn ? 'Access dailyplatform' : 'Accedi a dailyplatform'}
+              {isEn ? 'Register to dailyplatform' : 'Registrati a dailyplatform'}
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-[2.5]" />
             </a>
           </div>

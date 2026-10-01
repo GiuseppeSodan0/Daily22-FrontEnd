@@ -16,7 +16,7 @@ export const translations = {
       dailySafetyLab: 'Daily Safety Lab',
       bandi: 'Bandi',
       contact: 'Contatti',
-      accessPlatform: 'Accedi a dailyplatform',
+      accessPlatform: 'Registrati a dailyplatform',
     },
     footer: {
       description: 'daily integra tecnologia, dati e competenze HSE per rendere la sicurezza sul lavoro più semplice, continua e predittiva.',
@@ -34,7 +34,7 @@ export const translations = {
       contactUs: 'Contattaci',
       rightCopy: 'UNA NUOVA ERA PER LA SICUREZZA SUL LAVORO.',
       discoverPlatform: 'Scopri dailyplatform',
-      accessPlatform: 'Accedi a dailyplatform',
+      accessPlatform: 'Registrati a dailyplatform',
     },
     home: {
       dpSectionBadge: 'Piattaforma HSE Predittiva',
@@ -45,7 +45,7 @@ export const translations = {
       dpFeature2: 'Integrazione di sensoristica ed ecosistema di sicurezza',
       dpFeature3: 'Modelli di rischio predittivi per prevenire infortuni',
       discoverPlatform: 'Scopri dailyplatform',
-      accessPlatform: 'Accedi a dailyplatform',
+      accessPlatform: 'Registrati a dailyplatform',
       plans: {
         sectionBadge: 'dailyplatform',
         sectionTitle: 'dailyplatform',
@@ -403,7 +403,7 @@ export const translations = {
       heroBadge: 'Piattaforma HSE Integrata',
       heroSubtitle: 'Porta la prevenzione dentro un’unica piattaforma digitale',
       heroDesc: 'dailyplatform trasforma sicurezza, dati, documenti, KPI e processi aziendali in un ecosistema integrato, pensato per aiutare le imprese a prevenire meglio, decidere prima e proteggere le persone ogni giorno.',
-      buyBtn: 'Accedi a dailyplatform',
+      buyBtn: 'Registrati a dailyplatform',
       discoverBtn: 'Scopri come funziona',
       visionBadge: 'Visione',
       visionTitle: 'Il centro operativo della prevenzione aziendale',
@@ -843,7 +843,7 @@ export const translations = {
       dailySafetyLab: 'Daily Safety Lab',
       bandi: 'Grants',
       contact: 'Contact',
-      accessPlatform: 'Access dailyplatform',
+      accessPlatform: 'Register to dailyplatform',
     },
     footer: {
       description: 'daily combines technology, data and HSE expertise to make workplace safety simpler, continuous and predictive.',
@@ -861,7 +861,7 @@ export const translations = {
       contactUs: 'Contact Us',
       rightCopy: 'A NEW ERA FOR WORKPLACE SAFETY.',
       discoverPlatform: 'Discover dailyplatform',
-      accessPlatform: 'Access dailyplatform',
+      accessPlatform: 'Register to dailyplatform',
     },
     home: {
       dpSectionBadge: 'Predictive HSE Platform',
@@ -872,7 +872,7 @@ export const translations = {
       dpFeature2: 'Integration of safety sensors and ecosystem',
       dpFeature3: 'Predictive risk models to prevent workplace injuries',
       discoverPlatform: 'Discover dailyplatform',
-      accessPlatform: 'Access dailyplatform',
+      accessPlatform: 'Register to dailyplatform',
       plans: {
         sectionBadge: 'dailyplatform',
         sectionTitle: 'dailyplatform',
@@ -1230,7 +1230,7 @@ export const translations = {
       heroBadge: 'Integrated HSE Platform',
       heroSubtitle: 'Bring prevention into one digital platform',
       heroDesc: 'dailyplatform turns safety, data, documents, KPIs and business processes into an integrated ecosystem designed to help companies prevent better, decide earlier and protect people every day.',
-      buyBtn: 'Access dailyplatform',
+      buyBtn: 'Register to dailyplatform',
       discoverBtn: 'Discover how it works',
       visionBadge: 'Vision',
       visionTitle: 'The command center for corporate prevention',
