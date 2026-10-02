@@ -99,6 +99,13 @@ jobs:
 
       - name: Deploy via SSH
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
@@ -110,7 +117,7 @@ jobs:
 
           scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no dist/server.cjs root@daily22.it:/var/www/vhosts/daily22.it/node-app/server.cjs
 
-          $SSH root@daily22.it "cd /var/www/vhosts/daily22.it/node-app && pm2 restart daily22-frontend --update-env"
+          $SSH root@daily22.it "cd /var/www/vhosts/daily22.it/node-app && export SMTP_HOST=\"$SMTP_HOST\" SMTP_PORT=\"$SMTP_PORT\" SMTP_USER=\"$SMTP_USER\" SMTP_PASS=\"$SMTP_PASS\" SMTP_FROM=\"$SMTP_FROM\" SMTP_SECURE=\"$SMTP_SECURE\" && pm2 restart daily22-frontend --update-env"
 
           rm -f ~/.ssh/deploy_key
           echo "Deploy complete! https://daily22.it is live."
