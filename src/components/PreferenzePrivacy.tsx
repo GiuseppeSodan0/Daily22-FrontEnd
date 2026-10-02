@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Cookie, ChevronDown, ChevronUp, RotateCcw, ShieldCheck } from 'lucide-react';
+import { Cookie, ChevronDown, X, RotateCcw, ShieldCheck } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -115,15 +115,12 @@ export default function PreferenzePrivacy() {
   const [consent, setConsent] = useState<ConsentState>(DEFAULT_STATE);
   const [saved, setSaved] = useState(false);
   const [showPolicy, setShowPolicy] = useState(false);
-  const policyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (showPolicy && policyRef.current) {
-      const t = window.setTimeout(() => {
-        policyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-      return () => window.clearTimeout(t);
-    }
+    document.body.style.overflow = showPolicy ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [showPolicy]);
 
   useEffect(() => {
@@ -196,11 +193,11 @@ export default function PreferenzePrivacy() {
             </p>
             <button
               type="button"
-              onClick={() => setShowPolicy((v) => !v)}
+              onClick={() => setShowPolicy(true)}
               className="pt-3 inline-flex items-center gap-2 text-xs font-bold font-mono text-[#2C2C2E] hover:text-[#b08f00] transition-colors underline underline-offset-4"
             >
               Visualizza Cookie Policy completa
-              {showPolicy ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              <ChevronDown className="w-3.5 h-3.5" />
             </button>
           </motion.div>
 
@@ -269,27 +266,50 @@ export default function PreferenzePrivacy() {
             </div>
           </motion.div>
 
-          {/* Full Cookie Policy (expandable) */}
+          {/* Full Cookie Policy (modal) */}
           {showPolicy && (
             <motion.div
-              ref={policyRef}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="p-8 sm:p-12 card-premium space-y-10 text-xs sm:text-sm font-mono text-[#5E5E62] leading-relaxed"
+              className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="flex items-center gap-3 pb-4 border-b border-[#2C2C2E]/10">
-                <div className="p-2.5 rounded-xl bg-[#f6c73b]/15 text-[#2C2C2E] border border-[#f6c73b]/30">
-                  <Cookie className="w-5 h-5" />
+              {/* Backdrop */}
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowPolicy(false)} />
+
+              {/* Modal card */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                className="relative w-full max-w-4xl max-h-[85vh] overflow-hidden rounded-3xl bg-[#F0EFEB] border border-[#2C2C2E]/10 shadow-2xl flex flex-col"
+              >
+                {/* Modal header */}
+                <div className="flex items-center justify-between gap-3 px-6 sm:px-8 py-4 border-b border-[#2C2C2E]/10 shrink-0">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-[#f6c73b]/15 text-[#2C2C2E] border border-[#f6c73b]/30">
+                      <Cookie className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
+                        Cookie Policy di dailyplatform
+                      </span>
+                      <p className="text-base sm:text-lg font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">Cookie Policy completa</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowPolicy(false)}
+                    className="p-2.5 rounded-full bg-[#2C2C2E]/5 hover:bg-[#2C2C2E]/10 border border-[#2C2C2E]/10 transition-colors shrink-0"
+                    aria-label="Chiudi Cookie Policy"
+                  >
+                    <X className="w-5 h-5 text-[#2C2C2E]" />
+                  </button>
                 </div>
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
-                    Cookie Policy di dailyplatform
-                  </span>
-                  <p className="text-base sm:text-lg font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">Cookie Policy completa</p>
-                </div>
-              </div>
-              <p className="font-bold text-[#2C2C2E]">Ultimo aggiornamento: 1 ottobre 2026</p>
+
+                {/* Scrollable body */}
+                <div className="overflow-y-auto p-6 sm:p-10 space-y-10 text-xs sm:text-sm font-mono text-[#5E5E62] leading-relaxed">
+                  <p className="font-bold text-[#2C2C2E]">Ultimo aggiornamento: 1 ottobre 2026</p>
 
               {/* Intro */}
               <PolicyBlock>
@@ -746,6 +766,8 @@ export default function PreferenzePrivacy() {
                 <p className="font-bold text-[#2C2C2E]">Daily Practice 22 S.r.l. – P. IVA 09637811218 – Via Coroglio 57, 80124 Napoli</p>
                 <p>Privacy Policy · Termini e Condizioni · Cookie Policy · Preferenze Privacy</p>
               </div>
+                </div>
+              </motion.div>
             </motion.div>
           )}
         </motion.div>
