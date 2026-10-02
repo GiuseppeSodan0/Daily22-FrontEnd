@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Cookie, ChevronDown, ChevronUp, RotateCcw, ShieldCheck } from 'lucide-react';
 
@@ -115,6 +115,16 @@ export default function PreferenzePrivacy() {
   const [consent, setConsent] = useState<ConsentState>(DEFAULT_STATE);
   const [saved, setSaved] = useState(false);
   const [showPolicy, setShowPolicy] = useState(false);
+  const policyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (showPolicy && policyRef.current) {
+      const t = window.setTimeout(() => {
+        policyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+      return () => window.clearTimeout(t);
+    }
+  }, [showPolicy]);
 
   useEffect(() => {
     try {
@@ -262,6 +272,7 @@ export default function PreferenzePrivacy() {
           {/* Full Cookie Policy (expandable) */}
           {showPolicy && (
             <motion.div
+              ref={policyRef}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
