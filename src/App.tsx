@@ -14,7 +14,6 @@ import ChiSiamo from './components/ChiSiamo';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TerminiCondizioni from './components/TerminiCondizioni';
 import PreferenzePrivacy from './components/PreferenzePrivacy';
-import CookiePolicy from './components/CookiePolicy';
 import Vera from './components/Vera';
 import DailyPlatform from './components/DailyPlatform';
 import Salvatore from './components/Salvatore';
@@ -80,7 +79,6 @@ export default function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/termini-condizioni" element={<TerminiCondizioni />} />
             <Route path="/preferenze-privacy" element={<PreferenzePrivacy />} />
-            <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         </motion.div>
