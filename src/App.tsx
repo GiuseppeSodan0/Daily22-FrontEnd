@@ -4,6 +4,7 @@ import {useEffect} from 'react';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import CookieBanner from './components/CookieBanner';
 import HomePage from './components/HomePage';
 import WIDIU from './components/WIDIU';
 import ProgettiDetail from './components/ProgettiDetail';
@@ -85,6 +86,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <CookieBanner />
     </div>
   );
 }

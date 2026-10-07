@@ -187,7 +187,7 @@ export default function PreferenzePrivacy() {
               </div>
             </div>
             <p className="text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed">
-              Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per le finalità di funzionalità, esperienza, misurazione e \u201cmarketing (con annunci personalizzati)\u201d come specificato nella cookie policy.
+              Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per le finalità di funzionalità, esperienza, misurazione e &ldquo;marketing (con annunci personalizzati)&rdquo; come specificato nella cookie policy.
             </p>
             <p className="text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed mt-2">
               Puoi liberamente prestare, rifiutare o revocare il tuo consenso, in qualsiasi momento, accedendo al pannello delle preferenze. Il rifiuto del consenso può rendere non disponibili le relative funzioni.
