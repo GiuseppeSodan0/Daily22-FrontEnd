@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Cookie, ChevronDown, X, RotateCcw, ShieldCheck } from 'lucide-react';
+import StrumentiTracciamento from './StrumentiTracciamento';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -264,6 +265,11 @@ export default function PreferenzePrivacy() {
                 Salva preferenze
               </button>
             </div>
+          </motion.div>
+
+          {/* Dettagli Strumenti di Tracciamento (sezioni espandibili) */}
+          <motion.div variants={itemVariants}>
+            <StrumentiTracciamento />
           </motion.div>
 
           {/* Full Cookie Policy (modal) */}
