@@ -87,7 +87,7 @@ export default function PrivacyPolicy() {
                 <p>P. IVA 09637811218</p>
                 <p>Via Coroglio 57 – 80124 Napoli</p>
                 <p>Sito web: <a href="https://daily22.it" className="font-bold hover:underline">daily22.it</a></p>
-                <p>Indirizzo email del Titolare: <a href="mailto:admin@daily22.it" className="font-bold hover:underline">admin@daily22.it</a></p>
+                <p>Indirizzo email del Titolare: <a href="mailto:ileonardis@dy22.it" className="font-bold hover:underline">ileonardis@dy22.it</a></p>
               </div>
               <p>
                 Le richieste riguardanti il trattamento dei Dati Personali e l'esercizio dei diritti previsti dalla normativa possono essere inviate al Titolare utilizzando i recapiti sopra indicati.

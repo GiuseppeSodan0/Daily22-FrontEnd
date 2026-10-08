@@ -1006,7 +1006,7 @@ export default function TerminiCondizioni() {
                 <p>Via Coroglio 57</p>
                 <p>80124 Napoli – Italia</p>
                 <p>Sito: <a href="https://daily22.it" className="font-bold hover:underline">daily22.it</a></p>
-                <p>Email: <a href="mailto:admin@daily22.it" className="font-bold hover:underline">admin@daily22.it</a></p>
+                <p>Email: <a href="mailto:assistenza@dailyplatform.it" className="font-bold hover:underline">assistenza@dailyplatform.it</a></p>
               </div>
             </Block>
 
