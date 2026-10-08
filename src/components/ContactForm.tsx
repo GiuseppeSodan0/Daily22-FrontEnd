@@ -159,8 +159,8 @@ export default function ContactForm() {
 
       if (!res.ok || !data.success) {
         const defaultErr = lang === 'en'
-          ? 'An error occurred while sending your request. Please try again or contact us directly at segreteria@dy22.it.'
-          : 'Si è verificato un errore durante l’invio. Riprova o scrivici direttamente a segreteria@dy22.it.';
+          ? 'An error occurred while sending your request. Please try again or contact us directly at info@dy22.it.'
+          : 'Si è verificato un errore durante l’invio. Riprova o scrivici direttamente a info@dy22.it.';
         throw new Error(data.error || data.message || defaultErr);
       }
 
@@ -176,8 +176,8 @@ export default function ContactForm() {
       });
     } catch (err: any) {
       const fallbackErr = lang === 'en'
-        ? 'An error occurred while sending your request. Please try again or contact us directly at segreteria@dy22.it.'
-        : 'Si è verificato un errore durante l’invio. Riprova o scrivici direttamente a segreteria@dy22.it.';
+        ? 'An error occurred while sending your request. Please try again or contact us directly at info@dy22.it.'
+        : 'Si è verificato un errore durante l’invio. Riprova o scrivici direttamente a info@dy22.it.';
       setSubmitError(err.message || fallbackErr);
     } finally {
       setIsSubmitting(false);
@@ -224,8 +224,8 @@ export default function ContactForm() {
                       </div>
                       <div>
                         <p className="text-[10px] text-[#2C2C2E]/55 font-mono uppercase font-bold tracking-widest mb-1">{t('contact.emailLabelHeader') || t('contact.emailLabel')}</p>
-                        <a href="mailto:segreteria@dy22.it" className="text-xs sm:text-sm text-[#2C2C2E] hover:text-[#f6c73b] font-bold font-mono transition-colors">
-                          segreteria@dy22.it
+                        <a href="mailto:info@dy22.it" className="text-xs sm:text-sm text-[#2C2C2E] hover:text-[#f6c73b] font-bold font-mono transition-colors">
+                          info@dy22.it
                         </a>
                       </div>
                     </div>

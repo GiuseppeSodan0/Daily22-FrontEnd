@@ -424,7 +424,7 @@ export default function CookiePolicyContent() {
           <p>80124 Napoli – Italia</p>
           <p>Sito web: <a href="https://daily22.it" className="font-bold hover:underline">daily22.it</a></p>
           <p>Email: <a href="mailto:info@daily22.it" className="font-bold hover:underline">info@daily22.it</a></p>
-          <p>Segreteria: <a href="mailto:segreteria@dy22.it" className="font-bold hover:underline">segreteria@dy22.it</a></p>
+          <p>Segreteria: <a href="mailto:info@dy22.it" className="font-bold hover:underline">info@dy22.it</a></p>
         </div>
         <p>
           Per qualsiasi informazione relativa agli Strumenti di Tracciamento utilizzati da dailyplatform, l'Utente può contattare il Titolare attraverso i recapiti sopra indicati.

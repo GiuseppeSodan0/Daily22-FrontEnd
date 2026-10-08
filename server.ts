@@ -72,7 +72,7 @@ async function startServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // Contact Form API route sending to segreteria@dy22.it
+  // Contact Form API route sending to info@dy22.it
   app.post(['/api/contact', '/sendmail.php'], async (req, res) => {
     try {
       const { nome, azienda, email, telefono, oggetto, messaggio, consentePrivacy, language, timestamp, recaptchaToken } = req.body;
@@ -103,7 +103,7 @@ async function startServer() {
       }
 
       // 3. Strict Recipient & Subject setup for maximum deliverability
-      const recipientEmail = 'segreteria@dy22.it';
+      const recipientEmail = 'info@dy22.it';
       const lang = (language || 'it').toString().toLowerCase();
       const subjectPrefix = 'Nuova richiesta dal sito daily';
       const emailSubject = oggetto ? `${subjectPrefix}: ${oggetto}` : subjectPrefix;
@@ -200,8 +200,8 @@ Data e ora: ${dateFormatted}
     } catch (err: any) {
       console.error('[EMAIL DISPATCH ERROR]:', err);
       const errResponseMsg = (req.body?.language === 'en')
-        ? 'An error occurred while sending your request. Please try again or contact us directly at segreteria@dy22.it.'
-        : 'Si è verificato un errore durante l’invio. Riprova o scrivici direttamente a segreteria@dy22.it.';
+        ? 'An error occurred while sending your request. Please try again or contact us directly at info@dy22.it.'
+        : 'Si è verificato un errore durante l’invio. Riprova o scrivici direttamente a info@dy22.it.';
 
       return res.status(500).json({
         success: false,
