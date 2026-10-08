@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight, Check, Zap } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -19,6 +20,25 @@ export default function DailyPlatformPlans() {
       link: t(`home.plans.${key}.link`) || 'https://crm.dailyplatform.it/register',
       keyPoints,
     };
+  };
+
+  const renderPoint = (point: any, darkCard: boolean) => {
+    if (point && typeof point === 'object' && point.to) {
+      return (
+        <Link
+          to={point.to}
+          className={`inline-flex items-center gap-1 ${
+            darkCard
+              ? 'text-[#f6c73b] hover:text-[#f8d468]'
+              : 'text-[#2C2C2E] hover:text-[#b08f00]'
+          } underline underline-offset-2 transition-colors`}
+        >
+          {point.text}
+          <ArrowUpRight className="w-3.5 h-3.5" />
+        </Link>
+      );
+    }
+    return <span>{point}</span>;
   };
 
   const freeData = getPlanData('free');
@@ -64,10 +84,10 @@ export default function DailyPlatformPlans() {
 
               {/* Punti chiave */}
               <div className="space-y-3 mb-8">
-                {freeData.keyPoints.map((point: string, idx: number) => (
+                {freeData.keyPoints.map((point: any, idx: number) => (
                   <div key={idx} className="flex items-start gap-2.5 text-xs text-[#2C2C2E] font-mono">
                     <Check className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5 stroke-[2.5]" />
-                    <span>{point}</span>
+                    {renderPoint(point, false)}
                   </div>
                 ))}
               </div>
@@ -105,21 +125,16 @@ export default function DailyPlatformPlans() {
               <div className="my-6 pb-6 border-b border-white/10 space-y-2">
                 <div className="text-3xl sm:text-4xl font-extrabold text-[#f6c73b] font-mono tracking-tight">{plusData.price}</div>
                 {plusData.annualPrice && (
-                  <div className="flex flex-wrap items-center gap-2.5 pt-0.5">
-                    <span className="text-xs text-white/80 font-mono font-medium">{plusData.annualPrice}</span>
-                    <span className="annual-saving-badge inline-flex items-center px-2.5 py-1 rounded-full bg-[#f6c73b] text-[#2C2C2E] text-[11px] font-extrabold font-mono tracking-wide uppercase shadow-sm">
-                      {t('home.plans.saveTwoMonths')}
-                    </span>
-                  </div>
+                  <p className="text-xs text-white/80 font-mono font-medium pt-0.5">{plusData.annualPrice}</p>
                 )}
               </div>
 
               {/* Punti chiave */}
               <div className="space-y-3 mb-8">
-                {plusData.keyPoints.map((point: string, idx: number) => (
+                {plusData.keyPoints.map((point: any, idx: number) => (
                   <div key={idx} className="flex items-start gap-2.5 text-xs text-white/90 font-mono">
                     <Check className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5 stroke-[2.5]" />
-                    <span>{point}</span>
+                    {renderPoint(point, true)}
                   </div>
                 ))}
               </div>
@@ -150,21 +165,16 @@ export default function DailyPlatformPlans() {
               <div className="my-6 pb-6 border-b border-[#2C2C2E]/10 space-y-2">
                 <div className="text-3xl font-extrabold text-[#2C2C2E] font-mono tracking-tight">{proData.price}</div>
                 {proData.annualPrice && (
-                  <div className="flex flex-wrap items-center gap-2.5 pt-0.5">
-                    <span className="text-xs text-[#5E5E62] font-mono font-medium">{proData.annualPrice}</span>
-                    <span className="annual-saving-badge inline-flex items-center px-2.5 py-1 rounded-full bg-[#f6c73b] text-[#2C2C2E] text-[11px] font-extrabold font-mono tracking-wide uppercase border border-[#2C2C2E]/10 shadow-xs">
-                      {t('home.plans.saveTwoMonths')}
-                    </span>
-                  </div>
+                  <p className="text-xs text-[#5E5E62] font-mono font-medium pt-0.5">{proData.annualPrice}</p>
                 )}
               </div>
 
               {/* Punti chiave */}
               <div className="space-y-3 mb-8">
-                {proData.keyPoints.map((point: string, idx: number) => (
+                {proData.keyPoints.map((point: any, idx: number) => (
                   <div key={idx} className="flex items-start gap-2.5 text-xs text-[#2C2C2E] font-mono">
                     <Check className="w-4 h-4 text-[#f6c73b] shrink-0 mt-0.5 stroke-[2.5]" />
-                    <span>{point}</span>
+                    {renderPoint(point, false)}
                   </div>
                 ))}
               </div>

@@ -74,8 +74,9 @@ export const translations = {
             '1 azienda e 1 sede',
             'Fino a 2 utenti e 10 lavoratori',
             'CRM essenziale e calendario base',
-            'Archivio documentale fino a 250 MB',
-            '30 interazioni IA al mese'
+            'Gestione delle scadenze',
+            'Archivio documentale fino a 100 MB',
+            '5 interazioni con l’IA'
           ],
           cta: 'Inizia gratis',
           link: 'https://crm.dailyplatform.it/register'
@@ -84,16 +85,18 @@ export const translations = {
           badge: 'Più scelto',
           title: 'Piano Plus',
           headline: 'Gestisci la compliance ogni giorno',
-          price: '€ 59 al mese',
-          annualPrice: 'oppure € 590 all’anno',
+          price: 'A partire da 39€ al mese',
+          annualPrice: 'Contattaci per costruire il tuo piano su misura',
           desc: 'Il piano principale per gestire documenti, scadenze, lavoratori, formazione, DPI e attività HSE con il supporto dell’IA contestualizzata.',
           keyPoints: [
-            '1 azienda e fino a 3 sedi',
+            'IA completamente integrata nel CRM',
+            'Aziende illimitate',
+            'Lavoratori illimitati',
             'Fino a 5 utenti e 50 lavoratori',
-            'Scadenze illimitate e notifiche',
+            'Sistema di notifiche, mail e Whatsapp',
             'Archivio documentale fino a 5 GB',
-            '300 interazioni IA al mese',
-            'Export PDF ed Excel'
+            '300 interazioni con l’IA al mese',
+            'Illimitati import e export dal CRM'
           ],
           cta: 'Scegli Plus',
           link: 'https://crm.dailyplatform.it/register'
@@ -101,16 +104,13 @@ export const translations = {
         pro: {
           title: 'Piano Pro',
           headline: 'Governa, automatizza, previeni',
-          price: '€ 149 al mese',
-          annualPrice: 'oppure € 1.490 all’anno',
-          desc: 'Il piano avanzato per aziende strutturate che devono coordinare più sedi, utenti, responsabilità, automazioni e processi di prevenzione.',
+          price: 'Richiedi un preventivo',
+          annualPrice: 'Piani personalizzati anche per consulenti e studi di consulenza',
+          desc: 'Il piano avanzato per aziende più complesse che devono coordinare più sedi, utenti, responsabilità, automazioni e processi di prevenzione.',
           keyPoints: [
-            'Fino a 10 sedi operative',
-            'Fino a 15 utenti e 250 lavoratori',
-            'Ruoli e autorizzazioni avanzate',
-            'Archivio documentale fino a 25 GB',
-            '2.000 interazioni IA al mese',
-            'Workflow, report e automazioni'
+            'Massima personalizzazione delle componenti del Piano Plus',
+            { text: 'Strumento di collegamento con IoT (servizi WIDIU, Salvatore e Vera)', to: '/servizi' },
+            'Personalizzazione per comparto e settore Ateco delle macchine, attrezzature e impianti IoT'
           ],
           cta: 'Scegli Pro',
           link: 'https://crm.dailyplatform.it/register'
@@ -901,8 +901,9 @@ export const translations = {
             '1 company and 1 site',
             'Up to 2 users and 10 workers',
             'Essential CRM and basic calendar',
-            'Document archive up to 250 MB',
-            '30 AI interactions per month'
+            'Deadline management',
+            'Document archive up to 100 MB',
+            '5 AI interactions'
           ],
           cta: 'Start for free',
           link: 'https://crm.dailyplatform.it/register'
@@ -911,16 +912,18 @@ export const translations = {
           badge: 'Most chosen',
           title: 'Plus Plan',
           headline: 'Manage compliance every day',
-          price: '€59 per month',
-          annualPrice: 'or €590 per year',
+          price: 'From €39 per month',
+          annualPrice: 'Contact us to build your custom plan',
           desc: 'The main plan to manage documents, deadlines, workers, training, PPE and HSE activities with contextualised AI support.',
           keyPoints: [
-            '1 company and up to 3 sites',
+            'AI fully integrated into the CRM',
+            'Unlimited companies',
+            'Unlimited workers',
             'Up to 5 users and 50 workers',
-            'Unlimited deadlines and notifications',
+            'Notification system, email and WhatsApp',
             'Document archive up to 5 GB',
             '300 AI interactions per month',
-            'PDF and Excel exports'
+            'Unlimited CRM imports and exports'
           ],
           cta: 'Choose Plus',
           link: 'https://crm.dailyplatform.it/register'
@@ -928,16 +931,13 @@ export const translations = {
         pro: {
           title: 'Pro Plan',
           headline: 'Govern, automate, prevent',
-          price: '€149 per month',
-          annualPrice: 'or €1,490 per year',
-          desc: 'The advanced plan for structured companies that need to coordinate multiple sites, users, responsibilities, automations and prevention processes.',
+          price: 'Request a quote',
+          annualPrice: 'Custom plans also for consultants and consultancy firms',
+          desc: 'The advanced plan for more complex companies that need to coordinate multiple sites, users, responsibilities, automations and prevention processes.',
           keyPoints: [
-            'Up to 10 operational sites',
-            'Up to 15 users and 250 workers',
-            'Advanced roles and permissions',
-            'Document archive up to 25 GB',
-            '2,000 AI interactions per month',
-            'Workflows, reports and automations'
+            'Maximum customisation of the Plus Plan components',
+            { text: 'IoT integration tool (WIDIU, Salvatore and Vera services)', to: '/services' },
+            'Customisation by sector and ATECO code for machinery, equipment and IoT systems'
           ],
           cta: 'Choose Pro',
           link: 'https://crm.dailyplatform.it/register'
