@@ -43,7 +43,7 @@ export default function CookieBanner() {
           <div className="flex-1 space-y-2">
             <p className="text-xs sm:text-sm font-mono leading-relaxed text-white/90">
               Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per le finalità di funzionalità, esperienza, misurazione e &ldquo;marketing (con annunci personalizzati)&rdquo; come specificato nella{' '}
-              <Link to="/cookie-policy" className="underline underline-offset-2 hover:text-[#f6c73b] transition-colors">
+              <Link to="/preferenze-privacy" className="underline underline-offset-2 hover:text-[#f6c73b] transition-colors">
                 cookie policy
               </Link>
               .

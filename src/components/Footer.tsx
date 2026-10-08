@@ -112,8 +112,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center gap-6">
             <Link to="/privacy-policy" className="hover:text-[#f6c73b] transition-colors font-medium">{t('footer.privacy')}</Link>
             <Link to="/termini-condizioni" className="hover:text-[#f6c73b] transition-colors font-medium">Termini e Condizioni</Link>
-            <Link to="/cookie-policy" className="hover:text-[#f6c73b] transition-colors font-medium">Cookie Policy</Link>
-            <Link to="/preferenze-privacy" className="hover:text-[#f6c73b] transition-colors font-medium">Preferenze cookie</Link>
+            <Link to="/preferenze-privacy" className="hover:text-[#f6c73b] transition-colors font-medium">Cookie Policy e Preferenze cookie</Link>
             <LanguageSwitcher variant="footer" />
           </div>
         </div>

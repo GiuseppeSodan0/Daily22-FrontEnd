@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Cookie, ChevronDown, X, RotateCcw, ShieldCheck } from 'lucide-react';
+import { Cookie, ChevronDown, RotateCcw, ShieldCheck } from 'lucide-react';
 import StrumentiTracciamento from './StrumentiTracciamento';
 import CookiePolicyContent from './CookiePolicyContent';
 import { getStoredConsent, saveConsent as persistConsent, DEFAULT_CONSENT, type ConsentState } from '../lib/consent';
@@ -79,14 +79,11 @@ function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: (
 export default function PreferenzePrivacy() {
   const [consent, setConsent] = useState<ConsentState>(DEFAULT_CONSENT);
   const [saved, setSaved] = useState(false);
-  const [showPolicy, setShowPolicy] = useState(false);
+  const cookiePolicyRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    document.body.style.overflow = showPolicy ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [showPolicy]);
+  const scrollToCookiePolicy = () => {
+    cookiePolicyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   useEffect(() => {
     const stored = getStoredConsent();
@@ -138,7 +135,7 @@ export default function PreferenzePrivacy() {
             </p>
             <button
               type="button"
-              onClick={() => setShowPolicy(true)}
+              onClick={scrollToCookiePolicy}
               className="pt-3 inline-flex items-center gap-2 text-xs font-bold font-mono text-[#2C2C2E] hover:text-[#b08f00] transition-colors underline underline-offset-4"
             >
               Visualizza Cookie Policy completa
@@ -216,54 +213,23 @@ export default function PreferenzePrivacy() {
             <StrumentiTracciamento />
           </motion.div>
 
-          {/* Full Cookie Policy (modal) */}
-          {showPolicy && (
-            <motion.div
-              className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
-            >
-              {/* Backdrop */}
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowPolicy(false)} />
-
-              {/* Modal card */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.96, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.25, ease: 'easeOut' }}
-                className="relative w-full max-w-4xl max-h-[85vh] overflow-hidden rounded-3xl bg-[#F0EFEB] border border-[#2C2C2E]/10 shadow-2xl flex flex-col"
-              >
-                {/* Modal header */}
-                <div className="flex items-center justify-between gap-3 px-6 sm:px-8 py-4 border-b border-[#2C2C2E]/10 shrink-0">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-[#f6c73b]/15 text-[#2C2C2E] border border-[#f6c73b]/30">
-                      <Cookie className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
-                        Cookie Policy di dailyplatform
-                      </span>
-                      <p className="text-base sm:text-lg font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">Cookie Policy completa</p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setShowPolicy(false)}
-                    className="p-2.5 rounded-full bg-[#2C2C2E]/5 hover:bg-[#2C2C2E]/10 border border-[#2C2C2E]/10 transition-colors shrink-0"
-                    aria-label="Chiudi Cookie Policy"
-                  >
-                    <X className="w-5 h-5 text-[#2C2C2E]" />
-                  </button>
+          {/* Cookie Policy completa (inline section) */}
+          <motion.div variants={itemVariants}>
+            <div ref={cookiePolicyRef} id="cookie-policy" className="p-8 sm:p-12 card-premium scroll-mt-32">
+              <div className="flex items-center gap-3 pb-6 mb-6 border-b border-[#2C2C2E]/10">
+                <div className="p-2.5 rounded-xl bg-[#f6c73b]/15 text-[#2C2C2E] border border-[#f6c73b]/30">
+                  <Cookie className="w-5 h-5" />
                 </div>
-
-                {/* Scrollable body */}
-                <div className="overflow-y-auto p-6 sm:p-10">
-                  <CookiePolicyContent />
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
+                    Cookie Policy di dailyplatform
+                  </span>
+                  <p className="text-base sm:text-lg font-bold font-sans text-[#2C2C2E] uppercase tracking-tight">Cookie Policy completa</p>
                 </div>
-              </motion.div>
-            </motion.div>
-          )}
+              </div>
+              <CookiePolicyContent />
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

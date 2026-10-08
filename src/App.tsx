@@ -13,7 +13,6 @@ import Bandi from './components/Bandi';
 import DailySafetyLab from './components/DailySafetyLab';
 import ChiSiamo from './components/ChiSiamo';
 import PrivacyPolicy from './components/PrivacyPolicy';
-import CookiePolicy from './components/CookiePolicy';
 import TerminiCondizioni from './components/TerminiCondizioni';
 import PreferenzePrivacy from './components/PreferenzePrivacy';
 import Vera from './components/Vera';
@@ -79,7 +78,6 @@ export default function App() {
             <Route path="/grants" element={<Bandi />} />
             <Route path="/daily-safety-lab" element={<DailySafetyLab />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/termini-condizioni" element={<TerminiCondizioni />} />
             <Route path="/preferenze-privacy" element={<PreferenzePrivacy />} />
             <Route path="*" element={<HomePage />} />
