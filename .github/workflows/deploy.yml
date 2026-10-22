@@ -97,6 +97,53 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Configure nginx location for /firme/
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
+          ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
+
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy/nginx-firme.conf deploy/install-nginx-firme.sh root@daily22.it:/tmp/
+
+          $SSH root@daily22.it "chmod +x /tmp/install-nginx-firme.sh && /tmp/install-nginx-firme.sh daily22.it /tmp/nginx-firme.conf"
+
+          $SSH root@daily22.it "rm -f /tmp/nginx-firme.conf /tmp/install-nginx-firme.sh"
+
+          rm -f ~/.ssh/deploy_key
+          echo "nginx location /firme/ installed."
+
+      - name: Restore node app in pm2 if missing
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
+          ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
+
+          $SSH root@daily22.it "bash -s" <<'EOS'
+          if pm2 describe daily22-frontend >/dev/null 2>&1; then
+            echo "pm2: daily22-frontend gia' registrato"
+          else
+            echo "pm2: daily22-frontend non registrato, ripristino dal dump pm2"
+            pm2 resurrect || true
+          fi
+          if ! pm2 describe daily22-frontend >/dev/null 2>&1; then
+            if pm2 jlist | grep -q "node-app/server.cjs"; then
+              echo "pm2: processo con lo stesso script presente sotto un altro nome"
+            else
+              echo "pm2: avvio di daily22-frontend"
+              pm2 start /var/www/vhosts/daily22.it/node-app/server.cjs --name daily22-frontend --cwd /var/www/vhosts/daily22.it/node-app || true
+            fi
+          fi
+          pm2 list || true
+          EOS
+
+          rm -f ~/.ssh/deploy_key
+
       - name: Deploy via SSH
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
@@ -122,26 +169,8 @@ jobs:
           rm -f ~/.ssh/deploy_key
           echo "Deploy complete! https://daily22.it is live."
 
-      - name: Configure nginx location for /firme/
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
-          ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
-
-          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy/nginx-firme.conf deploy/install-nginx-firme.sh root@daily22.it:/tmp/
-
-          $SSH root@daily22.it "chmod +x /tmp/install-nginx-firme.sh && /tmp/install-nginx-firme.sh daily22.it /tmp/nginx-firme.conf"
-
-          $SSH root@daily22.it "rm -f /tmp/nginx-firme.conf /tmp/install-nginx-firme.sh"
-
-          rm -f ~/.ssh/deploy_key
-          echo "nginx location /firme/ installed."
-
       - name: Verify /firme/ resources
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ !cancelled() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: |
           for f in paolo-mirabella-v2.png daily-logo-orizzontale-v2.png loghi-istituzionali.png; do
             echo "== /firme/$f =="
