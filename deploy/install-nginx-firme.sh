@@ -26,12 +26,38 @@ die() { printf '[nginx-firme] ERROR: %s\n' "$*" >&2; exit 1; }
 command -v nginx >/dev/null 2>&1 || die "binario nginx non trovato"
 [ -d "$VHOST_DIR" ] || die "directory del vhost non trovata: $VHOST_DIR"
 
+diagnostics() {
+  log "--- diagnostica ---"
+  log "nginx: $(command -v nginx || echo 'non trovato')"
+  nginx -V 2>&1 | head -3 | sed 's/^/[nginx-firme]   /' || true
+  for d in "$NGINX_DIR" "$NGINX_DIR/plesk.d" "$VHOST_DIR" "$VHOST_DIR/conf" /var/www/vhosts; do
+    log "ls $d"
+    ls -la "$d" 2>&1 | head -25 | sed 's/^/[nginx-firme]   /' || true
+  done
+  log "grep -rl '$DOMAIN' su $NGINX_DIR e $VHOST_DIR"
+  grep -rl "$DOMAIN" "$NGINX_DIR" "$VHOST_DIR" 2>/dev/null | head -20 | sed 's/^/[nginx-firme]   /' || true
+  log "file nginx che contengono '$DOMAIN' (ricerca piu' ampia)"
+  timeout 90 grep -rl "$DOMAIN" /etc /usr/local/etc /opt/plesk 2>/dev/null \
+    | grep -iE 'nginx|plesk\.d|vhost' | head -20 | sed 's/^/[nginx-firme]   /' || true
+}
+
 # 1. File di configurazione nginx che dichiarano questo dominio.
 mapfile -t CANDIDATES < <(
   grep -rlE "server_name[^;]*\b${DOMAIN}\b" "$NGINX_DIR" "$VHOST_DIR" 2>/dev/null \
     | grep -v '\.bak' | sort -u
 )
-[ "${#CANDIDATES[@]}" -gt 0 ] || die "nessuna configurazione nginx trovata per $DOMAIN"
+if [ "${#CANDIDATES[@]}" -eq 0 ]; then
+  # il blocco server puo' vivere fuori dai percorsi standard: cercalo piu' in largo
+  mapfile -t CANDIDATES < <(
+    timeout 90 grep -rlE "server_name[^;]*\b${DOMAIN}\b" /etc /usr/local/etc /opt/plesk 2>/dev/null \
+      | grep -v '\.bak' | sort -u
+  )
+fi
+if [ "${#CANDIDATES[@]}" -eq 0 ]; then
+  diagnostics
+  die "nessuna configurazione nginx trovata per $DOMAIN"
+fi
+log "file di configurazione candidati: ${CANDIDATES[*]}"
 
 # 2. File che contengono il blocco server reale (quelli con 'root').
 VHOST_FILES=()
@@ -40,7 +66,10 @@ for f in "${CANDIDATES[@]}"; do
     VHOST_FILES+=("$f")
   fi
 done
-[ "${#VHOST_FILES[@]}" -gt 0 ] || die "nessun blocco server nginx trovato per $DOMAIN"
+if [ "${#VHOST_FILES[@]}" -eq 0 ]; then
+  diagnostics
+  die "nessun blocco server nginx trovato per $DOMAIN"
+fi
 
 # 3. Cerca un include gia' presente che possa raccogliere il nostro snippet.
 INSTALL_DIR=""
