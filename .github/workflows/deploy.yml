@@ -97,6 +97,20 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Inspect nginx vhost configuration
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
+          ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
+
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy/inspect-nginx.sh root@daily22.it:/tmp/
+          $SSH root@daily22.it "chmod +x /tmp/inspect-nginx.sh && /tmp/inspect-nginx.sh daily22.it; rm -f /tmp/inspect-nginx.sh"
+
+          rm -f ~/.ssh/deploy_key
+
       - name: Configure nginx location for /firme/
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
