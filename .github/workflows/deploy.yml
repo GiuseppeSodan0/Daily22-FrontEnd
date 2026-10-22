@@ -172,7 +172,7 @@ jobs:
       - name: Verify /firme/ resources
         if: ${{ !cancelled() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: |
-          for f in paolo-mirabella-v2.png daily-logo-orizzontale-v2.png loghi-istituzionali.png; do
+          for f in paolo-mirabella-v2.png daily-logo-orizzontale-v2.png loghi-istituzionali.png loghi-istituzionali-v2.png; do
             echo "== /firme/$f =="
             curl -sS -o /dev/null -D - "https://daily22.it/firme/$f" | sed -n '1p;/^[Cc]ontent-[Tt]ype:/p;/^[Xx]-[Rr]obots-[Tt]ag:/p;/^[Cc]ontent-[Ll]ength:/p'
           done
