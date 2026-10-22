@@ -1,156 +1,122 @@
 #!/usr/bin/env bash
-# Installa (o aggiorna) la location nginx ^~ /firme/ per un dominio Plesk.
+# Installa (idempotente) la location nginx per /firme/ nel vhost di un dominio.
 #
-# Uso: install-nginx-firme.sh <dominio> <file-snippet>
+# Struttura Plesk/Debian nginx rilevata su daily22.it:
+#   /etc/nginx/plesk.conf.d/vhosts/<dominio>.conf  -> symlink ->
+#   /var/www/vhosts/system/<dominio>/conf/nginx.conf        (generato da Plesk)
+#       ... include "/var/www/vhosts/system/<dominio>/conf/vhost_nginx.conf"; ...
+#   /var/www/vhosts/system/<dominio>/conf/vhost_nginx.conf   (file "extra" del dominio)
 #
-# Il sito daily22.it e' servito da nginx (Plesk), quindi i file .htaccess non
-# vengono letti: i vincoli di pubblicazione (noindex, nessuna directory listing,
-# nessuna pagina/galleria del personale) sono applicati qui.
+# Il blocco server e' quello SSL (443); l'http (80) fa solo redirect 301 verso https.
+# La location viene aggiunta al file incluso nel blocco server, cosi' non si tocca
+# il file generato da Plesk. Ogni deploy riesegue questo script: se il file viene
+# rigenerato da Plesk, la location viene rimossa.
 #
-# Lo script e' idempotente: puo' essere eseguito a ogni deploy.
-# Se nginx -t fallisce, la configurazione precedente viene ripristinata.
+# Uso: install-nginx-firme.sh <dominio> <snippet.conf>
 
 set -euo pipefail
 
-DOMAIN="${1:?dominio richiesto}"
-SNIPPET_FILE="${2:?file snippet richiesto}"
-NGINX_DIR="${NGINX_CONF_DIR:-/etc/nginx}"
-VHOST_BASE="${VHOST_BASE:-/var/www/vhosts}"
-VHOST_DIR="${VHOST_BASE}/${DOMAIN}"
-SNIPPET_NAME="nginx_firme.conf"
+DOMAIN="${1:-}"
+SNIPPET="${2:-}"
+[ -n "$DOMAIN" ] || { echo "uso: $0 <dominio> <snippet.conf>" >&2; exit 2; }
+[ -f "$SNIPPET" ] || { echo "[nginx-firme] snippet non trovato: $SNIPPET" >&2; exit 2; }
 
-log() { printf '[nginx-firme] %s\n' "$*"; }
-die() { printf '[nginx-firme] ERROR: %s\n' "$*" >&2; exit 1; }
+NGINX_DIR="${NGINX_DIR:-/etc/nginx}"
+SYSTEM_VHOST_DIR="${SYSTEM_VHOST_DIR:-/var/www/vhosts/system}"
+MARKER="# Daily Practice 22 - /firme/"
 
-[ -f "$SNIPPET_FILE" ] || die "snippet non trovato: $SNIPPET_FILE"
-command -v nginx >/dev/null 2>&1 || die "binario nginx non trovato"
-[ -d "$VHOST_DIR" ] || die "directory del vhost non trovata: $VHOST_DIR"
+log()  { echo "[nginx-firme] $*"; }
+die()  { echo "[nginx-firme] ERRORE: $*" >&2; exit 1; }
 
-diagnostics() {
-  log "--- diagnostica ---"
-  log "nginx: $(command -v nginx || echo 'non trovato')"
-  nginx -V 2>&1 | head -3 | sed 's/^/[nginx-firme]   /' || true
-  for d in "$NGINX_DIR" "$NGINX_DIR/plesk.conf.d" "$NGINX_DIR/conf.d" "$VHOST_DIR"; do
-    log "ls $d"
-    ls -la "$d" 2>&1 | head -25 | sed 's/^/[nginx-firme]   /' || true
-  done
-  log "nginx.conf principale"
-  sed -n '1,80p' "$NGINX_DIR/nginx.conf" 2>&1 | sed 's/^/[nginx-firme]   /' || true
-  log "server_name dichiarati (ricerca in /etc/nginx)"
-  grep -rn "server_name" "$NGINX_DIR" 2>/dev/null | head -30 | sed 's/^/[nginx-firme]   /' || true
-  log "configurazione effettiva (nginx -T)"
-  nginx -T 2>&1 | grep -nE "^# configuration file|server_name|^[[:space:]]*root |proxy_pass|listen " | head -80 | sed 's/^/[nginx-firme]   /' || true
-  log "file che contengono '$DOMAIN' (ricerca ampia, segue symlink)"
-  timeout 90 grep -rl --dereference-recursive "$DOMAIN" /etc /usr/local/etc /opt/plesk 2>/dev/null \
-    | grep -iE 'nginx|plesk\.d|vhost|conf' | head -20 | sed 's/^/[nginx-firme]   /' || true
+# Path reale (risolve i symlink): utile per non sovrascrivere un link.
+resolve_path() {
+  if command -v realpath >/dev/null 2>&1; then realpath "$1"; else readlink -f "$1"; fi
 }
 
-# 1. File di configurazione nginx che dichiarano questo dominio.
-mapfile -t CANDIDATES < <(
-  grep -rlE "server_name[^;]*\b${DOMAIN}\b" "$NGINX_DIR" "$VHOST_DIR" 2>/dev/null \
-    | grep -v '\.bak' | sort -u
-)
-if [ "${#CANDIDATES[@]}" -eq 0 ]; then
-  # il blocco server puo' vivere fuori dai percorsi standard: cercalo piu' in largo
-  mapfile -t CANDIDATES < <(
-    timeout 90 grep -rlE "server_name[^;]*\b${DOMAIN}\b" /etc /usr/local/etc /opt/plesk 2>/dev/null \
-      | grep -v '\.bak' | sort -u
-  )
+# 1. File nginx del dominio.
+VHOST_LINK="$NGINX_DIR/plesk.conf.d/vhosts/${DOMAIN}.conf"
+VHOST_FILE=""
+if [ -e "$VHOST_LINK" ]; then
+  VHOST_FILE="$(resolve_path "$VHOST_LINK")"
 fi
-if [ "${#CANDIDATES[@]}" -eq 0 ]; then
-  diagnostics
-  die "nessuna configurazione nginx trovata per $DOMAIN"
+if [ -z "$VHOST_FILE" ] || [ ! -f "$VHOST_FILE" ]; then
+  mapfile -t FOUND < <(grep -rlE "server_name[^;]*\b${DOMAIN}\b" "$NGINX_DIR" 2>/dev/null | grep -v '\.bak' | sort -u)
+  [ "${#FOUND[@]}" -gt 0 ] || die "nessuna configurazione nginx trovata per $DOMAIN"
+  VHOST_FILE="$(resolve_path "${FOUND[0]}")"
 fi
-log "file di configurazione candidati: ${CANDIDATES[*]}"
+log "configurazione nginx del dominio: $VHOST_FILE"
 
-# 2. File che contengono il blocco server reale (quelli con 'root').
-VHOST_FILES=()
-for f in "${CANDIDATES[@]}"; do
-  if grep -qE '^[[:space:]]*root[[:space:]]' "$f"; then
-    VHOST_FILES+=("$f")
-  fi
-done
-if [ "${#VHOST_FILES[@]}" -eq 0 ]; then
-  diagnostics
-  die "nessun blocco server nginx trovato per $DOMAIN"
-fi
+# 2. File "extra" del dominio incluso nel blocco server (target preferito).
+TARGET=""
+DOMAIN_CONF_DIR="${SYSTEM_VHOST_DIR}/${DOMAIN}/conf"
+while IFS= read -r inc; do
+  pat="${inc#*include}"
+  pat="${pat# }"; pat="${pat%;}"
+  pat="${pat#\"}"; pat="${pat%\"}"
+  pat="${pat#\'}"; pat="${pat%\'}"
+  case "$pat" in
+    /*) full="$pat" ;;
+    *)  full="$NGINX_DIR/$pat" ;;
+  esac
+  [ -f "$full" ] || continue
+  case "$full" in
+    "$DOMAIN_CONF_DIR"/*) ;;
+    *) continue ;;
+  esac
+  [ "$full" = "$VHOST_FILE" ] && continue
+  TARGET="$full"
+  break
+done < <(grep -oE 'include[[:space:]]+"?[^";]+\.conf"?' "$VHOST_FILE" 2>/dev/null | sort -u)
 
-# 3. Cerca un include gia' presente che possa raccogliere il nostro snippet.
-INSTALL_DIR=""
-for f in "${VHOST_FILES[@]}"; do
-  while IFS= read -r inc; do
-    pat="${inc#*include}"
-    pat="${pat# }"
-    pat="${pat%;}"
-    pat="${pat#\"}"; pat="${pat%\"}"
-    pat="${pat#\'}"; pat="${pat%\'}"
-    case "$pat" in /*) ;; *) pat="$VHOST_DIR/$pat" ;; esac
-    dir="$(dirname "$pat")"
-    base="$(basename "$pat")"
-    # il pattern deve poter raccogliere nginx_firme.conf
-    case "$SNIPPET_NAME" in
-      $base) ;;
-      *) continue ;;
-    esac
-    # ... e la directory deve stare dentro la directory del vhost
-    case "$dir" in
-      "$VHOST_DIR"/*) INSTALL_DIR="$dir"; break ;;
-    esac
-  done < <(grep -ohE 'include[[:space:]]+[^;]+;' "$f" 2>/dev/null | sort -u)
-  [ -n "$INSTALL_DIR" ] && break
-done
-
-BACKUPS=()
-
-if [ -n "$INSTALL_DIR" ]; then
-  log "include esistente rilevato: $INSTALL_DIR"
-  mkdir -p "$INSTALL_DIR"
-  cp "$SNIPPET_FILE" "$INSTALL_DIR/$SNIPPET_NAME"
+if [ -n "$TARGET" ]; then
+  log "file incluso nel blocco server: $TARGET"
 else
-  log "nessun include utilizzabile: iniezione nel blocco server"
-  INSTALL_DIR="$VHOST_DIR/conf"
-  mkdir -p "$INSTALL_DIR"
-  cp "$SNIPPET_FILE" "$INSTALL_DIR/$SNIPPET_NAME"
-  INCLUDE_LINE="include $INSTALL_DIR/$SNIPPET_NAME;"
-
-  for f in "${VHOST_FILES[@]}"; do
-    if grep -qF "$INCLUDE_LINE" "$f"; then
-      log "include gia' presente in $f"
-      continue
-    fi
-    cp "$f" "$f.bak-firme"
-    BACKUPS+=("$f.bak-firme")
-    awk -v inc="$INCLUDE_LINE" -v dom="$DOMAIN" '
-      { print }
-      /^[[:space:]]*server_name/ && index($0, dom) > 0 { print "    " inc }
-    ' "$f.bak-firme" > "$f"
-    log "include inserito in $f"
-  done
+  # fallback: nessun include utilizzabile, inseriamo nel vhost subito dopo root
+  TARGET="$VHOST_FILE"
+  log "nessun include utilizzabile: inserimento diretto in $TARGET"
 fi
 
-# 4. Validazione: se nginx -t fallisce, ripristino e uscita con errore.
-restore() {
-  for b in "${BACKUPS[@]}"; do
-    if [ -f "$b" ]; then
-      cp "$b" "${b%.bak-firme}"
-      rm -f "$b"
-      log "ripristinato ${b%.bak-firme}"
-    fi
-  done
-}
-
-if ! nginx -t; then
-  restore
-  nginx -t || true
-  die "nginx -t fallito: configurazione ripristinata"
+# 3. Idempotenza: il marcatore segnala che la location e' gia' presente.
+if grep -qF "$MARKER" "$TARGET" 2>/dev/null; then
+  log "location /firme/ gia' presente in $TARGET: nessuna modifica"
+  exit 0
 fi
 
-if command -v systemctl >/dev/null 2>&1; then
-  systemctl reload nginx
-elif command -v nginx >/dev/null 2>&1; then
-  nginx -s reload
+# 4. Backup.
+BACKUP="${TARGET}.bak-firme"
+cp -p "$TARGET" "$BACKUP"
+log "backup creato: $BACKUP"
+
+# 5. Inserimento dello snippet.
+SNIPPET_BODY="$(cat "$SNIPPET")"
+
+if [ "$TARGET" = "$VHOST_FILE" ]; then
+  # inserimento dentro il blocco server, subito dopo la direttiva root del dominio
+  awk -v domain="$DOMAIN" -v body="$SNIPPET_BODY" '
+    { print }
+    !done && $0 ~ ("^[[:space:]]*root[[:space:]]+\"?[^;]*" domain "/") { print ""; print body; done=1 }
+  ' "$TARGET" > "${TARGET}.tmp" && cat "${TARGET}.tmp" > "$TARGET" && rm -f "${TARGET}.tmp"
+  grep -qF "$MARKER" "$TARGET" || die "inserimento nel blocco server non riuscito"
 else
-  die "nessun metodo di reload disponibile"
+  {
+    printf '\n'
+    printf '%s\n' "$SNIPPET_BODY"
+  } >> "$TARGET"
+fi
+log "snippet installato in $TARGET"
+
+# 6. Validazione e reload, con rollback in caso di errore.
+if ! nginx -t 2>&1 | sed 's/^/[nginx-firme] /'; then
+  cp -p "$BACKUP" "$TARGET"
+  die "configurazione nginx non valida: ripristinato il backup"
 fi
 
-log "snippet installato in $INSTALL_DIR/$SNIPPET_NAME e nginx ricaricato"
+if systemctl reload nginx 2>/dev/null; then
+  log "nginx ricaricato"
+elif nginx -s reload 2>/dev/null; then
+  log "nginx ricaricato"
+else
+  die "reload di nginx non riuscito"
+fi
+
+log "location /firme/ installata per $DOMAIN"
