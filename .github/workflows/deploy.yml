@@ -121,3 +121,29 @@ jobs:
 
           rm -f ~/.ssh/deploy_key
           echo "Deploy complete! https://daily22.it is live."
+
+      - name: Configure nginx location for /firme/
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
+          ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
+
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy/nginx-firme.conf deploy/install-nginx-firme.sh root@daily22.it:/tmp/
+
+          $SSH root@daily22.it "chmod +x /tmp/install-nginx-firme.sh && /tmp/install-nginx-firme.sh daily22.it /tmp/nginx-firme.conf"
+
+          $SSH root@daily22.it "rm -f /tmp/nginx-firme.conf /tmp/install-nginx-firme.sh"
+
+          rm -f ~/.ssh/deploy_key
+          echo "nginx location /firme/ installed."
+
+      - name: Verify /firme/ resources
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          for f in paolo-mirabella-v2.png daily-logo-orizzontale-v2.png loghi-istituzionali.png; do
+            echo "== /firme/$f =="
+            curl -sS -o /dev/null -D - "https://daily22.it/firme/$f" | sed -n '1p;/^[Cc]ontent-[Tt]ype:/p;/^[Xx]-[Rr]obots-[Tt]ag:/p;/^[Cc]ontent-[Ll]ength:/p'
+          done
