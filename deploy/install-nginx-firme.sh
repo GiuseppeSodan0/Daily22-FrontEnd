@@ -30,15 +30,19 @@ diagnostics() {
   log "--- diagnostica ---"
   log "nginx: $(command -v nginx || echo 'non trovato')"
   nginx -V 2>&1 | head -3 | sed 's/^/[nginx-firme]   /' || true
-  for d in "$NGINX_DIR" "$NGINX_DIR/plesk.d" "$VHOST_DIR" "$VHOST_DIR/conf" /var/www/vhosts; do
+  for d in "$NGINX_DIR" "$NGINX_DIR/plesk.conf.d" "$NGINX_DIR/conf.d" "$VHOST_DIR"; do
     log "ls $d"
     ls -la "$d" 2>&1 | head -25 | sed 's/^/[nginx-firme]   /' || true
   done
-  log "grep -rl '$DOMAIN' su $NGINX_DIR e $VHOST_DIR"
-  grep -rl "$DOMAIN" "$NGINX_DIR" "$VHOST_DIR" 2>/dev/null | head -20 | sed 's/^/[nginx-firme]   /' || true
-  log "file nginx che contengono '$DOMAIN' (ricerca piu' ampia)"
-  timeout 90 grep -rl "$DOMAIN" /etc /usr/local/etc /opt/plesk 2>/dev/null \
-    | grep -iE 'nginx|plesk\.d|vhost' | head -20 | sed 's/^/[nginx-firme]   /' || true
+  log "nginx.conf principale"
+  sed -n '1,80p' "$NGINX_DIR/nginx.conf" 2>&1 | sed 's/^/[nginx-firme]   /' || true
+  log "server_name dichiarati (ricerca in /etc/nginx)"
+  grep -rn "server_name" "$NGINX_DIR" 2>/dev/null | head -30 | sed 's/^/[nginx-firme]   /' || true
+  log "configurazione effettiva (nginx -T)"
+  nginx -T 2>&1 | grep -nE "^# configuration file|server_name|^[[:space:]]*root |proxy_pass|listen " | head -80 | sed 's/^/[nginx-firme]   /' || true
+  log "file che contengono '$DOMAIN' (ricerca ampia, segue symlink)"
+  timeout 90 grep -rl --dereference-recursive "$DOMAIN" /etc /usr/local/etc /opt/plesk 2>/dev/null \
+    | grep -iE 'nginx|plesk\.d|vhost|conf' | head -20 | sed 's/^/[nginx-firme]   /' || true
 }
 
 # 1. File di configurazione nginx che dichiarano questo dominio.
