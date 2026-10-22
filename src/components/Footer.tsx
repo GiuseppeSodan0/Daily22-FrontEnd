@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Mail, Phone, Facebook, Linkedin, Instagram, MapPin} from 'lucide-react';
+import {Mail, Phone, Facebook, Linkedin, Instagram, MapPin, X} from 'lucide-react';
 import logoFull from '../assets/images/LOGO_DAILY_POSITIVO_ORIZZONTALE-png.png';
 import loghiBandiCampania from '../assets/images/Loghi-Bandi-Campania-2.png';
 import {useLanguage} from '../context/LanguageContext';
@@ -8,6 +8,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Footer() {
   const {t} = useLanguage();
+  const [showEthicCode, setShowEthicCode] = useState(false);
 
   return (
     <footer className="pt-20 pb-12 text-left bg-[#E5E4E0] text-[#2C2C2E]">
@@ -104,20 +105,47 @@ export default function Footer() {
         </div>
 
         {/* Lower row with Language Switcher */}
-        <div className="pt-4 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[#2C2C2E]/60">
+        <div className="pt-4 flex flex-col md:flex-row items-end justify-between gap-4 text-[11px] font-mono text-[#2C2C2E]/60">
           <div>
             <p>© {new Date().getFullYear()} Daily Practice 22 S.r.l. {t('footer.rights')}</p>
             <p className="mt-1">{t('footer.vat')} 09637811218 • Campania NewSteel Incubator • Città della Scienza, Napoli</p>
           </div>
-          <div className="flex flex-wrap items-center gap-6">
+          <div className="flex flex-wrap items-center gap-6 md:mb-0 mb-1">
             <Link to="/privacy-policy" className="hover:text-[#f6c73b] transition-colors font-medium">{t('footer.privacy')}</Link>
             <Link to="/termini-condizioni" className="hover:text-[#f6c73b] transition-colors font-medium">Termini e Condizioni</Link>
-            <Link to="/preferenze-privacy" className="hover:text-[#f6c73b] transition-colors font-medium">Cookie Policy e Preferenze cookie</Link>
+            <button type="button" onClick={() => setShowEthicCode(true)} className="hover:text-[#f6c73b] transition-colors font-medium">Codice Etico</button>
+            <Link to="/preferenze-privacy" className="hover:text-[#f6c73b] transition-colors font-medium">Preferenze cookie</Link>
             <LanguageSwitcher variant="footer" />
           </div>
         </div>
 
       </div>
+
+      {showEthicCode && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center" role="dialog" aria-modal="true">
+          <button
+            type="button"
+            aria-label="Chiudi codice etico"
+            className="absolute inset-0 bg-black/70"
+            onClick={() => setShowEthicCode(false)}
+          />
+          <div className="relative z-10 w-[95vw] max-w-5xl h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden">
+            <button
+              type="button"
+              aria-label="Chiudi"
+              onClick={() => setShowEthicCode(false)}
+              className="absolute top-2 right-2 z-20 p-2 rounded-full bg-white/90 hover:bg-white text-[#2C2C2E] shadow"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <iframe
+              src="/Codice%20Etico%20Daily.pdf"
+              title="Codice Etico Daily"
+              className="w-full h-full"
+            />
+          </div>
+        </div>
+      )}
     </footer>
   );
 }
