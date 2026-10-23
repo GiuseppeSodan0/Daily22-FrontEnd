@@ -439,7 +439,7 @@ export default function ProgettiDetail() {
                           <div className="w-full flex justify-center sm:justify-end mt-2">
                             <Link
                               to="/dailyplatform"
-                              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#f6c73b] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-widest hover:bg-[#f6c73b]/90 hover:brightness-105 transition-all duration-300 shadow-[0_4px_14px_rgba(246,199,59,0.2)] hover:shadow-[0_6px_20px_rgba(246,199,59,0.35)] active:scale-95 whitespace-nowrap"
+                              className="inline-flex items-center justify-center gap-2 max-w-full px-6 py-3 rounded-full bg-[#f6c73b] text-[#2C2C2E] text-xs font-bold font-sans uppercase tracking-widest text-center hover:bg-[#f6c73b]/90 hover:brightness-105 transition-all duration-300 shadow-[0_4px_14px_rgba(246,199,59,0.2)] hover:shadow-[0_6px_20px_rgba(246,199,59,0.35)] active:scale-95"
                             >
                               {t('progetti.discoverPlatform')}
                               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -541,9 +541,9 @@ export default function ProgettiDetail() {
                             </span>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                               {sol.highlights.map((h, i) => (
-                                <div key={i} className="flex items-center gap-2 text-xs font-mono text-white bg-white/10 px-3 py-2 rounded-xl border border-white/10 shadow-2xs">
-                                  <CheckCircle className="w-3.5 h-3.5 text-[#f6c73b] shrink-0" />
-                                  <span className="truncate">{h}</span>
+                                <div key={i} className="flex items-start gap-2 text-xs font-mono text-white bg-white/10 px-3 py-2 rounded-xl border border-white/10 shadow-2xs">
+                                  <CheckCircle className="w-3.5 h-3.5 text-[#f6c73b] shrink-0 mt-0.5" />
+                                  <span className="min-w-0 leading-snug break-words">{h}</span>
                                 </div>
                               ))}
                             </div>

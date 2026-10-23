@@ -23,8 +23,9 @@ const itemVariants = {
 
 function ArticleTitle({ num, title }: { num: string; title: string }) {
   return (
-    <h2 className="text-base sm:text-lg font-bold font-sans text-[#2C2C2E] uppercase tracking-tight flex items-center gap-2">
-      <span className="text-[#f6c73b]">{num}</span> {title}
+    <h2 className="text-base sm:text-lg font-bold font-sans text-[#2C2C2E] uppercase tracking-tight flex items-start gap-2">
+      <span className="text-[#f6c73b] shrink-0">{num}</span>
+      <span className="min-w-0 break-words">{title}</span>
     </h2>
   );
 }
@@ -1006,7 +1007,7 @@ export default function TerminiCondizioni() {
                 <p>Via Coroglio 57</p>
                 <p>80124 Napoli – Italia</p>
                 <p>Sito: <a href="https://daily22.it" className="font-bold hover:underline">daily22.it</a></p>
-                <p>Email: <a href="mailto:assistenza@dailyplatform.it" className="font-bold hover:underline">assistenza@dailyplatform.it</a></p>
+                <p>Email: <a href="mailto:assistenza@dailyplatform.it" className="font-bold hover:underline break-all">assistenza@dailyplatform.it</a></p>
               </div>
             </Block>
 

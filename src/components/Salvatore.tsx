@@ -905,7 +905,7 @@ export default function Salvatore() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             
             {/* Lavoratori */}
-            <div className="p-8 rounded-[24px] bg-white border border-black/5 hover:border-[#f6c73b]/70 hover:shadow-[0_18px_44px_rgba(44,44,46,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between h-[210px] group cursor-pointer shadow-sm">
+            <div className="p-8 rounded-[24px] bg-white border border-black/5 hover:border-[#f6c73b]/70 hover:shadow-[0_18px_44px_rgba(44,44,46,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between min-h-[210px] group cursor-pointer shadow-sm">
               <div>
                 <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#2C2C2E]/50">{isEn ? '01 // Operations' : '01 // Operatività'}</span>
                 <h3 className="text-lg font-bold font-sans text-[#2C2C2E] mt-2 mb-3 tracking-tight group-hover:text-[#f6c73b] transition-colors">{isEn ? 'Workers' : 'Lavoratori'}</h3>
@@ -916,7 +916,7 @@ export default function Salvatore() {
             </div>
 
             {/* Preposti */}
-            <div className="p-8 rounded-[24px] bg-white border border-black/5 hover:border-[#f6c73b]/70 hover:shadow-[0_18px_44px_rgba(44,44,46,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between h-[210px] group cursor-pointer shadow-sm">
+            <div className="p-8 rounded-[24px] bg-white border border-black/5 hover:border-[#f6c73b]/70 hover:shadow-[0_18px_44px_rgba(44,44,46,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between min-h-[210px] group cursor-pointer shadow-sm">
               <div>
                 <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#2C2C2E]/50">{isEn ? '02 // Coordination' : '02 // Coordinamento'}</span>
                 <h3 className="text-lg font-bold font-sans text-[#2C2C2E] mt-2 mb-3 tracking-tight group-hover:text-[#f6c73b] transition-colors">{isEn ? 'Supervisors' : 'Preposti'}</h3>
@@ -927,7 +927,7 @@ export default function Salvatore() {
             </div>
 
             {/* RSPP e HSE Manager */}
-            <div className="p-8 rounded-[24px] bg-white border border-black/5 hover:border-[#f6c73b]/70 hover:shadow-[0_18px_44px_rgba(44,44,46,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between h-[210px] group cursor-pointer shadow-sm">
+            <div className="p-8 rounded-[24px] bg-white border border-black/5 hover:border-[#f6c73b]/70 hover:shadow-[0_18px_44px_rgba(44,44,46,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between min-h-[210px] group cursor-pointer shadow-sm">
               <div>
                 <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#2C2C2E]/50">{isEn ? '03 // Technical Management' : '03 // Gestione Tecnica'}</span>
                 <h3 className="text-lg font-bold font-sans text-[#2C2C2E] mt-2 mb-3 tracking-tight group-hover:text-[#f6c73b] transition-colors">{isEn ? 'RSPP & HSE Managers' : 'RSPP e HSE Manager'}</h3>
@@ -938,7 +938,7 @@ export default function Salvatore() {
             </div>
 
             {/* Datori di lavoro e aziende */}
-            <div className="p-8 rounded-[24px] bg-white border border-black/5 hover:border-[#f6c73b]/70 hover:shadow-[0_18px_44px_rgba(44,44,46,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between h-[210px] group cursor-pointer shadow-sm">
+            <div className="p-8 rounded-[24px] bg-white border border-black/5 hover:border-[#f6c73b]/70 hover:shadow-[0_18px_44px_rgba(44,44,46,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between min-h-[210px] group cursor-pointer shadow-sm">
               <div>
                 <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#2C2C2E]/50">{isEn ? '04 // Governance' : '04 // Governance'}</span>
                 <h3 className="text-lg font-bold font-sans text-[#2C2C2E] mt-2 mb-3 tracking-tight group-hover:text-[#f6c73b] transition-colors">{isEn ? 'Employers' : 'Datori di lavoro'}</h3>

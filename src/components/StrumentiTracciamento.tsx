@@ -381,7 +381,7 @@ function ServiceContent({ service }: { service: Service }) {
           <ul className="list-disc pl-5 space-y-1 pt-1 text-[#2C2C2E]">
             {service.durations.map(([cookie, dur], i) => (
               <li key={i}>
-                <span className="font-mono">{cookie}</span>: {dur}
+                <span className="font-mono break-all">{cookie}</span>: {dur}
               </li>
             ))}
           </ul>

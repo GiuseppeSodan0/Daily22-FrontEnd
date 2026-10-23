@@ -901,9 +901,9 @@ export default function DailyPlatform() {
                     const isActive = activeNode === node.id;
                     const positionClass = 
                       node.id === 'dailyplatform' ? 'center' :
-                      node.id === 'salvatore' ? 'top' :
-                      node.id === 'widiu' ? 'left' :
-                      node.id === 'vera' ? 'right' :
+                      node.id === 'daily-ia' ? 'top' :
+                      node.id === 'crm-hse' ? 'left' :
+                      node.id === 'daily-safety-lab' ? 'right' :
                       node.id === 'dailybydaily' ? 'bottom' : '';
                     return (
                       <button
@@ -912,7 +912,7 @@ export default function DailyPlatform() {
                         className={`ecosistema-node ${positionClass} absolute pointer-events-auto rounded-2xl p-3 sm:p-4 text-xs font-bold font-mono tracking-wider uppercase border shadow-md cursor-pointer transition-all duration-300 flex flex-col items-center justify-center z-10 ${node.color} ${isActive ? 'scale-110 ring-4 ring-[#f6c73b]/25 border-[#f6c73b] z-20 shadow-[0_10px_25px_rgba(242,196,0,0.15)]' : 'hover:scale-105 hover:border-gray-400'}`}
                         style={{ left: node.x, top: node.y, transform: `translate(-50%, -50%)` }}
                       >
-                        <span className="font-sans font-bold tracking-tight text-xs sm:text-sm">{node.title}</span>
+                        <span className="font-sans font-bold tracking-tight text-[9px] leading-tight sm:text-sm">{node.title}</span>
                       </button>
                     );
                   })}

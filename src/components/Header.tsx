@@ -122,7 +122,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="nav-menu hidden xl:flex items-center gap-2">
+          <nav className="nav-menu hidden lg:flex items-center gap-2">
             {/* Home */}
             <Link
               to="/"
@@ -306,13 +306,13 @@ export default function Header() {
           </nav>
 
           {/* Desktop Right Actions: Language Switcher & CTA */}
-          <div className="hidden xl:flex items-center gap-3 shrink-0">
+          <div className="hidden lg:flex items-center gap-3 shrink-0">
             <LanguageSwitcher />
             <a
               href="https://crm.dailyplatform.it/register"
               target="_blank"
               rel="noopener noreferrer"
-              className="cta-button group relative inline-flex items-center gap-2 px-4 py-2 text-[13px] font-bold uppercase font-mono whitespace-nowrap"
+              className="cta-button group relative hidden xl:inline-flex items-center gap-2 px-4 py-2 text-[13px] font-bold uppercase font-mono whitespace-nowrap"
             >
               {t('header.accessPlatform')}
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-[2.5]" />
@@ -320,7 +320,7 @@ export default function Header() {
           </div>
 
           {/* Mobile/Tablet Controls */}
-          <div className="flex xl:hidden items-center gap-3">
+          <div className="flex lg:hidden items-center gap-3">
             <LanguageSwitcher />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -341,7 +341,7 @@ export default function Header() {
             animate={{opacity: 1, height: 'auto'}}
             exit={{opacity: 0, height: 0}}
             transition={{duration: 0.25, ease: 'easeInOut'}}
-            className="xl:hidden border-t bg-[#F0EFEB]/98 backdrop-blur-lg shadow-xl relative z-50"
+            className="lg:hidden border-t bg-[#F0EFEB]/98 backdrop-blur-lg shadow-xl relative z-50"
             style={{borderColor: 'rgba(44, 44, 46, 0.1)'}}
           >
             <div className="px-5 py-6 space-y-2 max-h-[82vh] overflow-y-auto">

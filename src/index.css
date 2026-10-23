@@ -356,7 +356,7 @@ body {
     display: flex !important;
     flex-direction: row !important;
     justify-content: center !important;
-    align-items: center !important;
+    align-items: stretch !important;
     gap: 8px !important;
     width: 100% !important;
     position: absolute !important;
@@ -374,11 +374,17 @@ body {
     flex: 1 1 0 !important;
     min-width: 0 !important;
     justify-content: center !important;
-    padding-left: 0.7rem !important;
-    padding-right: 0.7rem !important;
-    font-size: 9.5px !important;
-    gap: 5px !important;
-    white-space: nowrap !important;
+    padding-left: 0.55rem !important;
+    padding-right: 0.55rem !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+    gap: 4px !important;
+    text-align: center !important;
+    white-space: normal !important;
+  }
+
+  .hero-cta-row > a svg {
+    flex-shrink: 0 !important;
   }
 
   /* Band 2: Transparent Safe Area for Girl Subject (slightly reduced to lift image) */
@@ -486,6 +492,7 @@ body {
   .hero-cta-row {
     margin-top: 2rem !important;
     transform: translateY(12px) !important;
+    flex-wrap: wrap !important;
   }
 
   .hero-section {
@@ -591,8 +598,8 @@ body {
   }
 }
 
-/* Desktop Layout (> 1024px): 3 Columns with BIMBA_DESKTOP.jpg full-width cover */
-@media (min-width: 1025px) {
+/* Desktop Layout (>= 1024px): 3 Columns with BIMBA_DESKTOP.jpg full-width cover */
+@media (min-width: 1024px) {
   .hero-picture {
     display: block !important;
     position: absolute !important;
@@ -646,6 +653,11 @@ body {
     max-width: 430px !important;
     position: relative !important;
     z-index: 3 !important;
+  }
+
+  .hero-cta-row {
+    flex-wrap: wrap !important;
+    align-items: center !important;
   }
 
 
@@ -952,6 +964,7 @@ body {
   width: 100%;
   --gap: 24px;
   padding: 24px 0;
+  touch-action: pan-y;
 }
 
 @media (min-width: 768px) {
@@ -1118,6 +1131,7 @@ body {
   display: flex;
   justify-content: center;
   padding: 56px 24px 72px;
+  overflow-x: auto;
 }
 
 .grants-logos-section img {
@@ -1131,10 +1145,12 @@ body {
 @media (max-width: 767px) {
   .grants-logos-section {
     padding: 40px 20px 56px;
+    justify-content: flex-start;
   }
 
   .grants-logos-section img {
-    max-width: 100%;
+    max-width: none;
+    min-width: 560px;
   }
 }
 
@@ -1155,7 +1171,7 @@ body {
 
 @keyframes servicesMarquee {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-33.3333%); }
 }
 
 .animate-services-marquee {

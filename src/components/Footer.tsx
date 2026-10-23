@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Mail, Phone, Facebook, Linkedin, Instagram, MapPin, X} from 'lucide-react';
+import {Mail, Phone, Facebook, Linkedin, Instagram, MapPin, X, ExternalLink} from 'lucide-react';
 import logoFull from '../assets/images/LOGO_DAILY_POSITIVO_ORIZZONTALE-png.png';
 import loghiBandiCampania from '../assets/images/Loghi-Bandi-Campania-2.png';
 import {useLanguage} from '../context/LanguageContext';
@@ -96,16 +96,16 @@ export default function Footer() {
         </div>
 
         {/* Bandi Campania Logos Bar */}
-        <div className="py-6 my-6 border-t border-b border-[#2C2C2E]/10 flex justify-center">
+        <div className="py-6 my-6 border-t border-b border-[#2C2C2E]/10 flex justify-center overflow-x-auto">
           <img 
             src={loghiBandiCampania} 
             alt="Loghi Bandi Campania e FESR" 
-            className="max-w-[850px] w-full h-auto object-contain opacity-95 hover:opacity-100 transition-opacity"
+            className="max-w-[850px] min-w-[560px] sm:min-w-0 w-full h-auto object-contain opacity-95 hover:opacity-100 transition-opacity"
           />
         </div>
 
         {/* Lower row with Language Switcher */}
-        <div className="pt-4 flex flex-col md:flex-row items-end justify-between gap-4 text-[11px] font-mono text-[#2C2C2E]/60">
+        <div className="pt-4 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 text-[11px] font-mono text-[#2C2C2E]/60">
           <div>
             <p>© {new Date().getFullYear()} Daily Practice 22 S.r.l. {t('footer.rights')}</p>
             <p className="mt-1">{t('footer.vat')} 09637811218 • Campania NewSteel Incubator • Città della Scienza, Napoli</p>
@@ -122,26 +122,43 @@ export default function Footer() {
       </div>
 
       {showEthicCode && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-label="Codice Etico Daily">
           <button
             type="button"
             aria-label="Chiudi codice etico"
             className="absolute inset-0 bg-black/70"
             onClick={() => setShowEthicCode(false)}
           />
-          <div className="relative z-10 w-[95vw] max-w-5xl h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden">
-            <button
-              type="button"
-              aria-label="Chiudi"
-              onClick={() => setShowEthicCode(false)}
-              className="absolute top-2 right-2 z-20 p-2 rounded-full bg-white/90 hover:bg-white text-[#2C2C2E] shadow"
-            >
-              <X className="w-5 h-5" />
-            </button>
+          <div className="relative z-10 w-full max-w-5xl h-[88vh] sm:h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-[#2C2C2E]/10 bg-[#F0EFEB] shrink-0">
+              <p className="text-xs font-bold uppercase tracking-widest font-mono text-[#2C2C2E] truncate">
+                Codice Etico Daily
+              </p>
+              <div className="flex items-center gap-2 shrink-0">
+                <a
+                  href="/Codice-Etico-Daily.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase font-mono bg-[#2C2C2E] text-[#F0EFEB] hover:bg-[#f6c73b] hover:text-[#2C2C2E] transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Apri il PDF</span>
+                  <span className="sm:hidden">PDF</span>
+                </a>
+                <button
+                  type="button"
+                  aria-label="Chiudi"
+                  onClick={() => setShowEthicCode(false)}
+                  className="p-2 rounded-full bg-white/90 hover:bg-white text-[#2C2C2E] shadow"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
             <iframe
-              src="/Codice%20Etico%20Daily.pdf"
+              src="/Codice-Etico-Daily.pdf"
               title="Codice Etico Daily"
-              className="w-full h-full"
+              className="w-full flex-1 min-h-0 bg-white"
             />
           </div>
         </div>

@@ -87,7 +87,7 @@ export default function WidiuWorkerInteractive({
           y: orbitTranslateY,
         }}
       >
-        <svg width="100%" height="100%" viewBox="0 0 400 400" className="w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] overflow-visible">
+        <svg width="100%" height="100%" viewBox="0 0 400 400" className="w-[260px] h-[260px] sm:w-[400px] sm:h-[400px] overflow-visible">
           {/* Inner orbit */}
           <motion.circle
             cx="200"

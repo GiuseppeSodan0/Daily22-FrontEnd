@@ -624,7 +624,7 @@ export default function Vera() {
                 </p>
 
                 {/* Preset selectors */}
-                <div className="flex gap-3 mb-6">
+                <div className="flex flex-wrap gap-2 sm:gap-3 mb-6">
                   {(Object.keys(PAYLOAD_PRESETS) as Array<keyof typeof PAYLOAD_PRESETS>).map((presetKey) => {
                     const preset = PAYLOAD_PRESETS[presetKey];
                     const PresetIcon = preset.icon;
@@ -635,14 +635,14 @@ export default function Vera() {
                       <button
                         key={presetKey}
                         onClick={() => setActivePreset(presetKey)}
-                        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border font-mono text-[11px] font-bold tracking-tight transition-all uppercase ${
+                        className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-xl border font-mono text-[10px] sm:text-[11px] font-bold tracking-tight transition-all uppercase ${
                           activePreset === presetKey
                             ? 'bg-[#2C2C2E] text-white border-[#2C2C2E]'
                             : 'bg-[#F0EFEB]/50 text-[#5E5E62] border-[#2C2C2E]/10 hover:border-[#2C2C2E]/30'
                         }`}
                       >
                         <PresetIcon className="w-3.5 h-3.5 shrink-0" />
-                        <span>{presetTitle}</span>
+                        <span className="whitespace-normal text-center leading-tight sm:whitespace-nowrap">{presetTitle}</span>
                       </button>
                     );
                   })}

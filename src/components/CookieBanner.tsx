@@ -35,7 +35,7 @@ export default function CookieBanner() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-[90] p-3 sm:p-4">
-      <div className="max-w-7xl mx-auto rounded-2xl bg-[#22253B] text-white shadow-2xl border border-white/10 p-5 sm:p-6">
+      <div className="max-w-7xl mx-auto rounded-2xl bg-[#22253B] text-white shadow-2xl border border-white/10 p-5 sm:p-6 max-h-[85svh] overflow-y-auto">
         <div className="flex items-start gap-3">
           <div className="p-2 rounded-xl bg-white/5 border border-[#f6c73b]/30 shrink-0 hidden sm:block">
             <Cookie className="w-5 h-5 text-[#f6c73b]" />
