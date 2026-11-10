@@ -66,9 +66,6 @@ export default function Header() {
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
-    if (path === '/chi-siamo') return location.pathname === '/chi-siamo' || location.pathname === '/about';
-    if (path === '/servizi') return location.pathname === '/servizi' || location.pathname === '/services' || servicesSubItems.some((sub) => sub.path === location.pathname);
-    if (path === '/bandi') return location.pathname === '/bandi' || location.pathname === '/grants';
     if (path === '/contatti') return location.pathname === '/contatti' || location.pathname === '/contact';
     return location.pathname === path;
   };
@@ -122,33 +119,15 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="nav-menu hidden lg:flex items-center gap-2">
+          <nav className="nav-menu hidden lg:flex items-center gap-2 text-[#2C2C2E]">
             {/* Home */}
             <Link
               to="/"
-              className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/') ? 'text-[#f6c73b]' : 'text-[#2C2C2E] hover:text-[#f6c73b]'
-              }`}
+              aria-current={isActive('/') ? 'page' : undefined}
+              className="relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap hover:bg-[#f6c73b]/18"
             >
               {t('header.home')}
               {isActive('/') && (
-                <motion.div
-                  layoutId="activeTabIndicator"
-                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
-                  transition={{type: 'spring', stiffness: 350, damping: 28}}
-                />
-              )}
-            </Link>
-
-            {/* Su di noi / About Us */}
-            <Link
-              to="/chi-siamo"
-              className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/chi-siamo') ? 'text-[#f6c73b]' : 'text-[#2C2C2E] hover:text-[#f6c73b]'
-              }`}
-            >
-              {t('header.about')}
-              {isActive('/chi-siamo') && (
                 <motion.div
                   layoutId="activeTabIndicator"
                   className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
@@ -167,9 +146,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsServicesDropdownOpen((prev) => !prev)}
-                className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono flex items-center gap-1.5 cursor-pointer ${
-                  isServicesActive ? 'text-[#f6c73b]' : 'text-[#2C2C2E] hover:text-[#f6c73b]'
-                }`}
+                className="relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono flex items-center gap-1.5 cursor-pointer hover:bg-[#f6c73b]/18"
                 aria-expanded={isServicesDropdownOpen}
                 aria-label={t('header.services')}
               >
@@ -256,32 +233,14 @@ export default function Header() {
             {/* Daily Safety Lab */}
             <Link
               to="/daily-safety-lab"
-              className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/daily-safety-lab') ? 'text-[#f6c73b]' : 'text-[#2C2C2E]/75 hover:text-[#f6c73b]'
-              }`}
+              aria-current={isActive('/daily-safety-lab') ? 'page' : undefined}
+              className="relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap hover:text-[#e73449] focus-visible:text-[#e73449]"
             >
               {t('header.dailySafetyLab')}
               {isActive('/daily-safety-lab') && (
                 <motion.div
                   layoutId="activeTabIndicator"
-                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
-                  transition={{type: 'spring', stiffness: 350, damping: 28}}
-                />
-              )}
-            </Link>
-
-            {/* Bandi / Grants */}
-            <Link
-              to="/bandi"
-              className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/bandi') ? 'text-[#f6c73b]' : 'text-[#2C2C2E]/75 hover:text-[#f6c73b]'
-              }`}
-            >
-              {t('header.bandi')}
-              {isActive('/bandi') && (
-                <motion.div
-                  layoutId="activeTabIndicator"
-                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#f6c73b] rounded-full"
+                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#e73449] rounded-full"
                   transition={{type: 'spring', stiffness: 350, damping: 28}}
                 />
               )}
@@ -290,9 +249,8 @@ export default function Header() {
             {/* Contatti / Contact */}
             <Link
               to="/contatti"
-              className={`relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap ${
-                isActive('/contatti') ? 'text-[#f6c73b]' : 'text-[#2C2C2E]/75 hover:text-[#f6c73b]'
-              }`}
+              aria-current={isActive('/contatti') ? 'page' : undefined}
+              className="relative px-3 py-2 rounded-lg text-[13px] font-semibold uppercase tracking-tight transition-colors duration-300 font-mono whitespace-nowrap hover:bg-[#f6c73b]/18"
             >
               {t('header.contact')}
               {isActive('/contatti') && (
@@ -357,18 +315,6 @@ export default function Header() {
                 {t('header.home')}
               </button>
 
-              {/* Su di noi / About Us */}
-              <button
-                onClick={() => handleNavClick('/chi-siamo')}
-                className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
-                  isActive('/chi-siamo')
-                    ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
-                    : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
-                }`}
-              >
-                {t('header.about')}
-              </button>
-
               {/* Servizi / Services Expandable Accordion */}
               <div className="space-y-1">
                 <button
@@ -407,7 +353,7 @@ export default function Header() {
                                 ? 'text-[#2C2C2E] font-extrabold border-b border-[#2C2C2E]/10 mb-1 pb-2'
                                 : isSubActive
                                 ? 'bg-[#f6c73b]/25 text-[#2C2C2E] font-extrabold'
-                                : 'text-[#2C2C2E]/80 hover:text-[#2C2C2E] hover:bg-[#f6c73b]/15'
+                                : 'text-[#2C2C2E] hover:bg-[#f6c73b]/15'
                             }`}
                           >
                             <span>{sub.label}</span>
@@ -423,25 +369,12 @@ export default function Header() {
               {/* Daily Safety Lab */}
               <button
                 onClick={() => handleNavClick('/daily-safety-lab')}
-                className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
-                  isActive('/daily-safety-lab')
-                    ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
-                    : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
+                aria-current={isActive('/daily-safety-lab') ? 'page' : undefined}
+                className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 text-[#2C2C2E] hover:text-[#e73449] focus-visible:text-[#e73449] ${
+                  isActive('/daily-safety-lab') ? 'bg-[#e73449]/10 border-l-4 border-[#e73449] font-extrabold' : ''
                 }`}
               >
                 {t('header.dailySafetyLab')}
-              </button>
-
-              {/* Bandi / Grants */}
-              <button
-                onClick={() => handleNavClick('/bandi')}
-                className={`block w-full text-left px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition-all duration-200 ${
-                  isActive('/bandi')
-                    ? 'bg-[#f6c73b]/20 text-[#2C2C2E] border-l-4 border-[#f6c73b] pl-4 font-extrabold'
-                    : 'text-[#2C2C2E] hover:bg-[#f6c73b]/18'
-                }`}
-              >
-                {t('header.bandi')}
               </button>
 
               {/* Contatti / Contact */}

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Mail, Phone, Facebook, Linkedin, Instagram, MapPin, X, ExternalLink} from 'lucide-react';
 import logoFull from '../assets/images/LOGO_DAILY_POSITIVO_ORIZZONTALE-png.png';
-import loghiBandiCampania from '../assets/images/Loghi-Bandi-Campania-2.png';
+import institutionalLogos from '../assets/images/loghi-istituzionali.png';
 import {useLanguage} from '../context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 
@@ -14,10 +14,10 @@ export default function Footer() {
     <footer className="pt-20 pb-12 text-left bg-[#E5E4E0] text-[#2C2C2E]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-10 lg:grid-cols-[1.35fr_0.8fr_1fr_1fr] mb-10">
           
           {/* Column 1: Brand */}
-          <div className="space-y-4 lg:col-span-1">
+          <div className="col-span-2 space-y-4 lg:col-span-1">
             <Link to="/" className="inline-block group">
               <img
                 src={logoFull}
@@ -41,36 +41,34 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Tecnologia */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4 font-mono text-[#2C2C2E]/55">
-              {t('footer.solutions')}
-            </h4>
-            <ul className="space-y-2 text-xs font-mono">
-              <li><Link to="/dailyplatform" className="hover:text-[#f6c73b] transition-colors text-[#2C2C2E]/85">dailyplatform</Link></li>
-              <li><Link to="/servizi" className="hover:text-[#f6c73b] transition-colors text-[#2C2C2E]/85">dailybydaily</Link></li>
+            <h2 className="mb-3 font-mono text-xs font-bold uppercase tracking-wide">
+              {t('footer.company')}
+            </h2>
+            <ul className="space-y-3 text-sm font-mono text-[#2C2C2E]/85">
+              <li><Link to="/chi-siamo" className="hover:underline underline-offset-4">{t('header.about')}</Link></li>
+              <li><Link to="/bandi" className="hover:underline underline-offset-4">{t('header.bandi')}</Link></li>
             </ul>
           </div>
 
-          {/* Column 3: Azienda */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4 font-mono text-[#2C2C2E]/55">
-              {t('footer.quickLinks')}
-            </h4>
-            <ul className="space-y-2 text-xs font-mono">
-              <li><Link to="/chi-siamo" className="hover:text-[#f6c73b] transition-colors text-[#2C2C2E]/85">{t('header.about')}</Link></li>
-              <li><Link to="/bandi" className="hover:text-[#f6c73b] transition-colors text-[#2C2C2E]/85">{t('header.bandi')}</Link></li>
-              <li><Link to="/daily-safety-lab" className="hover:text-[#f6c73b] transition-colors text-[#2C2C2E]/85">{t('header.dailySafetyLab')}</Link></li>
-              <li><Link to="/contatti" className="hover:text-[#f6c73b] transition-colors text-[#2C2C2E]/85">{t('header.contact')}</Link></li>
+            <h2 className="mb-3 font-mono text-xs font-bold uppercase tracking-wide">
+              {t('footer.platformAndServices')}
+            </h2>
+            <ul className="space-y-3 text-sm font-mono text-[#2C2C2E]/85">
+              <li><Link to="/dailyplatform" className="hover:underline underline-offset-4">dailyplatform</Link></li>
+              <li><Link to="/servizi" className="hover:underline underline-offset-4">{t('header.allServices')}</Link></li>
+              <li><Link to="/daily-safety-lab" className="hover:text-[#e73449] focus-visible:text-[#e73449] hover:underline underline-offset-4 transition-colors">{t('header.dailySafetyLab')}</Link></li>
             </ul>
           </div>
 
           {/* Column 4: Contatti */}
-          <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4 font-mono text-[#2C2C2E]/55">
+          <div className="col-span-2 lg:col-span-1">
+            <h2 className="mb-3 font-mono text-xs font-bold uppercase tracking-wide">
               {t('footer.contacts')}
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-xs font-mono">
+              <li><Link to="/contatti" className="font-semibold hover:underline underline-offset-4">{t('hero.contactUs')}</Link></li>
               <li className="flex items-start gap-2 text-[#2C2C2E]/85">
                 <Mail className="w-3.5 h-3.5 text-[#f6c73b] shrink-0 mt-0.5" />
                 <a href="mailto:info@dy22.it" className="hover:text-[#f6c73b] hover:underline transition-colors">
@@ -95,12 +93,15 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bandi Campania Logos Bar */}
-        <div className="py-6 my-6 border-t border-b border-[#2C2C2E]/10 flex justify-center overflow-x-auto">
-          <img 
-            src={loghiBandiCampania} 
-            alt="Loghi Bandi Campania e FESR" 
-            className="max-w-[850px] min-w-[560px] sm:min-w-0 w-full h-auto object-contain opacity-95 hover:opacity-100 transition-opacity"
+        <div className="my-6 overflow-x-auto rounded-2xl bg-white/60 px-4 py-3">
+          <img
+            src={institutionalLogos}
+            alt={t('footer.institutionalLogosAlt')}
+            width={2172}
+            height={724}
+            loading="lazy"
+            decoding="async"
+            className="mx-auto block aspect-[8/1] h-auto w-full min-w-[600px] max-w-[1100px] object-cover object-[center_48%]"
           />
         </div>
 
