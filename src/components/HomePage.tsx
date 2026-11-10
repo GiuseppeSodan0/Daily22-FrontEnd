@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import Hero from './Hero';
 import DailyPlatformPlans from './DailyPlatformPlans';
 import ServicesMarquee from './ServicesMarquee';
-import workplacePrevention from '../assets/images/prevenzione-sul-lavoro.jpg';
+import dailyEcosystem from '../assets/images/ecosistema-daily.jpg';
 import { useLanguage } from '../context/LanguageContext';
 
 function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
@@ -69,7 +69,7 @@ export default function HomePage() {
               </div>
 
               <img
-                src={workplacePrevention}
+                src={dailyEcosystem}
                 alt={t('home.aboutImageAlt')}
                 width={1254}
                 height={1254}
