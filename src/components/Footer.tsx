@@ -93,17 +93,15 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="my-6 overflow-x-auto rounded-2xl bg-white/60 px-4 py-3">
-          <img
-            src={institutionalLogos}
-            alt={t('footer.institutionalLogosAlt')}
-            width={2172}
-            height={724}
-            loading="lazy"
-            decoding="async"
-            className="mx-auto block aspect-[8/1] h-auto w-full min-w-[600px] max-w-[1100px] object-cover object-[center_48%]"
-          />
-        </div>
+        <img
+          src={institutionalLogos}
+          alt={t('footer.institutionalLogosAlt')}
+          width={2172}
+          height={724}
+          loading="lazy"
+          decoding="async"
+          className="mx-auto my-6 block aspect-[8/1] h-auto w-full max-w-[640px] object-cover object-[center_48%]"
+        />
 
         {/* Lower row with Language Switcher */}
         <div className="pt-4 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 text-[11px] font-mono text-[#2C2C2E]/60">
