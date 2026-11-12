@@ -1,22 +1,29 @@
-import {articlePath, blogPath, blogTitle, findArticle, isBlogPage, siteUrl} from './articles';
+import {articlePath, blog, blogLanguage, blogLanguages, findArticle, isBlogPage, localizedBlogPath, siteUrl} from './articles';
 
 type HeadTag =
   | {tag: 'meta'; attrs: {name: string; content: string} | {property: string; content: string}}
-  | {tag: 'link'; attrs: {rel: string; href: string}}
+  | {tag: 'link'; attrs: {rel: string; href: string; hrefLang?: string}}
   | {tag: 'script'; attrs: {type: string}; text: string};
 
 export const defaultPageTitle = 'daily - sicurezza sul lavoro';
 
 export function editorialHead(pathname: string) {
-  if (!isBlogPage(pathname)) return {title: defaultPageTitle, tags: [] as HeadTag[]};
+  const editorialLanguage = blogLanguage(pathname);
+  if (!editorialLanguage) return {title: defaultPageTitle, tags: [] as HeadTag[]};
 
+  const editorial = blog[editorialLanguage];
   const article = findArticle(pathname);
-  const url = `${siteUrl}${article ? articlePath(article) : blogPath}`;
-  const title = article?.seoTitle ?? `${blogTitle} | daily`;
-  const description = article?.description ?? 'Approfondimenti di daily sulla sicurezza sul lavoro, la prevenzione e la gestione operativa delle emergenze.';
+  const url = `${siteUrl}${article ? articlePath(article) : editorial.path}`;
+  const title = article?.seoTitle ?? `${editorial.title} | daily`;
+  const description = article?.description ?? editorial.description;
   const tags: HeadTag[] = [];
   const meta = (name: string, content: string) => tags.push({tag: 'meta', attrs: {name, content}});
   const og = (property: string, content: string) => tags.push({tag: 'meta', attrs: {property, content}});
+  const jsonLd = (schema: object) => tags.push({
+    tag: 'script',
+    attrs: {type: 'application/ld+json'},
+    text: JSON.stringify(schema).replace(/</g, '\\u003c'),
+  });
 
   tags.push({tag: 'link', attrs: {rel: 'canonical', href: url}});
   meta('description', description);
@@ -25,8 +32,13 @@ export function editorialHead(pathname: string) {
   og('og:description', article?.socialDescription ?? description);
   og('og:type', article ? 'article' : 'website');
   og('og:url', url);
-  og('og:locale', 'it_IT');
+  og('og:locale', editorial.locale.replace('-', '_'));
   og('og:site_name', 'daily');
+
+  for (const language of blogLanguages) {
+    const path = localizedBlogPath(pathname, language);
+    if (path) tags.push({tag: 'link', attrs: {rel: 'alternate', href: `${siteUrl}${path}`, hrefLang: language}});
+  }
 
   if (!article) return {title, tags};
 
@@ -73,7 +85,7 @@ export function editorialHead(pathname: string) {
       '@type': 'BreadcrumbList',
       itemListElement: [
         {'@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/`},
-        {'@type': 'ListItem', position: 2, name: blogTitle, item: `${siteUrl}${blogPath}`},
+        {'@type': 'ListItem', position: 2, name: editorial.title, item: `${siteUrl}${editorial.path}`},
         {'@type': 'ListItem', position: 3, name: article.shortTitle, item: url},
       ],
     },
@@ -96,7 +108,7 @@ export function editorialHead(pathname: string) {
     ],
   };
 
-  tags.push({tag: 'script', attrs: {type: 'application/ld+json'}, text: JSON.stringify(schema).replace(/</g, '\\u003c')});
+  jsonLd(schema);
   return {title, tags};
 }
 

@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Cookie, X } from 'lucide-react';
 import { hasStoredConsent, saveConsent } from '../lib/consent';
+import {useLanguage} from '../context/LanguageContext';
 
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const location = useLocation();
+  const {lang} = useLanguage();
+  const english = lang === 'en';
 
   // Show the banner only if no consent choice has been stored yet.
   useEffect(() => {
@@ -42,20 +45,24 @@ export default function CookieBanner() {
           </div>
           <div className="flex-1 space-y-2">
             <p className="text-xs sm:text-sm font-mono leading-relaxed text-white/90">
-              Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per le finalità di funzionalità, esperienza, misurazione e &ldquo;marketing (con annunci personalizzati)&rdquo; come specificato nella{' '}
+              {english
+                ? 'We and selected third parties use cookies or similar technologies for technical purposes and, with your consent, for functionality, user experience, measurement and marketing with personalised ads, as described in the'
+                : 'Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per le finalità di funzionalità, esperienza, misurazione e “marketing (con annunci personalizzati)” come specificato nella'}{' '}
               <Link to="/preferenze-privacy" className="underline underline-offset-2 hover:text-[#f6c73b] transition-colors">
                 cookie policy
               </Link>
               .
             </p>
             <p className="text-[11px] sm:text-xs font-mono leading-relaxed text-white/70">
-              Puoi liberamente prestare, rifiutare o revocare il tuo consenso, in qualsiasi momento, accedendo al pannello delle preferenze. Il rifiuto del consenso può rendere non disponibili le relative funzioni.
+              {english
+                ? 'You can give, refuse or withdraw your consent at any time in the preferences panel. Refusing consent may make the related features unavailable.'
+                : 'Puoi liberamente prestare, rifiutare o revocare il tuo consenso, in qualsiasi momento, accedendo al pannello delle preferenze. Il rifiuto del consenso può rendere non disponibili le relative funzioni.'}
             </p>
           </div>
           <button
             type="button"
             onClick={() => decide(false)}
-            aria-label="Chiudi questa informativa"
+            aria-label={english ? 'Close this notice' : 'Chiudi questa informativa'}
             className="p-2 rounded-full hover:bg-white/10 transition-colors shrink-0"
           >
             <X className="w-4 h-4 text-white/80" />
@@ -68,7 +75,7 @@ export default function CookieBanner() {
             onClick={() => setVisible(false)}
             className="order-3 sm:order-1 sm:mr-auto inline-flex items-center justify-center px-5 py-3 text-[11px] font-bold tracking-wider uppercase font-sans text-white/90 border border-white/25 rounded-[18px] transition-colors hover:bg-white/10 whitespace-nowrap"
           >
-            Scopri di più e personalizza
+            {english ? 'Learn more and customise' : 'Scopri di più e personalizza'}
           </Link>
           {/* Rifiuta and Accetta share identical size, padding, font and prominence (no dark pattern) */}
           <button
@@ -76,14 +83,14 @@ export default function CookieBanner() {
             onClick={() => decide(false)}
             className="order-2 sm:order-2 inline-flex items-center justify-center px-8 py-3 text-[11px] font-bold tracking-wider uppercase font-sans text-[#22253B] bg-white rounded-[18px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm whitespace-nowrap sm:min-w-[150px]"
           >
-            Rifiuta
+            {english ? 'Reject' : 'Rifiuta'}
           </button>
           <button
             type="button"
             onClick={() => decide(true)}
             className="order-1 sm:order-3 inline-flex items-center justify-center px-8 py-3 text-[11px] font-bold tracking-wider uppercase font-sans text-[#22253B] bg-[#f6c73b] rounded-[18px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm whitespace-nowrap sm:min-w-[150px]"
           >
-            Accetta
+            {english ? 'Accept' : 'Accetta'}
           </button>
         </div>
       </div>

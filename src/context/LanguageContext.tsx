@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import {useLocation} from 'react-router-dom';
-import {isBlogPage} from '../blog/articles';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {blogLanguage, localizedBlogPath} from '../blog/articles';
 import { translations, Language, TranslationKey } from '../i18n/translations';
 
 interface LanguageContextType {
@@ -16,24 +16,37 @@ function savedLanguage(): Language {
   return saved === 'it' ? 'it' : 'en';
 }
 
+function storeLanguage(language: Language) {
+  localStorage.setItem('daily_lang', language);
+  localStorage.setItem('language', language);
+}
+
 export const LanguageProvider: React.FC<{children: React.ReactNode; initialLanguage?: Language}> = ({children, initialLanguage}) => {
-  const {pathname} = useLocation();
-  const editorial = isBlogPage(pathname);
-  const [lang, setLangState] = useState<Language>(() => initialLanguage ?? savedLanguage());
+  const {pathname, search, hash} = useLocation();
+  const navigate = useNavigate();
+  const pageLanguage = blogLanguage(pathname);
+  const [preference, setLangState] = useState<Language>(() => initialLanguage ?? pageLanguage ?? savedLanguage());
+  const lang = pageLanguage ?? preference;
 
   useEffect(() => {
-    if (initialLanguage) setLangState(savedLanguage());
-  }, [initialLanguage]);
+    if (pageLanguage) {
+      setLangState(pageLanguage);
+      storeLanguage(pageLanguage);
+    } else if (initialLanguage) {
+      setLangState(savedLanguage());
+    }
+  }, [initialLanguage, pageLanguage]);
 
   const setLang = (newLang: Language) => {
     setLangState(newLang);
-    localStorage.setItem('daily_lang', newLang);
-    localStorage.setItem('language', newLang);
+    storeLanguage(newLang);
+    const localizedPath = localizedBlogPath(pathname, newLang);
+    if (localizedPath && localizedPath !== pathname) navigate({pathname: localizedPath, search, hash});
   };
 
   useEffect(() => {
-    document.documentElement.lang = editorial ? 'it' : lang;
-  }, [editorial, lang]);
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const t = (key: string, fallback?: any): any => {
     const keys = key.split('.');

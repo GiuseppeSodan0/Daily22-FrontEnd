@@ -4,10 +4,10 @@
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{THE_REQUEST} \s/+_editorial(?:/|\s|\?) [NC]
   RewriteRule ^_editorial(?:/|$) - [R=404,L]
-  RewriteRule ^(blog(?:/[a-z0-9-]+)?)/$ /$1 [R=301,L]
+  RewriteRule ^((?:en/)?blog(?:/[a-z0-9-]+)?)/$ /$1 [R=301,L]
   RewriteCond %{DOCUMENT_ROOT}/_editorial/$1.html -f
-  RewriteRule ^(blog(?:/[a-z0-9-]+)?)$ /_editorial/$1.html [L]
-  RewriteRule ^blog(?:/|$) - [R=404,L]
+  RewriteRule ^((?:en/)?blog(?:/[a-z0-9-]+)?)$ /_editorial/$1.html [L]
+  RewriteRule ^(?:en/)?blog(?:/|$) - [R=404,L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]

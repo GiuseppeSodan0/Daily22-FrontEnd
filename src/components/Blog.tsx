@@ -1,12 +1,16 @@
 import {ArrowUpRight} from 'lucide-react';
 import {Link} from 'react-router-dom';
-import {articlePath, articles, blogTitle, formatArticleDate} from '../blog/articles';
+import {articlePath, articleTranslations, blog, formatArticleDate} from '../blog/articles';
+import type {Language} from '../i18n/translations';
 import ArticleCover from './ArticleCover';
 
-export default function Blog() {
+export default function Blog({language}: {language: Language}) {
+  const {title} = blog[language];
+  const articles = articleTranslations.map((translations) => translations[language]);
+
   return (
-    <section lang="it" className="mx-auto max-w-7xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{blogTitle}</h1>
+    <section lang={language} className="mx-auto max-w-7xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">
+      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
       <ul className="mt-8 grid gap-6 md:grid-cols-2">
         {articles.map((article, index) => (
           <li key={article.slug}>
@@ -30,7 +34,7 @@ export default function Blog() {
                   <p className="mt-4 leading-relaxed text-[#4C4C50]">{article.excerpt}</p>
                   {article.publishedOn && (
                     <time dateTime={article.publishedOn} className="mt-5 block text-sm text-[#5E5E62]">
-                      {formatArticleDate(article.publishedOn)}
+                      {formatArticleDate(article.publishedOn, article.language)}
                     </time>
                   )}
                 </div>

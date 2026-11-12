@@ -16,7 +16,7 @@ const prerendered = root.hasAttribute('data-prerendered');
 const app = (
   <StrictMode>
     <BrowserRouter>
-      <LanguageProvider initialLanguage={prerendered ? 'it' : undefined}>
+      <LanguageProvider initialLanguage={prerendered ? (document.documentElement.lang === 'en' ? 'en' : 'it') : undefined}>
         <App />
       </LanguageProvider>
     </BrowserRouter>

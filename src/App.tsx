@@ -12,7 +12,7 @@ import ContactForm from './components/ContactForm';
 import Bandi from './components/Bandi';
 import Blog from './components/Blog';
 import BlogArticle from './components/BlogArticle';
-import {articlePath, blogPath, findArticle, isBlogPage} from './blog/articles';
+import {articlePath, blog, blogLanguage, findArticle} from './blog/articles';
 import {syncEditorialHead} from './blog/seo';
 import DailySafetyLab from './components/DailySafetyLab';
 import ChiSiamo from './components/ChiSiamo';
@@ -25,7 +25,7 @@ import Salvatore from './components/Salvatore';
 
 export default function App() {
   const location = useLocation();
-  const isEditorial = isBlogPage(location.pathname);
+  const isPrerenderedPage = Boolean(blogLanguage(location.pathname));
   const article = findArticle(location.pathname);
 
   const isDailySafetyLabPage =
@@ -46,7 +46,7 @@ export default function App() {
   return (
     <div className="bg-[#F0EFEB] text-[#2C2C2E] min-h-screen flex flex-col justify-between selection:bg-[#f6c73b]/30 selection:text-[#2C2C2E] relative overflow-x-hidden">
       {/* Horizontal Brand Page Transition Curtain */}
-      {!isEditorial && <motion.div
+      {!isPrerenderedPage && <motion.div
         key={`curtain-${location.pathname}`}
         className="fixed inset-0 z-[9999] pointer-events-none"
         style={{ backgroundColor: curtainColor }}
@@ -64,7 +64,7 @@ export default function App() {
       <main className="flex-grow">
         <motion.div
           key={location.pathname}
-          initial={isEditorial ? false : { opacity: 0, y: 8 }}
+          initial={isPrerenderedPage ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
         >
@@ -86,7 +86,8 @@ export default function App() {
             <Route path="/servizi/salvatore" element={<Salvatore />} />
             <Route path="/bandi" element={<Bandi />} />
             <Route path="/grants" element={<Bandi />} />
-            <Route path={blogPath} element={<Blog />} />
+            <Route path={blog.it.path} element={<Blog language="it" />} />
+            <Route path={blog.en.path} element={<Blog language="en" />} />
             {article && <Route path={articlePath(article)} element={<BlogArticle article={article} />} />}
             <Route path="/daily-safety-lab" element={<DailySafetyLab />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

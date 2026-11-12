@@ -110,7 +110,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Configure nginx for /firme/ and /blog
+      - name: Configure nginx for /firme/, /blog and /en/blog
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           mkdir -p ~/.ssh
@@ -119,15 +119,16 @@ jobs:
           SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
           ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
 
-          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy/nginx-firme.conf deploy/nginx-editorial.conf deploy/install-nginx-firme.sh root@daily22.it:/tmp/
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy/nginx-firme.conf deploy/nginx-editorial.conf deploy/nginx-blog-en.conf deploy/install-nginx-firme.sh root@daily22.it:/tmp/
 
           $SSH root@daily22.it "chmod +x /tmp/install-nginx-firme.sh && /tmp/install-nginx-firme.sh daily22.it /tmp/nginx-firme.conf"
 
           $SSH root@daily22.it "/tmp/install-nginx-firme.sh daily22.it /tmp/nginx-editorial.conf '# Daily Practice 22 - /blog'"
-          $SSH root@daily22.it "rm -f /tmp/nginx-firme.conf /tmp/nginx-editorial.conf /tmp/install-nginx-firme.sh"
+          $SSH root@daily22.it "/tmp/install-nginx-firme.sh daily22.it /tmp/nginx-blog-en.conf '# Daily Practice 22 - /en/blog'"
+          $SSH root@daily22.it "rm -f /tmp/nginx-firme.conf /tmp/nginx-editorial.conf /tmp/nginx-blog-en.conf /tmp/install-nginx-firme.sh"
 
           rm -f ~/.ssh/deploy_key
-          echo "nginx locations for /firme/ and /blog installed."
+          echo "nginx locations for /firme/, /blog and /en/blog installed."
 
       - name: Restore node app in pm2 if missing
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -197,8 +198,16 @@ jobs:
           grep -Fq 'Domande frequenti' article.html
           curl -fsS --retry 3 "$origin/blog" -o blog.html
           grep -Fq "href=\"$article_path\"" blog.html
+          english_article_path=/en/blog/emergency-and-evacuation-plan
+          curl -fsS --retry 3 "$origin/en/blog" -o blog-en.html
+          grep -Fq '<html lang="en">' blog-en.html
+          grep -Fq "href=\"$english_article_path\"" blog-en.html
+          curl -fsS --retry 3 "$origin$english_article_path" -o article-en.html
+          grep -Fq '<html lang="en">' article-en.html
+          grep -Fq 'Frequently asked questions' article-en.html
           curl -fsS --retry 3 "$origin/sitemap.xml" -o sitemap.xml
           grep -Fq "<loc>$origin$article_path</loc>" sitemap.xml
+          grep -Fq "<loc>$origin$english_article_path</loc>" sitemap.xml
 
       - name: Verify /firme/ resources
         if: ${{ !cancelled() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}

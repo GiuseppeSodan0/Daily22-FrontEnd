@@ -4,10 +4,13 @@ import {Mail, Phone, Facebook, Linkedin, Instagram, MapPin, X, ExternalLink} fro
 import logoFull from '../assets/images/LOGO_DAILY_POSITIVO_ORIZZONTALE-png.png';
 import institutionalLogos from '../assets/images/loghi-istituzionali.png';
 import {useLanguage} from '../context/LanguageContext';
+import {blog} from '../blog/articles';
 import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Footer() {
-  const {t} = useLanguage();
+  const {t, lang} = useLanguage();
+  const english = lang === 'en';
+  const ethicsTitle = english ? 'Daily Code of Ethics' : 'Codice Etico Daily';
   const [showEthicCode, setShowEthicCode] = useState(false);
 
   return (
@@ -48,7 +51,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm font-mono text-[#2C2C2E]/85">
               <li><Link to="/chi-siamo" className="hover:underline underline-offset-4">{t('header.about')}</Link></li>
               <li><Link to="/bandi" className="hover:underline underline-offset-4">{t('header.bandi')}</Link></li>
-              <li><Link to="/blog" className="hover:underline underline-offset-4">Blog</Link></li>
+              <li><Link to={blog[lang].path} className="hover:underline underline-offset-4">Blog</Link></li>
             </ul>
           </div>
 
@@ -112,9 +115,9 @@ export default function Footer() {
           </div>
           <div className="flex flex-wrap items-center gap-6 md:mb-0 mb-1">
             <Link to="/privacy-policy" className="hover:text-[#f6c73b] transition-colors font-medium">{t('footer.privacy')}</Link>
-            <Link to="/termini-condizioni" className="hover:text-[#f6c73b] transition-colors font-medium">Termini e Condizioni</Link>
-            <button type="button" onClick={() => setShowEthicCode(true)} className="hover:text-[#f6c73b] transition-colors font-medium">Codice Etico</button>
-            <Link to="/preferenze-privacy" className="hover:text-[#f6c73b] transition-colors font-medium">Preferenze cookie</Link>
+            <Link to="/termini-condizioni" className="hover:text-[#f6c73b] transition-colors font-medium">{english ? 'Terms and Conditions' : 'Termini e Condizioni'}</Link>
+            <button type="button" onClick={() => setShowEthicCode(true)} className="hover:text-[#f6c73b] transition-colors font-medium">{english ? 'Code of Ethics' : 'Codice Etico'}</button>
+            <Link to="/preferenze-privacy" className="hover:text-[#f6c73b] transition-colors font-medium">{english ? 'Cookie preferences' : 'Preferenze cookie'}</Link>
             <LanguageSwitcher variant="footer" />
           </div>
         </div>
@@ -122,17 +125,17 @@ export default function Footer() {
       </div>
 
       {showEthicCode && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-label="Codice Etico Daily">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-label={ethicsTitle}>
           <button
             type="button"
-            aria-label="Chiudi codice etico"
+            aria-label={english ? 'Close the Code of Ethics' : 'Chiudi codice etico'}
             className="absolute inset-0 bg-black/70"
             onClick={() => setShowEthicCode(false)}
           />
           <div className="relative z-10 w-full max-w-5xl h-[88vh] sm:h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col">
             <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-[#2C2C2E]/10 bg-[#F0EFEB] shrink-0">
               <p className="text-xs font-bold uppercase tracking-widest font-mono text-[#2C2C2E] truncate">
-                Codice Etico Daily
+                {ethicsTitle}
               </p>
               <div className="flex items-center gap-2 shrink-0">
                 <a
@@ -142,12 +145,12 @@ export default function Footer() {
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase font-mono bg-[#2C2C2E] text-[#F0EFEB] hover:bg-[#f6c73b] hover:text-[#2C2C2E] transition-colors"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Apri il PDF</span>
+                  <span className="hidden sm:inline">{english ? 'Open PDF' : 'Apri il PDF'}</span>
                   <span className="sm:hidden">PDF</span>
                 </a>
                 <button
                   type="button"
-                  aria-label="Chiudi"
+                  aria-label={english ? 'Close' : 'Chiudi'}
                   onClick={() => setShowEthicCode(false)}
                   className="p-2 rounded-full bg-white/90 hover:bg-white text-[#2C2C2E] shadow"
                 >
@@ -157,7 +160,7 @@ export default function Footer() {
             </div>
             <iframe
               src="/Codice-Etico-Daily.pdf"
-              title="Codice Etico Daily"
+              title={ethicsTitle}
               className="w-full flex-1 min-h-0 bg-white"
             />
           </div>

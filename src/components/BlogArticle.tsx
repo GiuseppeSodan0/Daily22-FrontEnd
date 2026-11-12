@@ -1,19 +1,20 @@
 import {ArrowUpRight, ChevronDown, ChevronRight} from 'lucide-react';
 import {Link} from 'react-router-dom';
-import {type Article, blogPath, blogTitle, formatArticleDate} from '../blog/articles';
+import {type Article, articleLanguage, blog, formatArticleDate} from '../blog/articles';
 import ArticleCover from './ArticleCover';
 
 export default function BlogArticle({article}: {article: Article}) {
   const {Body, cover, cta, faq, publishedOn, modifiedOn} = article;
+  const labels = blog[articleLanguage(article)];
 
   return (
     <article lang={article.language} className="mx-auto max-w-7xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">
-      <nav aria-label="Percorso di navigazione" className="mb-8 text-sm text-[#5E5E62]">
+      <nav aria-label={labels.breadcrumb} className="mb-8 text-sm text-[#5E5E62]">
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <li><Link to="/" className="underline-offset-4 hover:underline">Home</Link></li>
           <li className="flex items-center gap-2">
             <ChevronRight className="size-3 shrink-0" aria-hidden="true" />
-            <Link to={blogPath} className="underline-offset-4 hover:underline">{blogTitle}</Link>
+            <Link to={labels.path} className="underline-offset-4 hover:underline">{labels.title}</Link>
           </li>
           <li className="flex items-center gap-2" aria-current="page">
             <ChevronRight className="size-3 shrink-0" aria-hidden="true" />
@@ -32,10 +33,10 @@ export default function BlogArticle({article}: {article: Article}) {
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-[#4C4C50] sm:text-xl">{article.excerpt}</p>
         <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-[#5E5E62]">
-          <span>Di <span className="font-semibold text-[#2C2C2E]">{article.author}</span></span>
-          {publishedOn && <span>Pubblicato il <time dateTime={publishedOn}>{formatArticleDate(publishedOn)}</time></span>}
+          <span>{labels.by} <span className="font-semibold text-[#2C2C2E]">{article.author}</span></span>
+          {publishedOn && <span>{labels.published} <time dateTime={publishedOn}>{formatArticleDate(publishedOn, article.language)}</time></span>}
           {modifiedOn && modifiedOn !== publishedOn && (
-            <span>Aggiornato il <time dateTime={modifiedOn}>{formatArticleDate(modifiedOn)}</time></span>
+            <span>{labels.updated} <time dateTime={modifiedOn}>{formatArticleDate(modifiedOn, article.language)}</time></span>
           )}
         </div>
       </header>
@@ -52,7 +53,7 @@ export default function BlogArticle({article}: {article: Article}) {
 
         {faq.length > 0 && (
           <section className="mt-14" aria-labelledby="article-faq">
-            <h2 id="article-faq" className="mb-5 text-2xl font-semibold tracking-tight sm:text-3xl">Domande frequenti</h2>
+            <h2 id="article-faq" className="mb-5 text-2xl font-semibold tracking-tight sm:text-3xl">{labels.faq}</h2>
             <div className="divide-y divide-[#2C2C2E]/15 rounded-2xl border border-[#2C2C2E]/15 bg-white/60">
               {faq.map(({question, answer}) => (
                 <details key={question} className="group px-4 sm:px-6">

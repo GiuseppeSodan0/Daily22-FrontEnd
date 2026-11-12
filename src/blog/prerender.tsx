@@ -4,7 +4,7 @@ import {renderToStaticMarkup, renderToString} from 'react-dom/server';
 import {StaticRouter} from 'react-router-dom';
 import App from '../App';
 import {LanguageProvider} from '../context/LanguageContext';
-import {articlePath, articles, blogPath, siteUrl} from './articles';
+import {articlePath, articleTranslations, blog, blogLanguages, siteUrl} from './articles';
 import {editorialHead} from './seo';
 
 const template = await readFile('dist/index.html', 'utf8');
@@ -12,7 +12,7 @@ if (!template.includes('<div id="root"></div>') || !/<title>[^<]*<\/title>/.test
   throw new Error('Editorial prerender requires the root and title in dist/index.html');
 }
 
-for (const article of articles) {
+for (const article of articleTranslations.flatMap((group) => Object.values(group))) {
   for (const date of [article.publishedOn, article.modifiedOn]) {
     if (date && (!/^\d{4}-\d{2}-\d{2}$/.test(date) || new Date(date).toISOString().slice(0, 10) !== date)) {
       throw new Error(`Invalid editorial date for ${article.slug}: ${date}`);
@@ -24,11 +24,15 @@ for (const article of articles) {
 }
 
 const pages = [
-  {path: blogPath, lastmod: undefined},
-  ...articles.map((article) => ({path: articlePath(article), lastmod: article.modifiedOn ?? article.publishedOn})),
+  ...blogLanguages.flatMap((language) => [
+    {path: blog[language].path, language, lastmod: undefined},
+    ...articleTranslations.map(({[language]: article}) => ({
+      path: articlePath(article), language, lastmod: article.modifiedOn ?? article.publishedOn,
+    })),
+  ]),
 ];
 
-for (const {path} of pages) {
+for (const {path, language} of pages) {
   const {title, tags} = editorialHead(path);
   const head = renderToStaticMarkup(
     <>
@@ -42,14 +46,15 @@ for (const {path} of pages) {
   );
   const markup = renderToString(
     <StaticRouter location={path}>
-      <LanguageProvider initialLanguage="it">
+      <LanguageProvider initialLanguage={language}>
         <App />
       </LanguageProvider>
     </StaticRouter>,
   );
   const preloads = markup.match(/^(?:<link rel="preload"[^>]*>)+/)?.[0] ?? '';
   const html = template
-    .replace('<head>', `<head data-editorial-path="${path}">`)
+    .replace('<html lang="it">', `<html lang="${language}">`)
+    .replace('<head>', `<head data-editorial-path="${path}" data-editorial-language="${language}">`)
     .replace(/<title>[^<]*<\/title>/, () => head + preloads)
     .replace('<div id="root"></div>', () => `<div id="root" data-prerendered>${markup.slice(preloads.length)}</div>`);
 
