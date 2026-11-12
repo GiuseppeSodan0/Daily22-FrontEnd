@@ -306,13 +306,12 @@ body {
   user-select: none;
 }
 
-/* Hero claim text responsive control */
-.hero-claim-mobile {
-  display: none !important;
+.hero-intro h1 {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
 }
 
-.hero-claim-desktop {
-  display: inline !important;
+.hero-intro > p:last-child {
+  font-size: 1rem;
 }
 
 /* Mobile Layout (< 768px): Uses BIMBA_DESKTOP.jpg full-width cover with continuous top background */
@@ -365,24 +364,17 @@ body {
     gap: 12px !important;
   }
 
-  /* Band 1: Top Content (Badge + Title) - flattened so order can place CTAs at the bottom */
+  /* Band 1: Top Content (Introduction) - flattened so order can place CTAs at the bottom */
   .hero-top-content,
   .hero-left,
   .hero-left-copy {
     display: contents !important;
   }
 
-  .hero-top-content .hero-badge,
-  .hero-left .hero-badge {
-    order: 2 !important;
-    margin-bottom: 4px !important;
-  }
-
-  .hero-top-content h1 {
-    order: 1 !important;
-    font-size: clamp(21px, 5.8vw, 26px) !important;
-    line-height: 1.2 !important;
-    text-align: center !important;
+  .hero-intro {
+    position: relative;
+    z-index: 30;
+    width: 100%;
   }
 
   /* CTAs - absolutely positioned at bottom of section */
@@ -437,51 +429,6 @@ body {
     pointer-events: none !important;
   }
 
-  /* Band 3: Bottom Content (claim) - sits just below the image */
-  .hero-bottom-text,
-  .hero-right,
-  .hero-right-copy {
-    order: 4 !important;
-    width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    max-width: 440px !important;
-    position: relative !important;
-    z-index: 30 !important;
-    padding-bottom: 0 !important;
-    margin-top: 310px !important;
-  }
-
-  .hero-right-text {
-    font-size: clamp(15px, 4.4vw, 19px) !important;
-    line-height: 1.18 !important;
-    letter-spacing: -0.035em !important;
-    color: #2C2C2E !important;
-    font-family: "Geist", sans-serif !important;
-    font-weight: 850 !important;
-    text-transform: uppercase !important;
-    text-align: center !important;
-  }
-
-  .hero-claim {
-    white-space: normal !important;
-    line-height: 1.12 !important;
-  }
-
-  .hero-claim-desktop {
-    display: none !important;
-  }
-
-  .hero-claim-mobile {
-    display: block !important;
-  }
-
-  .hero-claim-mobile span {
-    display: block !important;
-    white-space: nowrap !important;
-  }
 }
 
 /* Tablet Layout (768px - 1023px): Uses BIMBA_DESKTOP.jpg full-width cover */
@@ -502,26 +449,6 @@ body {
     height: 100% !important;
     object-fit: cover !important;
     object-position: center 80% !important;
-  }
-
-  .hero-badge {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: auto !important;
-    min-width: max-content !important;
-    max-width: none !important;
-    white-space: nowrap !important;
-    flex-wrap: nowrap !important;
-    padding: 6px 14px !important;
-    font-size: 9.5px !important;
-    line-height: 1 !important;
-  }
-
-  .hero-badge span,
-  .hero-badge p,
-  .hero-badge div {
-    white-space: nowrap !important;
   }
 
   .hero-cta-row {
@@ -577,30 +504,6 @@ body {
     pointer-events: none !important;
   }
 
-  .hero-right,
-  .hero-right-copy {
-    grid-column: 3 !important;
-    order: 3 !important;
-    position: relative !important;
-    z-index: 30 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
-    text-align: right !important;
-    justify-self: end !important;
-    max-width: 300px !important;
-  }
-
-  .hero-right-text {
-    font-size: clamp(16px, 2.2vw, 22px) !important;
-    line-height: 1.15 !important;
-    letter-spacing: -0.035em !important;
-    color: #2C2C2E !important;
-    font-family: "Geist", sans-serif !important;
-    font-weight: 850 !important;
-    text-transform: uppercase !important;
-    text-align: right !important;
-  }
 }
 
 /* Sub-tablet adjustments (768px - 899px) */
@@ -627,10 +530,6 @@ body {
     min-height: 340px !important;
   }
 
-  .hero-right,
-  .hero-right-copy {
-    max-width: 250px !important;
-  }
 }
 
 /* Desktop Layout (>= 1024px): 3 Columns with BIMBA_DESKTOP.jpg full-width cover */
@@ -707,28 +606,6 @@ body {
     pointer-events: none !important;
   }
 
-  .hero-right,
-  .hero-right-copy {
-    grid-column: 3 !important;
-    order: 3 !important;
-    align-items: flex-end !important;
-    text-align: right !important;
-    justify-self: end !important;
-    max-width: 470px !important;
-    position: relative !important;
-    z-index: 3 !important;
-  }
-
-  .hero-right-text {
-    font-size: clamp(28px, 2.6vw, 44px) !important;
-    line-height: 1.05 !important;
-    letter-spacing: -0.035em !important;
-    color: #2C2C2E !important;
-    font-family: "Geist", sans-serif !important;
-    font-weight: 850 !important;
-    text-transform: uppercase !important;
-    text-align: right !important;
-  }
 }
 
 @media (max-width: 1024px) {
@@ -1045,9 +922,9 @@ body {
 
 /* Daily Safety Lab Dedicated Page Accent Rules */
 .daily-safety-lab-page .dsl-primary-cta {
-  background-color: #e73749 !important;
+  background-color: var(--accent-color) !important;
   color: #FFFFFF !important;
-  border: 1px solid #e73749 !important;
+  border: 1px solid var(--accent-color) !important;
 }
 
 .daily-safety-lab-page .dsl-primary-cta * {
@@ -1055,7 +932,7 @@ body {
 }
 
 .daily-safety-lab-page .dsl-primary-cta:hover {
-  background-color: #e73749 !important;
+  background-color: var(--accent-color) !important;
   color: #FFFFFF !important;
   box-shadow: 0 0 18px rgba(231, 55, 73, 0.38) !important;
   transform: translateY(-1px);

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import PageIntro from './PageIntro';
 import {motion, AnimatePresence} from 'motion/react';
 import {Mail, Phone, Clock, MapPin, Check, Landmark, AlertTriangle, ArrowRight} from 'lucide-react';
 import {useLanguage} from '../context/LanguageContext';
@@ -185,7 +186,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-36 bg-[#F0EFEB] text-left" id="contatti">
+    <section className="pt-28 pb-36 sm:pt-36 bg-[#F0EFEB] text-left" id="contatti">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <motion.div
@@ -195,15 +196,8 @@ export default function ContactForm() {
           className="space-y-16"
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#2C2C2E]/10 bg-white/60 text-[11px] font-bold tracking-wider uppercase text-[#2C2C2E]/70 font-mono mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#f6c73b]" />
-              {t('contact.badge')}
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-sans text-[#2C2C2E] tracking-tight">{t('contact.title')}</h2>
-            <p className="mt-4 text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed">
-              {t('contact.subtitle')}
-            </p>
+          <motion.div variants={itemVariants}>
+            <PageIntro label={t('contact.badge')} title={t('contact.title')} description={t('contact.subtitle')} />
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">

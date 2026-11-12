@@ -39,12 +39,12 @@ export const siteUrl = 'https://daily22.it';
 export const blogLanguages = ['it', 'en'] as const;
 export const blog = {
   it: {
-    path: '/blog', locale: 'it-IT', title: 'Blog / Approfondimenti',
+    path: '/blog', locale: 'it-IT', title: 'Blog / Approfondimenti', heading: 'Approfondimenti',
     description: 'Approfondimenti di daily sulla sicurezza sul lavoro, la prevenzione e la gestione operativa delle emergenze.',
     breadcrumb: 'Percorso di navigazione', by: 'Di', published: 'Pubblicato il', updated: 'Aggiornato il', faq: 'Domande frequenti',
   },
   en: {
-    path: '/en/blog', locale: 'en-GB', title: 'Blog / Insights',
+    path: '/en/blog', locale: 'en-GB', title: 'Blog / Insights', heading: 'Insights',
     description: 'Insights from daily on workplace safety, risk prevention and how to manage emergencies in practice.',
     breadcrumb: 'Breadcrumb', by: 'By', published: 'Published on', updated: 'Updated on', faq: 'Frequently asked questions',
   },

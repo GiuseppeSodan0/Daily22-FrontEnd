@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageIntro from './PageIntro';
 import {
   ShieldCheck, Cpu, MessageSquare, CheckCircle, ArrowRight, Activity,
   ClipboardCheck, Scale, HardHat, Train, Radio, Trophy, HeartHandshake,
@@ -353,7 +354,7 @@ export default function ProgettiDetail() {
   };
 
   return (
-    <div className="py-36 bg-[#F0EFEB] text-left services-page">
+    <div className="pt-28 pb-36 sm:pt-36 bg-[#F0EFEB] text-left services-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <motion.div
@@ -363,12 +364,8 @@ export default function ProgettiDetail() {
           className="space-y-24"
         >
           {/* Title Header */}
-          <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">{t('progetti.headerBadge')}</span>
-            <h2 className="text-3xl sm:text-4xl font-bold mt-4 font-sans text-[#2C2C2E] tracking-tight">{t('progetti.headerTitle')}</h2>
-            <p className="mt-4 text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed">
-              {t('progetti.headerSubtitle')}
-            </p>
+          <motion.div variants={itemVariants}>
+            <PageIntro label={t('progetti.headerBadge')} title={t('progetti.headerTitle')} description={t('progetti.headerSubtitle')} />
           </motion.div>
 
           {/* Main Projects Column - Alternating image/text layouts */}

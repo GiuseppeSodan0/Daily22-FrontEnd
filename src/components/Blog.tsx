@@ -3,14 +3,15 @@ import {Link} from 'react-router-dom';
 import {articlePath, articleTranslations, blog, formatArticleDate} from '../blog/articles';
 import type {Language} from '../i18n/translations';
 import ArticleCover from './ArticleCover';
+import PageIntro from './PageIntro';
 
 export default function Blog({language}: {language: Language}) {
-  const {title} = blog[language];
+  const {heading, description} = blog[language];
   const articles = articleTranslations.map((translations) => translations[language]);
 
   return (
     <section lang={language} className="mx-auto max-w-7xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
+      <PageIntro label="Blog" title={heading} description={description} />
       <ul className="mt-8 grid gap-6 md:grid-cols-2">
         {articles.map((article, index) => (
           <li key={article.slug}>

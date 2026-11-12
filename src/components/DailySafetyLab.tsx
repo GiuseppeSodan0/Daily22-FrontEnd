@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import PageIntro from './PageIntro';
 import { motion } from 'motion/react';
 import { 
   ShieldCheck, 
@@ -200,7 +201,7 @@ export default function DailySafetyLab() {
   const currentActiveDot = activeIndex % 8;
 
   return (
-    <section className="daily-safety-lab-page relative overflow-hidden pt-36 pb-32 bg-[#F0EFEB] text-left">
+    <section className="daily-safety-lab-page relative overflow-hidden pt-28 pb-32 sm:pt-36 bg-[#F0EFEB] text-left">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#e73749]/10 blur-[160px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -213,17 +214,11 @@ export default function DailySafetyLab() {
           {/* Main Hero Section */}
           <motion.div 
             variants={itemVariants}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start"
           >
             <div className="lg:col-span-7 space-y-6 text-left">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#e73749] font-mono block">
-                {t('dsl.heroBadge')}
-              </span>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-sans text-[#2C2C2E] tracking-tight leading-tight">
-                {t('dsl.heroTitle')}
-              </h1>
+              <PageIntro label={t('dsl.heroBadge')} title={t('dsl.heroTitle')} description={t('dsl.heroP1')} />
               <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-[#5E5E62] font-mono">
-                <p>{t('dsl.heroP1')}</p>
                 <p>{t('dsl.heroP2')}</p>
               </div>
               <div className="pt-2">

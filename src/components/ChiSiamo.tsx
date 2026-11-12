@@ -1,4 +1,5 @@
 import React from 'react';
+import PageIntro from './PageIntro';
 import {motion} from 'motion/react';
 import {Link} from 'react-router-dom';
 import {ArrowRight, ShieldCheck, Target, Eye, Users} from 'lucide-react';
@@ -64,7 +65,7 @@ export default function ChiSiamo() {
   ];
 
   return (
-    <section className="relative overflow-hidden pt-36 pb-32 text-left bg-[#F0EFEB]">
+    <section className="relative overflow-hidden pt-28 pb-32 sm:pt-36 text-left bg-[#F0EFEB]">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#f6c73b]/5 blur-[160px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -76,9 +77,8 @@ export default function ChiSiamo() {
         >
 
           {/* Header */}
-          <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono">{t('header.about')}</span>
-            <h2 className="text-3xl sm:text-4xl font-bold mt-4 font-sans text-[#2C2C2E] tracking-tight">{t('about.title')}</h2>
+          <motion.div variants={itemVariants}>
+            <PageIntro label={t('header.about')} title={t('about.title')} />
           </motion.div>
 
           {/* Intro description and image */}

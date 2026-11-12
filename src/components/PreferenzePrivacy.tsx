@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PageIntro from './PageIntro';
+import {useLanguage} from '../context/LanguageContext';
 import { motion } from 'motion/react';
 import { Cookie, ChevronDown, RotateCcw, ShieldCheck } from 'lucide-react';
 import StrumentiTracciamento from './StrumentiTracciamento';
@@ -77,6 +79,7 @@ function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: (
 }
 
 export default function PreferenzePrivacy() {
+  const {t} = useLanguage();
   const [consent, setConsent] = useState<ConsentState>(DEFAULT_CONSENT);
   const [saved, setSaved] = useState(false);
   const cookiePolicyRef = useRef<HTMLDivElement>(null);
@@ -102,7 +105,7 @@ export default function PreferenzePrivacy() {
   const toggle = (id: CategoryId) => setConsent((prev) => ({ ...prev, [id]: !prev[id] }));
 
   return (
-    <section className="relative overflow-hidden pt-36 pb-32 bg-[#F0EFEB] text-left">
+    <section className="relative overflow-hidden pt-28 pb-32 sm:pt-36 bg-[#F0EFEB] text-left">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full bg-[#f6c73b]/5 blur-[160px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -112,35 +115,18 @@ export default function PreferenzePrivacy() {
           animate="visible"
           className="space-y-8"
         >
-          {/* Main Title Banner */}
-          <motion.div variants={itemVariants} className="p-8 sm:p-10 card-premium">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 rounded-2xl bg-[#f6c73b]/15 text-[#2C2C2E] border border-[#f6c73b]/30">
-                <Cookie className="w-6 h-6 text-[#2C2C2E]" />
-              </div>
-              <div>
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#2C2C2E]/60 font-mono block">
-                  Centro Preferenze Cookie
-                </span>
-                <h1 className="text-2xl sm:text-3xl font-bold font-sans text-[#2C2C2E] tracking-tight uppercase">
-                  Preferenze Privacy
-                </h1>
-              </div>
-            </div>
-            <p className="text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed">
-              Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per le finalità di funzionalità, esperienza, misurazione e &ldquo;marketing (con annunci personalizzati)&rdquo; come specificato nella cookie policy.
-            </p>
-            <p className="text-xs sm:text-sm text-[#5E5E62] font-mono leading-relaxed mt-2">
-              Puoi liberamente prestare, rifiutare o revocare il tuo consenso, in qualsiasi momento, accedendo al pannello delle preferenze. Il rifiuto del consenso può rendere non disponibili le relative funzioni.
-            </p>
-            <button
-              type="button"
-              onClick={scrollToCookiePolicy}
-              className="pt-3 inline-flex items-center gap-2 text-xs font-bold font-mono text-[#2C2C2E] hover:text-[#b08f00] transition-colors underline underline-offset-4"
-            >
-              Visualizza Cookie Policy completa
-              <ChevronDown className="w-3.5 h-3.5" />
-            </button>
+          <motion.div variants={itemVariants}>
+            <PageIntro label={t('legalIntro.preferencesLabel')} title={t('legalIntro.preferencesTitle')} description={t('legalIntro.preferencesDescription')}>
+              <p className="mt-3 max-w-prose leading-relaxed text-[var(--color-ink-soft)]">{t('legalIntro.preferencesDetail')}</p>
+              <button
+                type="button"
+                onClick={scrollToCookiePolicy}
+                className="pt-3 inline-flex items-center gap-2 text-xs font-bold font-mono text-[#2C2C2E] hover:text-[#b08f00] transition-colors underline underline-offset-4"
+              >
+                {t('legalIntro.preferencesPolicyLink')}
+                <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+            </PageIntro>
           </motion.div>
 
           {/* Consent Actions */}

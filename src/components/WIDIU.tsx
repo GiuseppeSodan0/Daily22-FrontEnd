@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageIntro from './PageIntro';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import {
@@ -133,7 +134,7 @@ export default function WIDIU() {
   ];
 
   return (
-    <div className="py-24 md:py-32 bg-[#F0EFEB] text-[#2C2C2E] overflow-hidden font-sans">
+    <div className="pt-28 pb-24 sm:pt-36 md:pb-32 bg-[#F0EFEB] text-[#2C2C2E] overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <motion.div
@@ -143,22 +144,11 @@ export default function WIDIU() {
           className="space-y-32"
         >
           {/* Hero Section */}
-          <section className="pt-8 text-left">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <section className="text-left">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
               
               <motion.div variants={itemVariants} className="lg:col-span-6 space-y-6 text-left">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6c73b]/10 border border-[#f6c73b]/25 text-xs font-bold font-mono tracking-widest uppercase text-[#2C2C2E]/80">
-                  <Cpu className="w-3.5 h-3.5 text-[#f6c73b]" />
-                  {t('widiu.heroBadge')}
-                </span>
-                
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-none text-[#2C2C2E]">
-                  {t('widiu.heroTitle')}
-                </h1>
-                
-                <p className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight text-[#2C2C2E]/90 text-balance leading-snug">
-                  {t('widiu.heroSub')}
-                </p>
+                <PageIntro label={t('widiu.heroBadge')} title={t('widiu.heroTitle')} description={t('widiu.heroSub')} />
                 
                 <div className="text-xs sm:text-sm leading-relaxed font-mono text-[#5E5E62] space-y-4">
                   <p>{t('widiu.heroP1')}</p>

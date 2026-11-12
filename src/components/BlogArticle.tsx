@@ -2,6 +2,7 @@ import {ArrowUpRight, ChevronDown, ChevronRight} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import {type Article, articleLanguage, blog, formatArticleDate} from '../blog/articles';
 import ArticleCover from './ArticleCover';
+import PageIntro from './PageIntro';
 
 export default function BlogArticle({article}: {article: Article}) {
   const {Body, cover, cta, faq, publishedOn, modifiedOn} = article;
@@ -23,15 +24,7 @@ export default function BlogArticle({article}: {article: Article}) {
         </ol>
       </nav>
 
-      <header className="border-b border-[#2C2C2E]/15 pb-8 sm:pb-10">
-        <p className="flex items-center gap-2 text-sm font-semibold">
-          <span className="size-2 rounded-full bg-[#F6C73B]" aria-hidden="true" />
-          {article.category}
-        </p>
-        <h1 className="mt-4 text-[clamp(2rem,5.5vw,3.75rem)] leading-[1.08] font-bold tracking-tight text-balance">
-          {article.title}
-        </h1>
-        <p className="mt-5 text-lg leading-relaxed text-[#4C4C50] sm:text-xl">{article.excerpt}</p>
+      <PageIntro label={article.category} title={article.title} description={article.excerpt} className="border-b border-[#2C2C2E]/15 pb-8 sm:pb-10">
         <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-[#5E5E62]">
           <span>{labels.by} <span className="font-semibold text-[#2C2C2E]">{article.author}</span></span>
           {publishedOn && <span>{labels.published} <time dateTime={publishedOn}>{formatArticleDate(publishedOn, article.language)}</time></span>}
@@ -39,7 +32,7 @@ export default function BlogArticle({article}: {article: Article}) {
             <span>{labels.updated} <time dateTime={modifiedOn}>{formatArticleDate(modifiedOn, article.language)}</time></span>
           )}
         </div>
-      </header>
+      </PageIntro>
 
       <ArticleCover
         cover={cover}
