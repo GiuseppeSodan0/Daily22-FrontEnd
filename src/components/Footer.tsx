@@ -29,13 +29,13 @@ export default function Footer() {
               {t('footer.description')}
             </p>
             <div className="flex items-center gap-3 pt-2">
-              <a href="https://www.facebook.com/share/1D7BoWLCHr/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg transition-colors hover:text-[#f6c73b] bg-[#2C2C2E]/5 text-[#2C2C2E]" aria-label="Facebook">
+              <a href="https://www.facebook.com/DailyPlatform1" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg transition-colors hover:text-[#f6c73b] bg-[#2C2C2E]/5 text-[#2C2C2E]" aria-label="Facebook">
                 <Facebook className="w-4 h-4" />
               </a>
               <a href="https://www.linkedin.com/company/daily-22/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg transition-colors hover:text-[#f6c73b] bg-[#2C2C2E]/5 text-[#2C2C2E]" aria-label="LinkedIn">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="https://www.instagram.com/daily__practice22?igsh=MTZ6YTJrZHo3bzExbQ==" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg transition-colors hover:text-[#f6c73b] bg-[#2C2C2E]/5 text-[#2C2C2E]" aria-label="Instagram">
+              <a href="https://www.instagram.com/dailyplatform22/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg transition-colors hover:text-[#f6c73b] bg-[#2C2C2E]/5 text-[#2C2C2E]" aria-label="Instagram">
                 <Instagram className="w-4 h-4" />
               </a>
             </div>
