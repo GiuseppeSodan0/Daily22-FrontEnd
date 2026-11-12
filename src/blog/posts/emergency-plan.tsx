@@ -220,6 +220,15 @@ export const emergencyPlan: Article = {
     filename: 'piano-emergenza-evacuazione-daily.webp',
     title: 'Piano di Emergenza ed Evacuazione – sicurezza operativa',
     alt: 'Persone che evacuano un edificio seguendo le procedure di emergenza, con focus su coordinamento, comunicazione e sicurezza operativa.',
+    asset: {
+      src: '/assets/images/piano-emergenza-evacuazione-daily.webp',
+      width: 1672,
+      height: 941,
+      variants: [
+        {src: '/assets/images/piano-emergenza-evacuazione-daily-480.webp', width: 480},
+        {src: '/assets/images/piano-emergenza-evacuazione-daily-960.webp', width: 960},
+      ],
+    },
   },
   Body: EmergencyPlanBody,
   faq: [
