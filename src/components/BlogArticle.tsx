@@ -1,13 +1,10 @@
 import {ArrowUpRight, ChevronDown, ChevronRight} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import {type Article, blogPath, blogTitle, formatArticleDate} from '../blog/articles';
+import ArticleCover from './ArticleCover';
 
 export default function BlogArticle({article}: {article: Article}) {
   const {Body, cover, cta, faq, publishedOn, modifiedOn} = article;
-  const asset = cover?.asset;
-  const srcSet = asset?.variants?.length
-    ? [...asset.variants, {src: asset.src, width: asset.width}].map(({src, width}) => `${src} ${width}w`).join(', ')
-    : undefined;
 
   return (
     <article lang={article.language} className="mx-auto max-w-5xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">
@@ -43,19 +40,12 @@ export default function BlogArticle({article}: {article: Article}) {
         </div>
       </header>
 
-      {asset && (
-        <img
-          src={asset.src}
-          srcSet={srcSet}
-          sizes="(min-width: 1024px) 960px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
-          width={asset.width}
-          height={asset.height}
-          alt={cover.alt}
-          title={cover.title}
-          fetchPriority="high"
-          className="mt-8 h-auto w-full rounded-3xl"
-        />
-      )}
+      <ArticleCover
+        cover={cover}
+        sizes="(min-width: 1024px) 960px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
+        className="mt-8 h-auto w-full rounded-3xl"
+        priority
+      />
 
       <div className="mx-auto mt-8 max-w-[70ch] sm:mt-12">
         <div className="editorial-prose"><Body /></div>
