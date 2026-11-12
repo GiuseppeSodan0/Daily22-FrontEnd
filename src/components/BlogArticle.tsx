@@ -7,7 +7,7 @@ export default function BlogArticle({article}: {article: Article}) {
   const {Body, cover, cta, faq, publishedOn, modifiedOn} = article;
 
   return (
-    <article lang={article.language} className="mx-auto max-w-5xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">
+    <article lang={article.language} className="mx-auto max-w-7xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">
       <nav aria-label="Percorso di navigazione" className="mb-8 text-sm text-[#5E5E62]">
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <li><Link to="/" className="underline-offset-4 hover:underline">Home</Link></li>
@@ -27,10 +27,10 @@ export default function BlogArticle({article}: {article: Article}) {
           <span className="size-2 rounded-full bg-[#F6C73B]" aria-hidden="true" />
           {article.category}
         </p>
-        <h1 className="mt-4 max-w-[22ch] text-[clamp(2rem,5.5vw,3.75rem)] leading-[1.08] font-bold tracking-tight text-balance">
+        <h1 className="mt-4 text-[clamp(2rem,5.5vw,3.75rem)] leading-[1.08] font-bold tracking-tight text-balance">
           {article.title}
         </h1>
-        <p className="mt-5 max-w-[64ch] text-lg leading-relaxed text-[#4C4C50] sm:text-xl">{article.excerpt}</p>
+        <p className="mt-5 text-lg leading-relaxed text-[#4C4C50] sm:text-xl">{article.excerpt}</p>
         <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-[#5E5E62]">
           <span>Di <span className="font-semibold text-[#2C2C2E]">{article.author}</span></span>
           {publishedOn && <span>Pubblicato il <time dateTime={publishedOn}>{formatArticleDate(publishedOn)}</time></span>}
@@ -42,12 +42,12 @@ export default function BlogArticle({article}: {article: Article}) {
 
       <ArticleCover
         cover={cover}
-        sizes="(min-width: 1024px) 960px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
+        sizes="(min-width: 1280px) 1216px, (min-width: 1024px) calc(100vw - 64px), (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
         className="mt-8 h-auto w-full rounded-3xl"
         priority
       />
 
-      <div className="mx-auto mt-8 max-w-[70ch] sm:mt-12">
+      <div className="mt-8 sm:mt-12">
         <div className="editorial-prose"><Body /></div>
 
         {faq.length > 0 && (
