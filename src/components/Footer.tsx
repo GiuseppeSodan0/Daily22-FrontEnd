@@ -48,6 +48,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm font-mono text-[#2C2C2E]/85">
               <li><Link to="/chi-siamo" className="hover:underline underline-offset-4">{t('header.about')}</Link></li>
               <li><Link to="/bandi" className="hover:underline underline-offset-4">{t('header.bandi')}</Link></li>
+              <li><Link to="/blog" className="hover:underline underline-offset-4">Blog</Link></li>
             </ul>
           </div>
 

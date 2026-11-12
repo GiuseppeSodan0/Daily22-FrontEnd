@@ -6,6 +6,41 @@
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
+.editorial-prose {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.editorial-prose > * + * {
+  margin-block-start: 1em;
+}
+
+.editorial-prose h2,
+.editorial-prose h3 {
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.editorial-prose h2 {
+  margin-block-start: 2em;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.editorial-prose h3 {
+  margin-block-start: 1.5em;
+  font-size: 1.25rem;
+}
+
+.editorial-prose ul {
+  list-style: disc;
+  padding-inline-start: 1.5em;
+}
+
+.editorial-prose li + li {
+  margin-block-start: 0.25em;
+}
+
 :root {
   --color-ink: #2C2C2E;
   --color-ink-soft: #5E5E62;

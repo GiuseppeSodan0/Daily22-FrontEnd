@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
 
-export default defineConfig(() => {
+export default defineConfig(({isSsrBuild}) => {
   return {
     plugins: [react(), tailwindcss()],
+    build: {copyPublicDir: !isSsrBuild},
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

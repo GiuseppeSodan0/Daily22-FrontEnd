@@ -23,7 +23,7 @@ SNIPPET="${2:-}"
 
 NGINX_DIR="${NGINX_DIR:-/etc/nginx}"
 SYSTEM_VHOST_DIR="${SYSTEM_VHOST_DIR:-/var/www/vhosts/system}"
-MARKER="# Daily Practice 22 - /firme/"
+MARKER="${3:-# Daily Practice 22 - /firme/}"
 
 log()  { echo "[nginx-firme] $*"; }
 die()  { echo "[nginx-firme] ERRORE: $*" >&2; exit 1; }
@@ -78,7 +78,7 @@ fi
 
 # 3. Idempotenza: il marcatore segnala che la location e' gia' presente.
 if grep -qF "$MARKER" "$TARGET" 2>/dev/null; then
-  log "location /firme/ gia' presente in $TARGET: nessuna modifica"
+  log "snippet gia' presente in $TARGET: nessuna modifica"
   exit 0
 fi
 
@@ -119,4 +119,4 @@ else
   die "reload di nginx non riuscito"
 fi
 
-log "location /firme/ installata per $DOMAIN"
+log "snippet installato per $DOMAIN"

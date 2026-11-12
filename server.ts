@@ -230,6 +230,17 @@ Data e ora: ${dateFormatted}
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
+    app.get(/^\/blog(?:\/|$)/, (req, res, next) => {
+      if (!/^\/blog(?:\/[a-z0-9-]+)?\/?$/.test(req.path)) return res.sendStatus(404);
+      if (req.path.endsWith('/')) {
+        return res.redirect(301, req.originalUrl.replace(/\/(?=\?|$)/, ''));
+      }
+      res.sendFile(path.join(distPath, '_editorial', `${req.path.slice(1)}.html`), (error) => {
+        if (error && 'status' in error && error.status === 404) return res.sendStatus(404);
+        if (error) next(error);
+      });
+    });
+    app.get(/^\/_editorial(?:\/|$)/, (_req, res) => res.sendStatus(404));
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));

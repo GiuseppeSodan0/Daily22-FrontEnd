@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
+import {isBlogPage} from '../blog/articles';
 import { translations, Language, TranslationKey } from '../i18n/translations';
 
 interface LanguageContextType {
@@ -9,11 +11,19 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lang, setLangState] = useState<Language>(() => {
-    const saved = localStorage.getItem('daily_lang') || localStorage.getItem('language');
-    return (saved === 'en' || saved === 'it') ? (saved as Language) : 'en';
-  });
+function savedLanguage(): Language {
+  const saved = localStorage.getItem('daily_lang') || localStorage.getItem('language');
+  return saved === 'it' ? 'it' : 'en';
+}
+
+export const LanguageProvider: React.FC<{children: React.ReactNode; initialLanguage?: Language}> = ({children, initialLanguage}) => {
+  const {pathname} = useLocation();
+  const editorial = isBlogPage(pathname);
+  const [lang, setLangState] = useState<Language>(() => initialLanguage ?? savedLanguage());
+
+  useEffect(() => {
+    if (initialLanguage) setLangState(savedLanguage());
+  }, [initialLanguage]);
 
   const setLang = (newLang: Language) => {
     setLangState(newLang);
@@ -22,8 +32,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
+    document.documentElement.lang = editorial ? 'it' : lang;
+  }, [editorial, lang]);
 
   const t = (key: string, fallback?: any): any => {
     const keys = key.split('.');
