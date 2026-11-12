@@ -110,7 +110,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Configure nginx for /firme/, /blog and /en/blog
+      - name: Configure nginx for /firme/, /blog, /en/blog and /faq
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           mkdir -p ~/.ssh
@@ -119,16 +119,17 @@ jobs:
           SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
           ssh-keyscan -H daily22.it >> ~/.ssh/known_hosts 2>/dev/null
 
-          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy/nginx-firme.conf deploy/nginx-editorial.conf deploy/nginx-blog-en.conf deploy/install-nginx-firme.sh root@daily22.it:/tmp/
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy/nginx-firme.conf deploy/nginx-editorial.conf deploy/nginx-blog-en.conf deploy/nginx-faq.conf deploy/install-nginx-firme.sh root@daily22.it:/tmp/
 
           $SSH root@daily22.it "chmod +x /tmp/install-nginx-firme.sh && /tmp/install-nginx-firme.sh daily22.it /tmp/nginx-firme.conf"
 
           $SSH root@daily22.it "/tmp/install-nginx-firme.sh daily22.it /tmp/nginx-editorial.conf '# Daily Practice 22 - /blog'"
           $SSH root@daily22.it "/tmp/install-nginx-firme.sh daily22.it /tmp/nginx-blog-en.conf '# Daily Practice 22 - /en/blog'"
-          $SSH root@daily22.it "rm -f /tmp/nginx-firme.conf /tmp/nginx-editorial.conf /tmp/nginx-blog-en.conf /tmp/install-nginx-firme.sh"
+          $SSH root@daily22.it "/tmp/install-nginx-firme.sh daily22.it /tmp/nginx-faq.conf '# Daily Practice 22 - /faq'"
+          $SSH root@daily22.it "rm -f /tmp/nginx-firme.conf /tmp/nginx-editorial.conf /tmp/nginx-blog-en.conf /tmp/nginx-faq.conf /tmp/install-nginx-firme.sh"
 
           rm -f ~/.ssh/deploy_key
-          echo "nginx locations for /firme/, /blog and /en/blog installed."
+          echo "nginx locations for /firme/, /blog, /en/blog and /faq installed."
 
       - name: Restore node app in pm2 if missing
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -184,7 +185,7 @@ jobs:
           rm -f ~/.ssh/deploy_key
           echo "Deploy complete! https://daily22.it is live."
 
-      - name: Verify editorial routes
+      - name: Verify prerendered routes
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           origin=https://daily22.it
@@ -205,9 +206,18 @@ jobs:
           curl -fsS --retry 3 "$origin$english_article_path" -o article-en.html
           grep -Fq '<html lang="en">' article-en.html
           grep -Fq 'Frequently asked questions' article-en.html
+          curl -fsS --retry 3 "$origin/faq" -o faq.html -D faq.headers
+          grep -Eq '^HTTP/[^ ]+ 200' faq.headers
+          grep -Eiq '^content-type: text/html' faq.headers
+          if grep -Eiq '^x-robots-tag:.*noindex' faq.headers; then exit 1; fi
+          grep -Fq "href=\"$origin/faq\"" faq.html
+          grep -Fq 'data-prerendered' faq.html
+          grep -Fq 'Domande frequenti su daily' faq.html
+          grep -Fq '"@type":"FAQPage"' faq.html
           curl -fsS --retry 3 "$origin/sitemap.xml" -o sitemap.xml
           grep -Fq "<loc>$origin$article_path</loc>" sitemap.xml
           grep -Fq "<loc>$origin$english_article_path</loc>" sitemap.xml
+          grep -Fq "<loc>$origin/faq</loc>" sitemap.xml
 
       - name: Verify /firme/ resources
         if: ${{ !cancelled() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}

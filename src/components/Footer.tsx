@@ -5,6 +5,7 @@ import logoFull from '../assets/images/LOGO_DAILY_POSITIVO_ORIZZONTALE-png.png';
 import institutionalLogos from '../assets/images/loghi-istituzionali.png';
 import {useLanguage} from '../context/LanguageContext';
 import {blog} from '../blog/articles';
+import {faqPath} from '../faq/content';
 import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Footer() {
@@ -52,6 +53,7 @@ export default function Footer() {
               <li><Link to="/chi-siamo" className="hover:underline underline-offset-4">{t('header.about')}</Link></li>
               <li><Link to="/bandi" className="hover:underline underline-offset-4">{t('header.bandi')}</Link></li>
               <li><Link to={blog[lang].path} className="hover:underline underline-offset-4">Blog</Link></li>
+              <li><Link to={faqPath} className="hover:underline underline-offset-4">FAQ</Link></li>
             </ul>
           </div>
 

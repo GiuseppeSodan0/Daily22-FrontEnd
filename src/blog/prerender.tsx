@@ -5,7 +5,8 @@ import {StaticRouter} from 'react-router-dom';
 import App from '../App';
 import {LanguageProvider} from '../context/LanguageContext';
 import {articlePath, articleTranslations, blog, blogLanguages, siteUrl} from './articles';
-import {editorialHead} from './seo';
+import {pageHead} from './seo';
+import {faqPath} from '../faq/content';
 
 const template = await readFile('dist/index.html', 'utf8');
 if (!template.includes('<div id="root"></div>') || !/<title>[^<]*<\/title>/.test(template)) {
@@ -24,6 +25,7 @@ for (const article of articleTranslations.flatMap((group) => Object.values(group
 }
 
 const pages = [
+  {path: faqPath, language: 'it' as const, lastmod: undefined},
   ...blogLanguages.flatMap((language) => [
     {path: blog[language].path, language, lastmod: undefined},
     ...articleTranslations.map(({[language]: article}) => ({
@@ -33,7 +35,7 @@ const pages = [
 ];
 
 for (const {path, language} of pages) {
-  const {title, tags} = editorialHead(path);
+  const {title, tags} = pageHead(path, language);
   const head = renderToStaticMarkup(
     <>
       <title>{title}</title>

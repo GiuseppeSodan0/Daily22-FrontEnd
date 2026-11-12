@@ -230,8 +230,9 @@ Data e ora: ${dateFormatted}
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.get(/^\/(?:en\/)?blog(?:\/|$)/, (req, res, next) => {
-      if (!/^\/(?:en\/)?blog(?:\/[a-z0-9-]+)?\/?$/.test(req.path)) return res.sendStatus(404);
+    app.get(/^\/faqs\/?$/, (req, res) => res.redirect(301, req.originalUrl.replace(/^\/faqs\/?/, '/faq')));
+    app.get(/^\/(?:faq\/?$|(?:en\/)?blog(?:\/|$))/, (req, res, next) => {
+      if (!/^\/(?:faq|(?:en\/)?blog(?:\/[a-z0-9-]+)?)\/?$/.test(req.path)) return res.sendStatus(404);
       if (req.path.endsWith('/')) {
         return res.redirect(301, req.originalUrl.replace(/\/(?=\?|$)/, ''));
       }

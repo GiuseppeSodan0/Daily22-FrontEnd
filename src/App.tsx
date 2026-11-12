@@ -1,6 +1,6 @@
 import {Routes, Route, useLocation} from 'react-router-dom';
 import {motion} from 'motion/react';
-import {useEffect} from 'react';
+import {useEffect, useLayoutEffect} from 'react';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -13,7 +13,10 @@ import Bandi from './components/Bandi';
 import Blog from './components/Blog';
 import BlogArticle from './components/BlogArticle';
 import {articlePath, blog, blogLanguage, findArticle} from './blog/articles';
-import {syncEditorialHead} from './blog/seo';
+import {syncPageHead} from './blog/seo';
+import {faqPath, isFaqPage} from './faq/content';
+import Faq from './components/Faq';
+import {useLanguage} from './context/LanguageContext';
 import DailySafetyLab from './components/DailySafetyLab';
 import ChiSiamo from './components/ChiSiamo';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -25,7 +28,11 @@ import Salvatore from './components/Salvatore';
 
 export default function App() {
   const location = useLocation();
-  const isPrerenderedPage = Boolean(blogLanguage(location.pathname));
+  const {lang} = useLanguage();
+  const faqPage = isFaqPage(location.pathname);
+  const editorialLanguage = blogLanguage(location.pathname);
+  const isPrerenderedPage = Boolean(editorialLanguage) || faqPage;
+  const headLanguage = faqPage ? lang : editorialLanguage ?? 'it';
   const article = findArticle(location.pathname);
 
   const isDailySafetyLabPage =
@@ -39,9 +46,9 @@ export default function App() {
     document.documentElement.style.setProperty('--transition-color', curtainColor);
   }, [location.pathname, curtainColor]);
 
-  useEffect(() => {
-    syncEditorialHead(location.pathname);
-  }, [location.pathname]);
+  useLayoutEffect(() => {
+    syncPageHead(location.pathname, headLanguage);
+  }, [location.pathname, headLanguage]);
 
   return (
     <div className="bg-[#F0EFEB] text-[#2C2C2E] min-h-screen flex flex-col justify-between selection:bg-[#f6c73b]/30 selection:text-[#2C2C2E] relative overflow-x-hidden">
@@ -88,6 +95,7 @@ export default function App() {
             <Route path="/grants" element={<Bandi />} />
             <Route path={blog.it.path} element={<Blog language="it" />} />
             <Route path={blog.en.path} element={<Blog language="en" />} />
+            <Route path={faqPath} element={<Faq />} />
             {article && <Route path={articlePath(article)} element={<BlogArticle article={article} />} />}
             <Route path="/daily-safety-lab" element={<DailySafetyLab />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
