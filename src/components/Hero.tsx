@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import PageIntro from './PageIntro';
 
 import bimbaDesktop from '../assets/images/BIMBA_DESKTOP.jpg';
 
@@ -49,12 +48,18 @@ export default function Hero() {
         animate="visible"
         className="hero-content w-full"
       >
-        {/* Homepage introduction and actions */}
+        {/* COLONNA SINISTRA / BLOCCO INIZIALE: Badge, Title & CTAs */}
         <motion.div
           variants={itemVariants}
           className="hero-left hero-top-content hero-left-copy order-1 relative z-30"
         >
-          <PageIntro label={t('hero.badge')} title={t('hero.title')} description={t('hero.subtitle')} className="hero-intro" />
+          <div className="hero-badge inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#2C2C2E]/10 bg-white/70 text-[9.5px] sm:text-[10px] font-bold tracking-wider uppercase text-[#2C2C2E]/80 font-mono mb-4 md:mb-6 backdrop-blur-sm whitespace-nowrap shrink-0">
+            <span>{t('hero.badge')}</span>
+          </div>
+
+          <h1 className="text-2xl sm:text-3xl md:text-[22px] lg:text-[38px] xl:text-[44px] font-bold tracking-tight text-[#2C2C2E] leading-[1.15] md:leading-[1.1] font-sans text-balance">
+            {t('hero.title')}
+          </h1>
 
           {/* CTAs - inside hero-left for desktop grid flow; on mobile, display:contents on hero-left
               flattens this, and position:absolute + position:static on hero-content makes it
@@ -86,6 +91,19 @@ export default function Hero() {
           className="hero-center-safe-area hero-center-spacer order-2 relative z-20 pointer-events-none"
         />
 
+        {/* COLONNA DESTRA / BLOCCO FINALE */}
+        <motion.div
+          variants={itemVariants}
+          className="hero-right hero-bottom-text hero-right-copy order-3 relative z-30"
+        >
+          <h2 className="hero-right-text hero-claim">
+            <span className="hero-claim-desktop">{t('hero.rightCopy')}</span>
+            <span className="hero-claim-mobile">
+              <span>{isEn ? 'A NEW ERA' : 'UNA NUOVA ERA'}</span>
+              <span>{isEn ? 'FOR WORKPLACE SAFETY' : 'PER LA SICUREZZA SUL LAVORO'}</span>
+            </span>
+          </h2>
+        </motion.div>
       </motion.div>
 
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2C2C2E]/10 to-transparent w-full z-20" />
