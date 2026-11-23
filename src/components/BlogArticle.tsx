@@ -7,6 +7,14 @@ import PageIntro from './PageIntro';
 export default function BlogArticle({article}: {article: Article}) {
   const {Body, cover, cta, faq, publishedOn, modifiedOn} = article;
   const labels = blog[articleLanguage(article)];
+  const coverImage = (
+    <ArticleCover
+      cover={cover}
+      sizes="(min-width: 1280px) 1216px, (min-width: 1024px) calc(100vw - 64px), (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
+      className="mt-8 h-auto w-full rounded-3xl"
+      priority
+    />
+  );
 
   return (
     <article lang={article.language} className="mx-auto max-w-7xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">
@@ -34,12 +42,12 @@ export default function BlogArticle({article}: {article: Article}) {
         </div>
       </PageIntro>
 
-      <ArticleCover
-        cover={cover}
-        sizes="(min-width: 1280px) 1216px, (min-width: 1024px) calc(100vw - 64px), (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
-        className="mt-8 h-auto w-full rounded-3xl"
-        priority
-      />
+      {cover?.asset && cover.caption ? (
+        <figure>
+          {coverImage}
+          <figcaption className="mt-3 text-sm leading-relaxed text-[#5E5E62]">{cover.caption}</figcaption>
+        </figure>
+      ) : coverImage}
 
       <div className="mt-8 sm:mt-12">
         <div className="editorial-prose"><Body /></div>

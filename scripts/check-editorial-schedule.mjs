@@ -23,6 +23,10 @@ if (released) {
   assert.equal(post.publisher.name, 'Daily Practice 22 S.r.l.');
   assert.equal(post.datePublished, metodo22.publishAt);
   assert.equal(post.inLanguage, 'it-IT');
+  assert.equal(post.image, 'https://daily22.it/assets/images/metodo22-cultura-prevenzione-lavoro.webp');
+  assert.match(html, /property="og:image" content="https:\/\/daily22\.it\/assets\/images\/metodo22-cultura-prevenzione-lavoro\.webp"/);
+  assert.match(html, /name="twitter:image" content="https:\/\/daily22\.it\/assets\/images\/metodo22-cultura-prevenzione-lavoro\.webp"/);
+  assert.match(html, /<figcaption[^>]*>Il lavoro cambia\. La prevenzione deve saperlo riconoscere\.<\/figcaption>/);
   assert.equal(graph.some((entity) => entity['@type'] === 'FAQPage'), false);
 } else {
   const files = readdirSync('dist', {recursive: true}).filter((file) => /\.(?:js|html|xml)$/.test(file));
