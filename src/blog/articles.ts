@@ -2,19 +2,25 @@ import type {ComponentType} from 'react';
 import type {Language} from '../i18n/translations';
 import {emergencyPlan} from './posts/emergency-plan';
 import {emergencyPlanEn} from './posts/emergency-plan.en';
+import {metodo22} from './posts/metodo22';
 
 export interface Article {
   slug: string;
   shortTitle: string;
   title: string;
   category: string;
+  subcategory?: string;
   author: string;
+  authorType?: 'Person' | 'Organization';
+  publisher?: string;
   language: 'it-IT' | 'en-GB';
   publishedOn?: string;
   modifiedOn?: string;
+  scheduledFor?: string;
   seoTitle: string;
   description: string;
   excerpt: string;
+  showExcerpt?: boolean;
   socialTitle: string;
   socialDescription: string;
   keywords: string[];
@@ -23,6 +29,10 @@ export interface Article {
     filename: string;
     title: string;
     alt: string;
+    caption?: string;
+    description?: string;
+    expectedWidth?: number;
+    expectedHeight?: number;
     asset?: {
       src: string;
       width: number;
@@ -50,7 +60,17 @@ export const blog = {
   },
 } as const;
 
-export const articleTranslations: readonly Record<Language, Article>[] = [{it: emergencyPlan, en: emergencyPlanEn}];
+export const articleTranslations: readonly {it: Article; en?: Article}[] = [
+  ...(import.meta.env.VITE_METODO22_RELEASED ? [{it: metodo22}] : []),
+  {it: emergencyPlan, en: emergencyPlanEn},
+];
+
+export function articlesForLanguage(language: Language) {
+  return articleTranslations.flatMap((translations) => {
+    const article = translations[language];
+    return article ? [article] : [];
+  });
+}
 
 export function articleLanguage(article: Article): Language {
   return article.language === 'en-GB' ? 'en' : 'it';
@@ -62,7 +82,7 @@ export function articlePath(article: Article) {
 
 export function findArticle(pathname: string) {
   const path = pathname.replace(/\/$/, '');
-  return articleTranslations.flatMap((group) => Object.values(group)).find((article) => articlePath(article) === path);
+  return blogLanguages.flatMap(articlesForLanguage).find((article) => articlePath(article) === path);
 }
 
 export function blogLanguage(pathname: string): Language | undefined {
@@ -79,7 +99,8 @@ export function localizedBlogPath(pathname: string, language: Language) {
   const article = findArticle(pathname);
   if (article) {
     const translations = articleTranslations.find((group) => group[articleLanguage(article)] === article);
-    return translations && articlePath(translations[language]);
+    const translated = translations?.[language];
+    return translated ? articlePath(translated) : undefined;
   }
   return blogLanguage(pathname) ? blog[language].path : undefined;
 }

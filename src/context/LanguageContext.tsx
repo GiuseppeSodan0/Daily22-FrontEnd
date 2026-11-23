@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {blogLanguage, localizedBlogPath} from '../blog/articles';
+import {blog, blogLanguage, localizedBlogPath} from '../blog/articles';
 import { translations, Language, TranslationKey } from '../i18n/translations';
 
 interface LanguageContextType {
@@ -40,7 +40,7 @@ export const LanguageProvider: React.FC<{children: React.ReactNode; initialLangu
   const setLang = (newLang: Language) => {
     setLangState(newLang);
     storeLanguage(newLang);
-    const localizedPath = localizedBlogPath(pathname, newLang);
+    const localizedPath = localizedBlogPath(pathname, newLang) ?? (pageLanguage ? blog[newLang].path : undefined);
     if (localizedPath && localizedPath !== pathname) navigate({pathname: localizedPath, search, hash});
   };
 

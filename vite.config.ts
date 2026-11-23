@@ -2,10 +2,17 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
+import schedule from './src/blog/schedule.json';
 
 export default defineConfig(({isSsrBuild}) => {
+  const buildAt = process.env.EDITORIAL_BUILD_AT ?? new Date().toISOString();
+  if (!Number.isFinite(Date.parse(buildAt))) throw new Error('Invalid EDITORIAL_BUILD_AT');
+
   return {
     plugins: [react(), tailwindcss()],
+    define: {
+      'import.meta.env.VITE_METODO22_RELEASED': Date.parse(buildAt) >= Date.parse(schedule.metodo22.publishAt),
+    },
     build: {copyPublicDir: !isSsrBuild},
     resolve: {
       alias: {

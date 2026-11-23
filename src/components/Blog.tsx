@@ -1,13 +1,13 @@
 import {ArrowUpRight} from 'lucide-react';
 import {Link} from 'react-router-dom';
-import {articlePath, articleTranslations, blog, formatArticleDate} from '../blog/articles';
+import {articlePath, articlesForLanguage, blog, formatArticleDate} from '../blog/articles';
 import type {Language} from '../i18n/translations';
 import ArticleCover from './ArticleCover';
 import PageIntro from './PageIntro';
 
 export default function Blog({language}: {language: Language}) {
   const {heading, description} = blog[language];
-  const articles = articleTranslations.map((translations) => translations[language]);
+  const articles = articlesForLanguage(language);
 
   return (
     <section lang={language} className="mx-auto max-w-7xl px-4 pt-28 pb-20 font-sans sm:px-6 sm:pt-36 lg:px-8">

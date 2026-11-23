@@ -95,14 +95,18 @@ export function pageHead(pathname: string, language: Language = 'it') {
     meta('twitter:image:alt', cover.alt);
   }
 
-  const publisher = {'@type': 'Organization', name: 'daily', url: siteUrl};
+  const publisher = {'@type': 'Organization', name: article.publisher ?? 'daily', url: siteUrl};
   const graph = [
     {
       '@type': 'BlogPosting',
       '@id': `${url}#article`,
       headline: article.title,
       description,
-      author: {'@type': 'Organization', name: article.author, url: siteUrl},
+      author: {
+        '@type': article.authorType ?? 'Organization',
+        name: article.author,
+        ...(article.authorType === 'Person' ? {} : {url: siteUrl}),
+      },
       publisher,
       mainEntityOfPage: {'@type': 'WebPage', '@id': url},
       datePublished: article.publishedOn,

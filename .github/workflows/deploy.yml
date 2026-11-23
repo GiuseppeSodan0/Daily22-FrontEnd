@@ -5,17 +5,45 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+  schedule:
+    # 09:00 Europe/Rome on 27 November (08:00 UTC).
+    - cron: '0 8 27 11 *'
+
+concurrency:
+  group: daily22-deploy-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
 
 jobs:
+  publication-window:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.window.outputs.enabled }}
+    steps:
+      - id: window
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          enabled=true
+          if [[ "$EVENT_NAME" == schedule && "$(date -u +%Y)" != 2026 ]]; then
+            enabled=false
+          fi
+          echo "enabled=$enabled" >> "$GITHUB_OUTPUT"
+
   build-and-deploy:
+    needs: publication-window
+    if: needs.publication-window.outputs.enabled == 'true'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set editorial build time
+        run: echo "EDITORIAL_BUILD_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -95,7 +123,7 @@ jobs:
         run: npm run lint
 
       - name: Set editorial publication date
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
           article_url=https://daily22.it/blog/piano-di-emergenza-ed-evacuazione
           html=$(mktemp)
@@ -110,8 +138,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify scheduled publication
+        run: node scripts/check-editorial-schedule.mjs
+
       - name: Configure nginx for /firme/, /blog, /en/blog and /faq
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: success() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
@@ -132,7 +163,7 @@ jobs:
           echo "nginx locations for /firme/, /blog, /en/blog and /faq installed."
 
       - name: Restore node app in pm2 if missing
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: success() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
@@ -161,7 +192,7 @@ jobs:
           rm -f ~/.ssh/deploy_key
 
       - name: Deploy via SSH
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: success() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -186,7 +217,7 @@ jobs:
           echo "Deploy complete! https://daily22.it is live."
 
       - name: Verify prerendered routes
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: success() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
           origin=https://daily22.it
           article_path=/blog/piano-di-emergenza-ed-evacuazione
@@ -218,9 +249,20 @@ jobs:
           grep -Fq "<loc>$origin$article_path</loc>" sitemap.xml
           grep -Fq "<loc>$origin$english_article_path</loc>" sitemap.xml
           grep -Fq "<loc>$origin/faq</loc>" sitemap.xml
+          metodo_path=/blog/prevenzione-sicurezza-lavoro-metodo-22
+          if [[ -f "dist/_editorial$metodo_path.html" ]]; then
+            curl -fsS --retry 3 "$origin$metodo_path" -o metodo22.html
+            grep -Fq 'La prevenzione non è un documento' metodo22.html
+            grep -Fq '"@type":"Person","name":"Ilaria Leonardis"' metodo22.html
+            grep -Fq "<loc>$origin$metodo_path</loc>" sitemap.xml
+          else
+            status=$(curl -sS --retry 3 -o metodo22.html -w '%{http_code}' "$origin$metodo_path")
+            [[ "$status" == 404 ]]
+            if grep -Fq "$metodo_path" blog.html sitemap.xml; then exit 1; fi
+          fi
 
       - name: Verify /firme/ resources
-        if: ${{ !cancelled() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ !cancelled() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
         run: |
           for f in paolo-mirabella-v2.png daily-logo-orizzontale-v2.png loghi-istituzionali.png loghi-istituzionali-v2.png; do
             echo "== /firme/$f =="

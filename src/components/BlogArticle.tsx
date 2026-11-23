@@ -24,11 +24,11 @@ export default function BlogArticle({article}: {article: Article}) {
         </ol>
       </nav>
 
-      <PageIntro label={article.category} title={article.title} description={article.excerpt} className="border-b border-[#2C2C2E]/15 pb-8 sm:pb-10">
+      <PageIntro label={article.category} title={article.title} description={article.showExcerpt === false ? undefined : article.excerpt} className="border-b border-[#2C2C2E]/15 pb-8 sm:pb-10">
         <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-[#5E5E62]">
           <span>{labels.by} <span className="font-semibold text-[#2C2C2E]">{article.author}</span></span>
           {publishedOn && <span>{labels.published} <time dateTime={publishedOn}>{formatArticleDate(publishedOn, article.language)}</time></span>}
-          {modifiedOn && modifiedOn !== publishedOn && (
+          {modifiedOn && publishedOn && Date.parse(modifiedOn) > Date.parse(publishedOn) && (
             <span>{labels.updated} <time dateTime={modifiedOn}>{formatArticleDate(modifiedOn, article.language)}</time></span>
           )}
         </div>
