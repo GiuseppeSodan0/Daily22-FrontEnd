@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import PageIntro from './PageIntro';
 import {motion, AnimatePresence} from 'motion/react';
 import {Mail, Phone, Clock, MapPin, Check, Landmark, AlertTriangle, ArrowRight} from 'lucide-react';
@@ -426,9 +427,14 @@ export default function ContactForm() {
                           onChange={handleChange}
                           className="mt-0.5 accent-[#f6c73b] w-4 h-4 cursor-pointer"
                         />
-                        <label htmlFor="consentePrivacy" className="text-[11px] text-[#5E5E62] leading-relaxed cursor-pointer font-mono">
-                          {t('contact.privacyConsent')}
-                        </label>
+                        <div className="text-[11px] text-[#5E5E62] leading-relaxed font-mono">
+                          <label htmlFor="consentePrivacy" className="cursor-pointer">
+                            {t('contact.privacyConsent')}
+                          </label>{' '}
+                          <Link to="/privacy-policy" className="underline underline-offset-2 focus-visible:outline focus-visible:outline-2">
+                            {lang === 'en' ? 'Read the Privacy Policy' : 'Leggi la Privacy Policy'}
+                          </Link>
+                        </div>
                       </div>
 
                       <button

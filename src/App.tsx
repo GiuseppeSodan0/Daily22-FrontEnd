@@ -19,7 +19,7 @@ import Faq from './components/Faq';
 import {useLanguage} from './context/LanguageContext';
 import DailySafetyLab from './components/DailySafetyLab';
 import ChiSiamo from './components/ChiSiamo';
-import PrivacyPolicy from './components/PrivacyPolicy';
+import SitePrivacyPolicy from './components/SitePrivacyPolicy';
 import TerminiCondizioni from './components/TerminiCondizioni';
 import PreferenzePrivacy from './components/PreferenzePrivacy';
 import Vera from './components/Vera';
@@ -98,7 +98,7 @@ export default function App() {
             <Route path={faqPath} element={<Faq />} />
             {article && <Route path={articlePath(article)} element={<BlogArticle article={article} />} />}
             <Route path="/daily-safety-lab" element={<DailySafetyLab />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/privacy-policy" element={<SitePrivacyPolicy />} />
             <Route path="/termini-condizioni" element={<TerminiCondizioni />} />
             <Route path="/preferenze-privacy" element={<PreferenzePrivacy />} />
             <Route path="*" element={<HomePage />} />

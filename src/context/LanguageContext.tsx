@@ -41,7 +41,10 @@ export const LanguageProvider: React.FC<{children: React.ReactNode; initialLangu
     setLangState(newLang);
     storeLanguage(newLang);
     const localizedPath = localizedBlogPath(pathname, newLang) ?? (pageLanguage ? blog[newLang].path : undefined);
-    if (localizedPath && localizedPath !== pathname) navigate({pathname: localizedPath, search, hash});
+    if (newLang !== lang && document.getElementById('iubenda-widget')) {
+      // Reinitialise the CMP in the selected language, sharing site-level consent.
+      window.location.assign((localizedPath ?? pathname) + search + hash);
+    } else if (localizedPath && localizedPath !== pathname) navigate({pathname: localizedPath, search, hash});
   };
 
   useEffect(() => {

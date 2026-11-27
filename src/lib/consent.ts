@@ -1,14 +1,4 @@
-// Central consent manager for the site.
-//
-// This is the single source of truth for cookie/tracking consent. It:
-//  - stores the user's choice in localStorage;
-//  - drives Google Consent Mode (default denied is set in index.html, updates here);
-//  - loads/updates the Meta Pixel strictly based on the marketing consent;
-//  - notifies the UI when the choice changes.
-//
-// It intentionally mirrors the category model used by the Preferences page and the
-// cookie banner, so there is only ONE consent system on the site.
-
+// Analytics adapters: all choices come exclusively from iubenda.
 export type ConsentCategory =
   | 'necessary'
   | 'functionality'
@@ -38,29 +28,25 @@ export const DEFAULT_CONSENT: ConsentState = {
   marketing: false,
 };
 
+// iubenda is the only source of consent. Legacy records cannot grant tracking.
 export function getStoredConsent(): ConsentState | null {
-  try {
-    const raw = localStorage.getItem(CONSENT_STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    return {
-      necessary: true,
-      functionality: !!parsed.functionality,
-      experience: !!parsed.experience,
-      measurement: !!parsed.measurement,
-      marketing: !!parsed.marketing,
-    };
-  } catch {
-    return null;
-  }
+  const preferences = (window as any).__dailyIubendaPreferences;
+  const purposes = preferences?.purposes;
+  if (!purposes || typeof purposes !== 'object' || Array.isArray(purposes)) return null;
+  return {
+    necessary: true,
+    functionality: purposes['2'] === true,
+    experience: purposes['3'] === true,
+    measurement: purposes['4'] === true,
+    marketing: purposes['5'] === true,
+  };
 }
 
-export function hasStoredConsent(): boolean {
-  try {
-    return localStorage.getItem(CONSENT_STORAGE_KEY) !== null;
-  } catch {
-    return false;
-  }
+export function openCookiePreferences(): boolean {
+  const api = (window as any)._iub?.cs?.api;
+  if (typeof api?.openPreferences !== 'function') return false;
+  api.openPreferences();
+  return true;
 }
 
 function gtagConsentUpdate(state: ConsentState): void {
@@ -91,6 +77,8 @@ function ensureGoogleTag(): void {
   if (googleTagLoaded) return;
   const s = document.createElement('script');
   s.async = true;
+  // This tag is already gated by an explicit CMP purpose, before insertion.
+  s.setAttribute('data-cmp-ab', '1');
   s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
   document.head.appendChild(s);
   w.dataLayer = w.dataLayer || [];
@@ -126,6 +114,7 @@ function ensureMetaPixel(): void {
 
   const t = document.createElement('script');
   t.async = true;
+  t.setAttribute('data-cmp-ab', '1');
   t.src = 'https://connect.facebook.net/en_US/fbevents.js';
   const s = document.getElementsByTagName('script')[0];
   s.parentNode?.insertBefore(t, s);
@@ -152,30 +141,11 @@ function applyMetaConsent(state: ConsentState): void {
 }
 
 export function applyConsent(state: ConsentState): void {
-  // Update Consent Mode first, then load Google tags only when measurement is allowed.
+  // This also stops an already-loaded Google tag after consent is withdrawn.
+  (window as any)[`ga-disable-${GA_MEASUREMENT_ID}`] = !state.measurement;
   gtagConsentUpdate(state);
   if (state.measurement) ensureGoogleTag();
   applyMetaConsent(state);
-}
-
-export function saveConsent(state: ConsentState): void {
-  const normalised: ConsentState = {
-    necessary: true,
-    functionality: !!state.functionality,
-    experience: !!state.experience,
-    measurement: !!state.measurement,
-    marketing: !!state.marketing,
-  };
-  try {
-    localStorage.setItem(
-      CONSENT_STORAGE_KEY,
-      JSON.stringify({ ...normalised, savedAt: new Date().toISOString() })
-    );
-  } catch {
-    // localStorage unavailable
-  }
-  applyConsent(normalised);
-  window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: normalised }));
 }
 
 let initialised = false;
@@ -183,9 +153,32 @@ let initialised = false;
 export function initConsent(): void {
   if (initialised) return;
   initialised = true;
-  // Apply the stored choice, or the safe default (all non-essential denied).
-  applyConsent(getStoredConsent() || DEFAULT_CONSENT);
-  window.addEventListener(CONSENT_EVENT, (e: any) => {
-    if (e?.detail) applyConsent(e.detail as ConsentState);
-  });
+  const sync = () => {
+    const state = getStoredConsent() || DEFAULT_CONSENT;
+    applyConsent(state);
+    window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: { ...state } }));
+  };
+  window.addEventListener('daily-iubenda-preferences', sync);
+  sync();
+}
+
+let completeRegistrationFired = false;
+
+export function trackMetaCompleteRegistration(): boolean {
+  if (completeRegistrationFired) return false;
+  try {
+    const w = window as any;
+    const stored = getStoredConsent();
+    const consentState = stored || DEFAULT_CONSENT;
+    if (!consentState.marketing) return false;
+    if (!metaPixelLoaded && typeof w.fbq !== 'function') {
+      ensureMetaPixel();
+    }
+    if (typeof w.fbq !== 'function') return false;
+    w.fbq('track', 'CompleteRegistration');
+    completeRegistrationFired = true;
+    return true;
+  } catch {
+    return false;
+  }
 }
